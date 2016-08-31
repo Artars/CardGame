@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
  */
 public abstract class Carta implements Comparable {
     
+    //Teste
     private int numero;
     private int naipe;
     private boolean enabled;
