@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.CardModel;
 import View.BoardFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,9 +21,14 @@ import java.util.Observer;
 public class CardController implements MouseListener, MouseMotionListener, ActionListener {
 
     private BoardFrame view;
+    private CardModel model;
     
     public void addView(Observer view){
         this.view = (BoardFrame)view;
+    }
+    
+    public void addModel(Observer model) {
+        this.model = (CardModel) model;
     }
     
     @Override
@@ -63,6 +69,10 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     @Override
     public void actionPerformed(ActionEvent ae) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void startMainWindow(){
+        view.setVisible(true);
     }
     
 }

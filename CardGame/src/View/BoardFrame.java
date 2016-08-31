@@ -6,8 +6,12 @@
 package View;
 
 import Controller.CardController;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JPanel;
 
 /**
  *
@@ -15,22 +19,42 @@ import java.util.Observer;
  */
 public class BoardFrame extends javax.swing.JFrame implements Observer {
 
-    CardController controller;
+    private CardController controller;
+    private Table board;
     
     /**
      * Creates new form BoardFrame
      */
-    public BoardFrame() {
+    public BoardFrame(Table board) {
         initComponents();
+        init(board);
+    }
+    
+    private void init(Table board){
+      
+        Dimension area = new Dimension(boardPanel.getWidth(), boardPanel.getHeight());
+        
+        this.board = board;
+        this.board.setPreferredSize(area);//set dimensao do painel de desenho
+        this.board.setBackground(new Color(124,179,66));//set cor de fundo       
+        this.boardPanel.setLayout(new GridLayout(1, 1));
+        
+        // o board que nos interessa nao é o do Swing padrao, mas a classe Tabuleiro jPanel que criamos !!!
+        this.boardPanel.add(board);  
     }
     
     public void addController(CardController controller){
         this.controller = controller;
-        //this.board.addMouseListener(controller);
-        //this.board.addMouseMotionListener(controller);
+        this.board.addMouseListener(controller);
+        this.board.addMouseMotionListener(controller);
         //this.jMenuItem1.setActionCommand("sair"); this.jMenuItem1.addActionListener(controller);
     }
 
+    public JPanel getBoardPanel() {
+        return boardPanel;
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,18 +64,18 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        boardPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout boardPanelLayout = new javax.swing.GroupLayout(boardPanel);
+        boardPanel.setLayout(boardPanelLayout);
+        boardPanelLayout.setHorizontalGroup(
+            boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 400, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        boardPanelLayout.setVerticalGroup(
+            boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
@@ -59,11 +83,11 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -72,7 +96,7 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel boardPanel;
     // End of variables declaration//GEN-END:variables
 
     @Override

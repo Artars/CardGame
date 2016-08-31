@@ -5,7 +5,10 @@
  */
 package CardGame;
 
+import Controller.CardController;
+import Model.CardModel;
 import View.BoardFrame;
+import View.Table;
 
 /**
  *
@@ -40,7 +43,17 @@ public class Main {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BoardFrame().setVisible(true);
+                Table board = new Table();
+                BoardFrame view = new BoardFrame(board);
+                CardModel model = new CardModel();
+                board.registerObserver(model);
+                board.registerObserver(view);
+                CardController controller = new CardController();
+                controller.addView(view);
+                controller.addModel(model);
+                view.addController(controller);
+                controller.startMainWindow();
+                //BoardFrame().setVisible(true);
             }
         });
     }

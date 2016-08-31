@@ -7,6 +7,7 @@ package Model;
 
 import Cartas.Carta;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -25,6 +26,7 @@ public class CardModel implements Observer {
     
     public CardModel (){
         baralho = new ArrayList<>();
+        this.CreateBaralho (baralho);
         maoJogador1 = new ArrayList<>();
         maoJogador2 = new ArrayList<>();
         boardJog1 = new Carta[5];
@@ -34,12 +36,13 @@ public class CardModel implements Observer {
     private void CreateBaralho(ArrayList<Integer> list){
         for (int i = 0; i < 56; i++)
             list.add(new Integer(i));
+        Collections.shuffle(list);
     }
     
     
     @Override
     public void update(Observable o, Object o1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
