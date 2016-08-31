@@ -6,6 +6,7 @@
 package Model;
 
 import Cartas.Carta;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
@@ -18,11 +19,14 @@ import java.util.Observer;
 public class CardModel implements Observer {
 
     private ArrayList<Integer> baralho;
+    private ArrayList<Integer> descarteDinamico;
     
     private ArrayList<Carta> maoJogador1;
     private ArrayList<Carta> maoJogador2;
     private Carta[] boardJog1;
     private Carta[] boardJog2;
+    private Carta[] descarteFixo;
+    
     
     public CardModel (){
         baralho = new ArrayList<>();
@@ -38,6 +42,18 @@ public class CardModel implements Observer {
             list.add(new Integer(i));
         Collections.shuffle(list);
     }
+    
+    private void CreateWorkspaces(Rectangle2D[] workspace) {
+        /*
+            Sendo a estrutura do menu dada por
+        0 - Mão Jogador Outro
+        1 - Mesa Jogador Outro
+        2 - Mesa Descarte
+        3 - Mesa Jogador Atual
+        4 - Mão Jogador Atual
+        */
+    }
+    
     
     
     @Override

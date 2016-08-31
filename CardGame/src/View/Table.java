@@ -28,11 +28,25 @@ public class Table extends JPanel {
     public void registerObserver(Observer ob){
         observers.add(ob);
     }
+
+    public void drawRetangulo (Graphics2D g) {
+        int width =  getWidth()/2;
+        int height = getHeight() /6;
+        int margem = height /6;
+        
+        g.setColor (Color.WHITE);
+     
+        for (int i = 0; i < 5; i++) {
+            g.fillRect(width /2, margem * (i+1) + height * i, width, height);
+        }
+        
+    }
     
     @Override //sobrescrita do metodo paintComponent da classe JPanel
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
        
+        drawRetangulo ((Graphics2D) g);
         Graphics2D g2 = (Graphics2D)g;
         for(Observer ob : observers){
             ob.update(null, g);

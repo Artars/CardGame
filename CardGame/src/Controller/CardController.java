@@ -7,11 +7,13 @@ package Controller;
 
 import Model.CardModel;
 import View.BoardFrame;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Rectangle2D;
 import java.util.Observer;
 
 /**
@@ -22,6 +24,15 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 
     private BoardFrame view;
     private CardModel model;
+    
+    Rectangle2D[] workspaces;
+
+    public CardController() {
+        workspaces = new Rectangle2D[5];
+        this.CreateWorkspaces(workspaces);
+    }
+    
+    
     
     public void addView(Observer view){
         this.view = (BoardFrame)view;
@@ -72,7 +83,12 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     }
     
     public void startMainWindow(){
+        view.setMinimumSize(new Dimension(600, 400));
         view.setVisible(true);
+    }
+
+    private void CreateWorkspaces(Rectangle2D[] workspaces) {
+        
     }
     
 }
