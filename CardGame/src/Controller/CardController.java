@@ -31,10 +31,17 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     Rectangle[] workspaces;
 
     public CardController() {
-        workspaces = new Rectangle[5];
+        workspaces = new Rectangle[25];
     }
     
-    
+    /*public int getWorkspace (int x, int y){
+        int width = view.getBoardPanel().getWidth()/4;   
+        if (x >= width && x <= width*3){
+            int height = view.getBoardPanel().getHeight()/36;
+            i
+        }
+        
+    }*/
     
     public void addView(Observer view){
         this.view = (BoardFrame)view;
@@ -48,12 +55,23 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     @Override
     public void mouseClicked(MouseEvent me) {
         int i = 0;
+        int j = 0;
+        int n = 0;
+        int width = 0;
+        int height = 0;
+        width =  view.getBoardPanel().getBounds().width /10;
+        height = view.getBoardPanel().getBounds().height /6;
+        int margem = height /6;
+        
         for(Rectangle reckt : workspaces) {
+            reckt.reshape((5*width /2)+(n*width)+3, (margem * (i+1) + height * i)+3, width-6, height-6);
             if (reckt.inside(me.getX(), me.getY())) {
-                System.out.println("Clicaram no retangulo " + i);
+                System.out.println("Clicaram no retangulo " + j);
                 break;
             }
-            i++;
+            j++;
+            n = j%5;
+            i = j/5;
         }
     }
 
@@ -100,12 +118,14 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     private void CreateWorkspaces(Rectangle[] workspaces) {
         int width = 0;
         int height = 0;
-        width =  view.getBoardPanel().getBounds().width / 2;
+        width =  view.getBoardPanel().getBounds().width /10;
         height = view.getBoardPanel().getBounds().height /6;
         int margem = height /6;
      
         for (int i = 0; i < 5; i++) {
-            workspaces[i] = new Rectangle(width /2, margem * (i+1) + height * i, width, height);
+            for (int j = 0; j < 5; j++){
+                workspaces[i*5+j] = new Rectangle((5*width /2)+(j*width)+3, (margem * (i+1) + height * i)+3, width-6, height-6);
+            }
         }
     }
     

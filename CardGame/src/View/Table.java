@@ -41,13 +41,31 @@ public class Table extends JPanel {
         }
         
     }
+
+    public void drawRetangulo2 (Graphics2D g) {
+        int width =  getWidth() /10;
+        int height = getHeight() /6;
+        int margem = height /6;
+        
+        g.setColor (new Color(124,179,66));
+     
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++){
+                g.fillRect((5*width /2)+(j*width)+3, (margem * (i+1) + height * i)+3, width-6, height-6);
+            }
+        }
+        
+    }
     
     @Override //sobrescrita do metodo paintComponent da classe JPanel
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
        
         drawRetangulo ((Graphics2D) g);
+        
         Graphics2D g2 = (Graphics2D)g;
+        drawRetangulo2 (g2);
+        
         for(Observer ob : observers){
             ob.update(null, g);
         }
