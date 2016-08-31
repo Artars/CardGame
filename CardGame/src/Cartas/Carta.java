@@ -78,7 +78,7 @@ public abstract class Carta implements Comparable {
     
     
     public Carta (int n) {
-        this.numero = n % 13;
+        this.numero = (n % 13) + 1;
         this.naipe = n / 13;
         
         String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString();
