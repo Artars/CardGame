@@ -19,9 +19,22 @@ public class CardModel implements Observer {
     private ArrayList<Integer> baralho;
     
     private ArrayList<Carta> maoJogador1;
+    private ArrayList<Carta> maoJogador2;
+    private Carta[] boardJog1;
+    private Carta[] boardJog2;
     
-    Carta[] BoardJog1 = new Carta[5];
+    public CardModel (){
+        baralho = new ArrayList<>();
+        maoJogador1 = new ArrayList<>();
+        maoJogador2 = new ArrayList<>();
+        boardJog1 = new Carta[5];
+        boardJog2 = new Carta[5];
+    }
     
+    private void CreateBaralho(ArrayList<Integer> list){
+        for (int i = 0; i < 56; i++)
+            list.add(new Integer(i));
+    }
     
     
     @Override
