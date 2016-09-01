@@ -67,8 +67,7 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
         boardPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        boardPanel.setMinimumSize(new java.awt.Dimension(10, 10));
+        setResizable(false);
 
         javax.swing.GroupLayout boardPanelLayout = new javax.swing.GroupLayout(boardPanel);
         boardPanel.setLayout(boardPanelLayout);

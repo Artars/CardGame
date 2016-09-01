@@ -8,6 +8,7 @@ package Controller;
 import Model.CardModel;
 import View.BoardFrame;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,10 +51,10 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     
     public void addModel(Observer model) {
         this.model = (CardModel) model;
+        UpdateWorkspaces();
     }
     
-    @Override
-    public void mouseClicked(MouseEvent me) {
+    public void UpdateWorkspaces (){
         int i = 0;
         int j = 0;
         int n = 0;
@@ -62,16 +63,31 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         width =  view.getBoardPanel().getBounds().width /10;
         height = view.getBoardPanel().getBounds().height /6;
         int margem = height /6;
+        Point[] locations = new Point[7];
         
         for(Rectangle reckt : workspaces) {
             reckt.reshape((5*width /2)+(n*width)+3, (margem * (i+1) + height * i)+3, width-6, height-6);
+            if (j % 5 == 0)
+                locations[i] = new Point((5*width /2)+(n*width)+3, (margem * (i+1) + height * i)+3);
+            j++;
+            n = j%5;
+            i = j/5;
+        }
+        locations[6] = new Point(110,110);
+        locations[5] = new Point(110,110);
+        model.UpdateBoardLocations(locations, width - 6);
+    }
+    
+    @Override
+    public void mouseClicked(MouseEvent me) {
+        UpdateWorkspaces();
+        int j = 0;
+        for(Rectangle reckt : workspaces) {
             if (reckt.inside(me.getX(), me.getY())) {
                 System.out.println("Clicaram no retangulo " + j);
                 break;
             }
             j++;
-            n = j%5;
-            i = j/5;
         }
     }
 

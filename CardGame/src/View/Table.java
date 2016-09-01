@@ -34,7 +34,7 @@ public class Table extends JPanel {
         int height = getHeight() /6;
         int margem = height /6;
         
-        g.setColor (Color.WHITE);
+        g.setColor (Color.DARK_GRAY);
      
         for (int i = 0; i < 5; i++) {
             g.fillRect(width /2, margem * (i+1) + height * i, width, height);

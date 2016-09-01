@@ -82,7 +82,8 @@ public abstract class Carta implements Comparable {
         this.numero = (n % 13) + 1;
         this.naipe = n / 13;
         
-        String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString();
+        String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
+        //imgPatch = "img/2_of_clubs"
         if(this.sprite == null){
             try {
                 sprite = ImageIO.read(new File(imgPath));
@@ -92,7 +93,16 @@ public abstract class Carta implements Comparable {
         }
     }
     
-    public void Draw(Graphics2D g) {
+    public void Draw(Graphics2D g, int x, int y) {
+        int sizeHeight = g.getClip().getBounds().height / 6 - 6;
+        int sizeWidth = g.getClip().getBounds().width / 10 - 6;
+        
+        
+        int x2 = x + sizeHeight;
+        int y2 = y + sizeWidth;
+        
+        g.drawImage(sprite, x, y, sizeWidth, sizeHeight, null);
+        
         
     }
     

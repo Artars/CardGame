@@ -5,8 +5,10 @@
  */
 package Model;
 
+import Cartas.Atacante;
 import Cartas.Carta;
-import java.awt.geom.Rectangle2D;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Observable;
@@ -19,22 +21,92 @@ import java.util.Observer;
 public class CardModel implements Observer {
 
     private ArrayList<Integer> baralho;
-    private ArrayList<Integer> descarteDinamico;
+    private ArrayList<Integer> descarteFixo;
     
-    private ArrayList<Carta> maoJogador1;
-    private ArrayList<Carta> maoJogador2;
-    private Carta[] boardJog1;
-    private Carta[] boardJog2;
-    private Carta[] descarteFixo;
+    private Carta[] maoJogador1;
+    private Carta[] maoJogador2;
+    private Carta[] boardJogador1;
+    private Carta[] boardJogador2;
+    private Carta[] descarteDinamico;
+    
+    //Board Location Reference
+    private Point[] socketLocation;
+    private int socketWidth;
     
     
     public CardModel (){
         baralho = new ArrayList<>();
+        descarteFixo = new ArrayList<>();
         this.CreateBaralho (baralho);
-        maoJogador1 = new ArrayList<>();
-        maoJogador2 = new ArrayList<>();
-        boardJog1 = new Carta[5];
-        boardJog2 = new Carta[5];
+        maoJogador1 = new Carta[5];
+        maoJogador2 = new Carta[5];
+        boardJogador1 = new Carta[5];
+        boardJogador2 = new Carta[5];
+        descarteDinamico = new Carta[5];
+        socketLocation = new Point[7];
+        for (int i =0; i<7; i++){
+            socketLocation[i] = new Point(i*10,i*10);
+            socketWidth = 10;
+        }
+        init ();
+    }
+    
+    public void init() {
+        for (int i = 0; i < 5; i++) {
+            maoJogador2[i] = new Atacante(baralho.get(0));
+            baralho.remove(0);
+        }
+        for (int i = 0; i < 5; i++) {
+            boardJogador2[i] = new Atacante(baralho.get(0));
+            baralho.remove(0);
+        }
+        for (int i = 0; i < 5; i++) {
+            descarteDinamico[i] = new Atacante(baralho.get(0));
+            baralho.remove(0);
+        }
+        for (int i = 0; i < 5; i++) {
+            maoJogador1[i] = new Atacante(baralho.get(0));
+            baralho.remove(0);
+        }
+        for (int i = 0; i < 5; i++) {
+            boardJogador1[i] = new Atacante(baralho.get(0));
+            baralho.remove(0);
+        }
+        
+        
+    }
+    
+    public void draw(Graphics2D g) {
+        int section = 0;
+        for(int i = 0; i < 5; i++) {
+            if (maoJogador2[i] != null)
+                maoJogador2[i].Draw(g, (int) socketLocation[section].getX() + (socketWidth + 6) * i, (int) socketLocation[section].getY());
+        }
+        
+        section++;
+        for(int i = 0; i < 5; i++) {
+            if (boardJogador2[i] != null)
+                boardJogador2[i].Draw(g, (int) socketLocation[section].getX() + (socketWidth + 6) * i, (int) socketLocation[section].getY());
+        }
+        
+        section++;
+        for(int i = 0; i < 5; i++) {
+            if (descarteDinamico[i] != null)
+                descarteDinamico[i].Draw(g, (int) socketLocation[section].getX() + (socketWidth + 6) * i, (int) socketLocation[section].getY());
+        }
+        
+        section++;
+        for(int i = 0; i < 5; i++) {
+            if (boardJogador1[i] != null)
+                boardJogador1[i].Draw(g, (int) socketLocation[section].getX() + (socketWidth + 6) * i, (int) socketLocation[section].getY());
+        }
+        
+        section++;
+        for(int i = 0; i < 5; i++) {
+            if (maoJogador1[i] != null)
+                maoJogador1[i].Draw(g, (int) socketLocation[section].getX() + (socketWidth + 6) * i, (int) socketLocation[section].getY());
+        }
+       
     }
     
     private void CreateBaralho(ArrayList<Integer> list){
@@ -43,22 +115,20 @@ public class CardModel implements Observer {
         Collections.shuffle(list);
     }
     
-    private void CreateWorkspaces(Rectangle2D[] workspace) {
-        /*
-            Sendo a estrutura do menu dada por
-        0 - Mão Jogador Outro
-        1 - Mesa Jogador Outro
-        2 - Mesa Descarte
-        3 - Mesa Jogador Atual
-        4 - Mão Jogador Atual
-        */
+    public void UpdateBoardLocations(Point[] locations, int socketWidth) {
+        int i = 0;
+        for (Point p :locations){
+            socketLocation[i] = p;
+            i++;
+        }
+        this.socketWidth = socketWidth;
     }
     
     
     
     @Override
-    public void update(Observable o, Object o1) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(Observable o, Object arg) {
+        draw((Graphics2D) arg);
     }
     
 }
