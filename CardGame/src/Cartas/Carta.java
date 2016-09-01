@@ -26,6 +26,7 @@ public abstract class Carta implements Comparable {
     protected int jogador;
     protected Image sprite;
     protected int multiplicador;
+    protected boolean realizouAcao = false;
 
     @Override
     public int compareTo(Object t) {
@@ -39,14 +40,7 @@ public abstract class Carta implements Comparable {
         }
         return 0;
     }
-    
-    public enum Naipes{
-        Paus,
-        Ouros,
-        Copas,
-        Espadas;
-    }
-    
+
     public abstract boolean Acao(Object o);
     
     private String NumeroToString(){
@@ -83,6 +77,7 @@ public abstract class Carta implements Comparable {
     public Carta (int n) {
         this.numero = (n % 13) + 1;
         this.naipe = n / 13;
+        this.multiplicador = 1;
         
         String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
         //imgPatch = "img/2_of_clubs"
@@ -115,11 +110,6 @@ public abstract class Carta implements Comparable {
         enable = false;
     }
     
-    public boolean isEnabled() {
-        return enable;
-    }
-    
-
     public int getNumero() {
         return numero;
     }
@@ -128,7 +118,7 @@ public abstract class Carta implements Comparable {
         return naipe;
     }
 
-    public boolean isEnable() {
+    public boolean isEnabled() {
         return enable;
     }
 

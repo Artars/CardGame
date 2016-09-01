@@ -11,6 +11,6 @@ package Cartas;
  */
 public interface Atacavel {
     public void LevarDano (int dano);
-    public void RecurarVida (int cura);
+    public void RecuperarVida (int cura);
     public boolean EstaVivo();
 }

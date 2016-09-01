@@ -13,20 +13,30 @@ import java.awt.Point;
  */
 public class Defensor extends Carta implements Atacavel {
 
-    private int vida;
+    private float vida;
+    private int vidaAtual;
     private int maxVida;
     private boolean realizouAcao = false;
 
     public Defensor(int n) {
         super(n);
-        vida = 2*n;
+        vida = maxVida = 2*n;
+        vidaAtual = maxVida * multiplicador;
     }
    
     
     @Override
     public boolean Acao(Object o) {
         if(!realizouAcao) {
-            if (o instanceof Point) {
+            if (isEnabled()) {
+                if (o instanceof Point) {
+                    realizouAcao = true;
+                    return true;
+                }
+                return false;
+            } else {
+                realizouAcao = true;
+                Enable();
                 return true;
             }
         }
@@ -35,20 +45,27 @@ public class Defensor extends Carta implements Atacavel {
 
     @Override
     public void LevarDano(int dano) {
-        vida = vida - dano;
+        vidaAtual -= dano;
+        vida = (float) vidaAtual / maxVida;
     }
 
     @Override
-    public void RecurarVida(int cura) {
+    public void RecuperarVida(int cura) {
         if (EstaVivo()) {
-            vida += cura;
-            if (vida > maxVida) vida = maxVida;
+            vidaAtual += cura;
+            if (vidaAtual > maxVida * multiplicador) {
+                vida = maxVida;
+                vidaAtual = maxVida *multiplicador;
+            } 
         }
     }
 
+
     @Override
     public boolean EstaVivo() {
-        return (vida > 0); //To change body of generated methods, choose Tools | Templates.
+        if (vidaAtual <= 0)
+            Disable();
+        return (vidaAtual > 0); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

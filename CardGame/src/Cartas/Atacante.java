@@ -12,25 +12,34 @@ package Cartas;
 public class Atacante extends Carta implements Atacavel {
 
     private int maxVida;
-    private int vida;
+    private float vida;
     private int forca;
-    private boolean realizouAcao = false;
+    private int vidaAtual;
     
     public Atacante(int n) {
         super(n);
         maxVida = 10 - n;
         forca = n;
         vida = maxVida;
+        vidaAtual = maxVida;
     }
 
     @Override
     public boolean Acao(Object o) {
         if(!realizouAcao) {
-            if (o instanceof Atacavel) {
-                if (((Carta)o).enable) {
-                    ((Atacavel) o).LevarDano(forca * multiplicador);
-                    return true;
+            if(isEnabled()) {
+                if (o instanceof Atacavel) {
+                    if (((Carta)o).isEnabled()) {
+                       ((Atacavel) o).LevarDano(forca * multiplicador);
+                       realizouAcao = true;
+                        return true;
+                    }
                 }
+                return false;
+            } else {
+                realizouAcao = true;
+                Enable();
+                return true;
             }
         }
         return false;
@@ -38,20 +47,26 @@ public class Atacante extends Carta implements Atacavel {
     
     @Override
     public void LevarDano(int dano) {
-        vida = vida - dano; //To change body of generated methods, choose Tools | Templates.
+        vidaAtual -= dano;
+        vida = (float) vidaAtual/ maxVida;
     }
 
     @Override
-    public void RecurarVida(int cura) {
+    public void RecuperarVida(int cura) {
         if (EstaVivo()) {
-            vida += cura;
-            if (vida > maxVida) vida = maxVida; 
+            vidaAtual += cura;
+            if (vidaAtual > maxVida * multiplicador) {
+                vida = maxVida;
+                vidaAtual = maxVida *multiplicador;
+            } 
         }
     }
 
     @Override
     public boolean EstaVivo() {
-        return (vida > 0);
+        if (vida <= 0)
+            Disable();
+        return (vida > 0); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
