@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Cartas.Carta;
 import Model.CardModel;
 import View.BoardFrame;
 import java.awt.Dimension;
@@ -25,6 +26,8 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 
     private BoardFrame view;
     private CardModel model;
+    private Carta cartaSlc;
+    private int posSlc;
     
     private int turno = 0;
     private int jogadorAtual;
@@ -33,6 +36,8 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 
     public CardController() {
         workspaces = new Rectangle[25];
+        cartaSlc = null;
+        posSlc = -1;
     }
     
     /*public int getWorkspace (int x, int y){
@@ -52,6 +57,14 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     public void addModel(Observer model) {
         this.model = (CardModel) model;
         UpdateWorkspaces();
+    }
+    
+    public void setcartaSlc (Carta cartaSlc){
+        this.cartaSlc = cartaSlc;
+    }
+
+    public void setposSlc (int posSlc){
+        this.posSlc = posSlc;
     }
     
     public void UpdateWorkspaces (){
@@ -85,6 +98,37 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         for(Rectangle reckt : workspaces) {
             if (reckt.inside(me.getX(), me.getY())) {
                 System.out.println("Clicaram no retangulo " + j);
+                if (j < 10 && cartaSlc != null) {
+                    cartaSlc.Acao(model.getBoard(2,j%5));
+                    System.out.println("Acao no retangulo " + j);
+                }
+                else if (j < 15 && cartaSlc != null){
+                    model.descarte(cartaSlc);
+                    cartaSlc = null;
+                    System.out.println("Acao no retangulo " + j);
+                }
+                else if (j < 20){
+                    if (cartaSlc != null){
+                       cartaSlc.Acao(model.getBoard(1,j%5));
+                       cartaSlc = null;
+                       System.out.println("Acao no retangulo " + j);
+                    }
+                    else{
+                        cartaSlc = model.getBoard(1,j%5);
+                        if (cartaSlc != null) System.out.println("Carta selecionada no retangulo " + j);
+                    } 
+                }
+                else if (j < 25){
+                    if (cartaSlc != null){
+                       cartaSlc.Acao(model.getMao(1,j%5));
+                       cartaSlc = null;
+                       System.out.println("Acao no retangulo " + j);
+                    }
+                    else{
+                        cartaSlc = model.getMao(1,j%5);
+                        if (cartaSlc != null) System.out.println("Carta selecionada no retangulo " + j);
+                    } 
+                }
                 break;
             }
             j++;
@@ -144,5 +188,4 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
             }
         }
     }
-    
 }
