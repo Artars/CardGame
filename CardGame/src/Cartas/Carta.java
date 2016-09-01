@@ -20,12 +20,12 @@ import javax.imageio.ImageIO;
 public abstract class Carta implements Comparable {
     
     //Teste
-    private int numero;
-    private int naipe;
-    private boolean enabled;
-    private int jogador;
-    private Image sprite;
-    private int multiplicador;
+    protected int numero;
+    protected int naipe;
+    protected boolean enable;
+    protected int jogador;
+    protected Image sprite;
+    protected int multiplicador;
 
     @Override
     public int compareTo(Object t) {
@@ -46,6 +46,8 @@ public abstract class Carta implements Comparable {
         Copas,
         Espadas;
     }
+    
+    public abstract boolean Acao(Object o);
     
     private String NumeroToString(){
         switch(this.numero){
@@ -105,7 +107,18 @@ public abstract class Carta implements Comparable {
         
     }
     
-    public abstract void ColocarCarta ();
+    public void Enable () {
+        enable = true;
+    }
+    
+    public void Disable() {
+        enable = false;
+    }
+    
+    public boolean isEnabled() {
+        return enable;
+    }
+    
 
     public int getNumero() {
         return numero;
@@ -115,8 +128,8 @@ public abstract class Carta implements Comparable {
         return naipe;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public boolean isEnable() {
+        return enable;
     }
 
     public int getJogador() {

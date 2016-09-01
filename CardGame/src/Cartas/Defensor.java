@@ -5,53 +5,50 @@
  */
 package Cartas;
 
+import java.awt.Point;
+
 /**
  *
  * @author Arthur
  */
-public class Atacante extends Carta implements Atacavel {
+public class Defensor extends Carta implements Atacavel {
 
-    private int maxVida;
     private int vida;
-    private int forca;
+    private int maxVida;
     private boolean realizouAcao = false;
-    
-    public Atacante(int n) {
-        super(n);
-        maxVida = 10 - n;
-        forca = n;
-        vida = maxVida;
-    }
 
+    public Defensor(int n) {
+        super(n);
+        vida = 2*n;
+    }
+   
+    
     @Override
     public boolean Acao(Object o) {
         if(!realizouAcao) {
-            if (o instanceof Atacavel) {
-                if (((Carta)o).enable) {
-                    ((Atacavel) o).LevarDano(forca * multiplicador);
-                    return true;
-                }
+            if (o instanceof Point) {
+                return true;
             }
         }
         return false;
     }
-    
+
     @Override
     public void LevarDano(int dano) {
-        vida = vida - dano; //To change body of generated methods, choose Tools | Templates.
+        vida = vida - dano;
     }
 
     @Override
     public void RecurarVida(int cura) {
         if (EstaVivo()) {
             vida += cura;
-            if (vida > maxVida) vida = maxVida; 
+            if (vida > maxVida) vida = maxVida;
         }
     }
 
     @Override
     public boolean EstaVivo() {
-        return (vida > 0);
+        return (vida > 0); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
