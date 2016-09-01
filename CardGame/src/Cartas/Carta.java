@@ -97,9 +97,8 @@ public abstract class Carta implements Comparable {
         int sizeHeight = g.getClip().getBounds().height / 6 - 6;
         int sizeWidth = g.getClip().getBounds().width / 10 - 6;
         
-        
-        int x2 = x + sizeHeight;
-        int y2 = y + sizeWidth;
+        sizeHeight = 94;
+        sizeWidth = 74;
         
         g.drawImage(sprite, x, y, sizeWidth, sizeHeight, null);
         

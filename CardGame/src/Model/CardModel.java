@@ -48,10 +48,13 @@ public class CardModel implements Observer {
             socketLocation[i] = new Point(i*10,i*10);
             socketWidth = 10;
         }
-        init ();
+        TesteLoucao();
     }
     
-    public void init() {
+    
+    public void TesteLoucao() {
+        for (int i = 0; i < 0; i++)
+            baralho.remove(0);
         for (int i = 0; i < 5; i++) {
             maoJogador2[i] = new Atacante(baralho.get(0));
             baralho.remove(0);
@@ -65,15 +68,13 @@ public class CardModel implements Observer {
             baralho.remove(0);
         }
         for (int i = 0; i < 5; i++) {
-            maoJogador1[i] = new Atacante(baralho.get(0));
-            baralho.remove(0);
-        }
-        for (int i = 0; i < 5; i++) {
             boardJogador1[i] = new Atacante(baralho.get(0));
             baralho.remove(0);
         }
-        
-        
+        for (int i = 0; i < 5; i++) {
+            maoJogador1[i] = new Atacante(baralho.get(0));
+            baralho.remove(0);
+        } 
     }
     
     public void draw(Graphics2D g) {
@@ -110,7 +111,7 @@ public class CardModel implements Observer {
     }
     
     private void CreateBaralho(ArrayList<Integer> list){
-        for (int i = 0; i < 56; i++)
+        for (int i = 0; i < 52; i++)
             list.add(new Integer(i));
         Collections.shuffle(list);
     }
