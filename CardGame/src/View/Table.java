@@ -37,7 +37,8 @@ public class Table extends JPanel {
         g.setColor (Color.DARK_GRAY);
      
         for (int i = 0; i < 5; i++) {
-            g.fillRect(width /2, margem * (i+1) + height * i, width, height);
+            if (i != 2) g.fillRect(width /2, margem * (i+1) + height * i, width, height);
+            else g.fillRect((width /2)-(width/5), margem * (i+1) + height * i, width+(2*width/5), height);
         }
         
     }
@@ -47,11 +48,16 @@ public class Table extends JPanel {
         int height = getHeight() /6;
         int margem = height /6;
         
-        g.setColor (new Color(124,179,66));
+        g.setColor (new Color(51,105,30));
      
         for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++){
-                g.fillRect((5*width /2)+(j*width)+3, (margem * (i+1) + height * i)+3, width-6, height-6);
+            if (i != 2){ 
+                for (int j = 0; j < 5; j++)
+                    g.fillRect((5*width /2)+(j*width)+3, (margem * (i+1) + height * i)+3, width-6, height-6);
+            }
+            else{ 
+                for (int j = 0; j < 7; j++)
+                    g.fillRect((5*width /2)+((j-1)*width)+3, (margem * (i+1) + height * i)+3, width-6, height-6);
             }
         }
         

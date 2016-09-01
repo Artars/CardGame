@@ -48,9 +48,16 @@ public class CardModel implements Observer {
             socketLocation[i] = new Point(i*10,i*10);
             socketWidth = 10;
         }
-        TesteLoucao();
+        //TesteLoucao();
+        ColocarCartas();
     }
     
+    public void ColocarCartas(){
+        maoJogador2[2] = new Atacante(baralho.get(0));
+        baralho.remove(0);
+        boardJogador1[4] = new Atacante(baralho.get(0));
+        baralho.remove(0);
+    }
     
     public void TesteLoucao() {
         for (int i = 0; i < 0; i++)
