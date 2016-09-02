@@ -26,7 +26,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 
     private BoardFrame view;
     private CardModel model;
-    private Carta cartaSlc;
+    private int cartaSlc;
     private int posSlc;
     
     private int turno = 0;
@@ -36,7 +36,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 
     public CardController() {
         workspaces = new Rectangle[25];
-        cartaSlc = null;
+        cartaSlc = -1;
         posSlc = -1;
     }
     
@@ -59,7 +59,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         UpdateWorkspaces();
     }
     
-    public void setcartaSlc (Carta cartaSlc){
+    public void setcartaSlc (int cartaSlc){
         this.cartaSlc = cartaSlc;
     }
 
@@ -95,44 +95,55 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     public void mouseClicked(MouseEvent me) {
         UpdateWorkspaces();
         int j = 0;
+        Carta C = null;
         for(Rectangle reckt : workspaces) {
             if (reckt.inside(me.getX(), me.getY())) {
                 System.out.println("Clicaram no retangulo " + j);
-                if (j < 10 && cartaSlc != null) {
-                    cartaSlc.Acao(model.getBoard(2,j%5));
-                    System.out.println("Acao no retangulo " + j);
-                }
-                else if (j < 15 && cartaSlc != null){
-                    model.descarte(cartaSlc);
-                    cartaSlc = null;
-                    System.out.println("Acao no retangulo " + j);
-                }
-                else if (j < 20){
-                    if (cartaSlc != null){
-                       cartaSlc.Acao(model.getBoard(1,j%5));
-                       cartaSlc = null;
-                       System.out.println("Acao no retangulo " + j);
+                if (j >= 5){
+                    if (j < 10 && cartaSlc < 20 && cartaSlc >= 15) {
+                        C = model.getBoard(1,cartaSlc%5);
+
+                        C.Acao(model.getBoard(2,j%5));
+                        System.out.println("Ataque no retangulo " + j);
+                        cartaSlc = -1;
                     }
-                    else{
-                        cartaSlc = model.getBoard(1,j%5);
-                        if (cartaSlc != null) System.out.println("Carta selecionada no retangulo " + j);
-                    } 
-                }
-                else if (j < 25){
-                    if (cartaSlc != null){
-                       cartaSlc.Acao(model.getMao(1,j%5));
-                       cartaSlc = null;
-                       System.out.println("Acao no retangulo " + j);
+                    else if (j < 15 && j >= 10 && cartaSlc >= 20){
+                        C = model.getMao(1,cartaSlc%5);
+
+                        model.descarte(C);
+                        cartaSlc = -1;
+                        System.out.println("Descarte no retangulo " + j);
                     }
-                    else{
-                        cartaSlc = model.getMao(1,j%5);
-                        if (cartaSlc != null) System.out.println("Carta selecionada no retangulo " + j);
-                    } 
+                    else if (j < 20 && j >= 15){
+                        if (cartaSlc != -1){
+                            if (cartaSlc < 20) C = model.getBoard(1,cartaSlc%5);
+                            else C = model.getMao(1,cartaSlc%5);
+
+                           C.Acao(model.getBoard(1,j%5));
+                           cartaSlc = -1;
+                           System.out.println("Acao no retangulo " + j);
+                        }
+                        else {
+                            if (model.getBoard(1, j%5) != null) cartaSlc = j;
+                            if (cartaSlc != -1) System.out.println("Carta selecionada no retangulo " + j);
+                        } 
+                    }
+                    else if (j < 25 && j >= 10){
+                        if (cartaSlc == -1){
+                            if (model.getMao(1, j%5) != null) cartaSlc = j;
+                            if (cartaSlc != -1) System.out.println("Carta selecionada no retangulo " + j);
+                        }
+                        else cartaSlc = -1;
+                    }
+                    else cartaSlc = -1;
                 }
+                else cartaSlc = -1;
                 break;
             }
+            else if (j == 24) cartaSlc = -1;
             j++;
         }
+        C = null;
     }
 
     @Override

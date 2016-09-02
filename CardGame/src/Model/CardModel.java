@@ -59,6 +59,8 @@ public class CardModel implements Observer {
         baralho.remove(0);
         boardJogador2[1] = new Atacante(baralho.get(0));
         baralho.remove(0);
+        maoJogador1[2] = new Atacante(baralho.get(0));
+        baralho.remove(0);
     }
     
     public void TesteLoucao() {
@@ -143,7 +145,8 @@ public class CardModel implements Observer {
 
     public Carta getMao(int i, int j) {
         if (i==1) return maoJogador1[j];
-        else  return maoJogador2[j];
+        else if (i==2) return maoJogador2[j];
+        return null;
     }
 
     public Carta getBoard(int jog,int index) {
