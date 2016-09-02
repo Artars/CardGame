@@ -114,6 +114,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
                         cartaSlc = -1;
                         System.out.println("Descarte no retangulo " + j);
                     }
+                    else if (j < 15 && j >= 10 && cartaSlc == -1) model.pegarCartas(1);
                     else if (j < 20 && j >= 15){
                         if (cartaSlc != -1){
                             if (cartaSlc < 20) C = model.getBoard(1,cartaSlc%5);
@@ -144,6 +145,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
             j++;
         }
         C = null;
+        view.repaint();
     }
 
     @Override

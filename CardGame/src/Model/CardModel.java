@@ -20,7 +20,7 @@ import java.util.Observer;
  */
 public class CardModel implements Observer {
 
-    private ArrayList<Integer> baralho;
+    private Baralho baralho;
     private ArrayList<Integer> descarteFixo;
     
     private Carta[] maoJogador1;
@@ -35,9 +35,8 @@ public class CardModel implements Observer {
     
     
     public CardModel (){
-        baralho = new ArrayList<>();
+        baralho = new Baralho(52);
         descarteFixo = new ArrayList<>();
-        this.CreateBaralho (baralho);
         maoJogador1 = new Carta[5];
         maoJogador2 = new Carta[5];
         boardJogador1 = new Carta[5];
@@ -53,42 +52,32 @@ public class CardModel implements Observer {
     }
     
     public void ColocarCartas(){
-        maoJogador2[2] = new Atacante(baralho.get(0));
-        baralho.remove(0);
-        boardJogador1[4] = new Atacante(baralho.get(0));
-        baralho.remove(0);
-        boardJogador2[1] = new Atacante(baralho.get(0));
-        baralho.remove(0);
-        maoJogador1[2] = new Atacante(baralho.get(0));
-        baralho.remove(0);
+        maoJogador2[2] = (baralho.retirarCartas(1)).get(0);
+        boardJogador1[4] = (baralho.retirarCartas(1)).get(0);
+        boardJogador2[1] = (baralho.retirarCartas(1)).get(0);
+        maoJogador1[2] = (baralho.retirarCartas(1)).get(0);
     }
     
     public void TesteLoucao() {
-        for (int i = 0; i < 0; i++)
-            baralho.remove(0);
         for (int i = 0; i < 5; i++) {
-            maoJogador2[i] = new Atacante(baralho.get(0));
-            baralho.remove(0);
+            maoJogador2[i] = (baralho.retirarCartas(1)).get(0);
         }
         for (int i = 0; i < 5; i++) {
-            boardJogador2[i] = new Atacante(baralho.get(0));
-            baralho.remove(0);
+            boardJogador2[i] = (baralho.retirarCartas(1)).get(0);
         }
         for (int i = 0; i < 5; i++) {
-            descarteDinamico[i] = new Atacante(baralho.get(0));
-            baralho.remove(0);
+            descarteDinamico[i] = (baralho.retirarCartas(1)).get(0);
         }
         for (int i = 0; i < 5; i++) {
-            boardJogador1[i] = new Atacante(baralho.get(0));
-            baralho.remove(0);
+            boardJogador1[i] = (baralho.retirarCartas(1)).get(0);
         }
         for (int i = 0; i < 5; i++) {
-            maoJogador1[i] = new Atacante(baralho.get(0));
-            baralho.remove(0);
+            maoJogador1[i] = (baralho.retirarCartas(1)).get(0);
         } 
     }
     
     public void draw(Graphics2D g) {
+        baralho.Draw(g, 603, 251);
         int section = 0;
         for(int i = 0; i < 5; i++) {
             if (maoJogador2[i] != null)
@@ -121,12 +110,6 @@ public class CardModel implements Observer {
        
     }
     
-    private void CreateBaralho(ArrayList<Integer> list){
-        for (int i = 0; i < 52; i++)
-            list.add(new Integer(i));
-        Collections.shuffle(list);
-    }
-    
     public void UpdateBoardLocations(Point[] locations, int socketWidth) {
         int i = 0;
         for (Point p :locations){
@@ -157,5 +140,53 @@ public class CardModel implements Observer {
     
     public void descarte(Carta cartaSlc){
         
+    }
+    
+    public void pegarCartas (int jogador){
+        int n=0;
+        ArrayList<Carta> cards;
+        
+        if (jogador == 1){
+            for (int i=0; i<5; i++) if (maoJogador1[i] == null) n++;
+            if (n!=0 && n < 3){
+                cards = baralho.retirarCartas(n);
+                for (Carta c : cards) {
+                    int i = 0;
+                    while (maoJogador1[i] != null && i<5) i++;
+                    if (i < 5)
+                        maoJogador1[i] = c;
+                }
+            }
+            else{
+                cards = baralho.retirarCartas(2);
+                for (Carta c : cards) {
+                    int i = 0;
+                    while (maoJogador1[i] != null && i<5) i++;
+                    if (i < 5)
+                        maoJogador1[i] = c;
+                }
+            }
+        }
+        else{
+            for (int i=0; i<5; i++) if (maoJogador2[i] == null) n++;
+            if (n!=0 && n<3){
+                cards = baralho.retirarCartas(n);
+                for (Carta c : cards) {
+                    int i = 0;
+                    while (maoJogador2[i] != null && i<5) i++;
+                    if (i < 5)
+                        maoJogador2[i] = c;
+                }
+            }              
+            else{
+                cards = baralho.retirarCartas(2);
+                for (Carta c : cards) {
+                    int i = 0;
+                    while (maoJogador2[i] != null && i<5) i++;
+                    if (i < 5)
+                        maoJogador2[i] = c;
+                }
+            }
+        }
     }
 }

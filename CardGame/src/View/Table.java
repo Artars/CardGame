@@ -63,6 +63,10 @@ public class Table extends JPanel {
         
     }
     
+/*    public void redraw (){
+        paintComponent();
+    }*/
+    
     @Override //sobrescrita do metodo paintComponent da classe JPanel
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
