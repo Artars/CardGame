@@ -33,5 +33,10 @@ public class Curandeiro extends Carta {
             return false;
         }
     }
+
+    @Override
+    public void onClick() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

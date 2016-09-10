@@ -9,8 +9,11 @@ import Cartas.Atacante;
 import Cartas.Carta;
 import Cartas.Curandeiro;
 import Cartas.Defensor;
+import Cartas.Renderizavel;
+import cardgame.GameManager;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,10 +26,11 @@ import javax.imageio.ImageIO;
  *
  * @author Arthur
  */
-public class Baralho {
+public class Baralho implements Renderizavel{
     
     private ArrayList<Integer> cartas;
     private Image sprite;
+    private Rectangle rect;
 
     public Baralho(int n) {
         cartas = new ArrayList<>();
@@ -41,11 +45,28 @@ public class Baralho {
                 Logger.getLogger(Carta.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        
+        rect = new Rectangle(0,0,74,94);
+        GameManager.getInstance().adicionarRender(this);
+    }
+
+    public void setRect(Rectangle rect) {
+        this.rect = rect;
+    }
+    
+    public void setRect(int x, int y, int width, int height) {
+        rect = new Rectangle(x,y,width,height);
+    }
+    
+    public void setRect(int x, int y) {
+        rect.x = x;
+        rect.y = y;
     }
     
     public void shuffle() {
         Collections.shuffle(cartas);
     }
+    
     
     private Carta criarCarta(Integer i) {
         int n = i.intValue();;
@@ -69,6 +90,7 @@ public class Baralho {
         return c;
     }
     
+    
     public ArrayList<Carta> retirarCartas(int n) {
         ArrayList<Carta> a = new ArrayList<>();
         
@@ -80,14 +102,7 @@ public class Baralho {
         return a;
     }
     
-    public void Draw(Graphics2D g, int x, int y) {
-        int sizeHeight = g.getClip().getBounds().height / 6 - 6;
-        int sizeWidth = g.getClip().getBounds().width / 10 - 6;
-        
-        sizeHeight = 94;
-        sizeWidth = 74;
-        
-        g.drawImage(sprite, x, y, sizeWidth, sizeHeight, null);   
+    public void draw(Graphics2D g) {
+        g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);   
     }
-    
 }
