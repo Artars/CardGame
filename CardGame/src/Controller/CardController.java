@@ -31,6 +31,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     private CardModel model;
     private int cartaSlc;
     private int posSlc;
+    private ArrayList<Selecionavel> clicados;
     
     private int turno = 0;
     private int jogadorAtual;
@@ -99,6 +100,11 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     
     @Override
     public void mouseClicked(MouseEvent me) {
+    
+    }
+    /*
+    @Override
+    public void mouseClicked(MouseEvent me) {
         UpdateWorkspaces();
         int j = 0;
         Carta C = null;
@@ -151,10 +157,10 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         }
         C = null;
     }
-
-    @Override
+    */
+    
     public void mousePressed(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
     }
 
     @Override
@@ -181,8 +187,6 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     public void mouseMoved(MouseEvent me) {
         int x = me.getX();
         int y = me.getY();
-        
-        System.out.println("Estou em " + x + "," + y);
         
         for(Selecionavel s: selecionados)
             s.onLeave();
