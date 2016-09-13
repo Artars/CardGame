@@ -65,7 +65,7 @@ public class Atacante extends Carta implements Atacavel {
             selecionado = true;
     }
     
-    
+    @Override
     public void onClick(BoardHolder b) {
         int inimigo = (jogador == 1) ? 1:2;
         if (b.getJogador() == jogador && b != boardParent) {
@@ -77,6 +77,7 @@ public class Atacante extends Carta implements Atacavel {
         }
     }
     
+    @Override
     public void onClick(BoardHolder b, Atacavel a) {
         int inimigo = (jogador == 1) ? 1:2;
         if (b.getJogador() == inimigo) {
@@ -84,4 +85,5 @@ public class Atacante extends Carta implements Atacavel {
                 a.LevarDano(forca * multiplicador);            
         }
     }
+
 }

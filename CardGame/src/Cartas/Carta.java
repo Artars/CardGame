@@ -39,6 +39,10 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     
     protected boolean realizouAcao = false;
 
+    public abstract void onClick(BoardHolder b, Atacavel a);
+    
+    public abstract void onClick(BoardHolder b);
+    
     @Override
     public int compareTo(Object t) {
         if (t instanceof Carta){
@@ -110,6 +114,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         this.naipe = n / 13;
         this.multiplicador = 1;
         this.index = -1;
+        this.jogador = jogador;
         
         String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
         //imgPatch = "img/2_of_clubs"
@@ -218,5 +223,11 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         }
         return false;
     }
+
+    public void setJogador(int jogador) {
+        this.jogador = jogador;
+    }
+    
+    
     
 }

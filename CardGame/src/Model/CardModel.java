@@ -56,6 +56,11 @@ public class CardModel implements Observer {
     
     public void TesteLoucao() {
         ArrayList<Carta> teste =  baralho.retirarCartas(5);
+        teste.get(0).setJogador(2);
+        teste.get(1).setJogador(2);
+        teste.get(2).setJogador(1);
+        teste.get(3).setJogador(2);
+        teste.get(4).setJogador(1);
         System.out.println(boards[0].insereCarta(teste.get(0), 2));
         boards[0].insereCarta(teste.get(1), 0);
         boards[3].insereCarta(teste.get(2), 4);
