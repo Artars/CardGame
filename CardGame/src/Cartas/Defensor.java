@@ -67,5 +67,10 @@ public class Defensor extends Carta implements Atacavel {
             Disable();
         return (vidaAtual > 0); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void onClick() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

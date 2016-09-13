@@ -9,6 +9,8 @@ package View;
  * @author Arthur
  */
 
+import Cartas.Renderizavel;
+import cardgame.GameManager;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -29,6 +31,7 @@ public class Table extends JPanel {
         observers.add(ob);
     }
 
+    /*
     public void drawRetangulo (Graphics2D g) {
         int width =  getWidth()/2;
         int height = getHeight() /6;
@@ -43,6 +46,7 @@ public class Table extends JPanel {
         
     }
 
+    
     public void drawRetangulo2 (Graphics2D g) {
         int width =  getWidth() /10;
         int height = getHeight() /6;
@@ -62,6 +66,7 @@ public class Table extends JPanel {
         }
         
     }
+    */
     
 /*    public void redraw (){
         paintComponent();
@@ -71,14 +76,17 @@ public class Table extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
        
-        drawRetangulo ((Graphics2D) g);
+        //drawRetangulo ((Graphics2D) g);
         
         Graphics2D g2 = (Graphics2D)g;
-        drawRetangulo2 (g2);
+        //drawRetangulo2 (g2);
         
         for(Observer ob : observers){
             ob.update(null, g);
         }
+        
+        for(Renderizavel r: GameManager.getInstance().getRenderizaveis())
+            r.draw((Graphics2D) g);
     }
 
     

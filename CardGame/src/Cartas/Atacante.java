@@ -16,6 +16,14 @@ public class Atacante extends Carta implements Atacavel {
     private int forca;
     private int vidaAtual;
     
+    public Atacante(int x, int y, int n) {
+        super(x,y,n);
+        maxVida = 10 - n;
+        forca = n;
+        vida = maxVida;
+        vidaAtual = maxVida;
+    }
+    
     public Atacante(int n) {
         super(n);
         maxVida = 10 - n;
@@ -67,6 +75,11 @@ public class Atacante extends Carta implements Atacavel {
         if (vida <= 0)
             Disable();
         return (vida > 0); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void onClick() {
+        
     }
     
 }

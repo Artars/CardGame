@@ -6,8 +6,10 @@
 package Controller;
 
 import Cartas.Carta;
+import Cartas.Selecionavel;
 import Model.CardModel;
 import View.BoardFrame;
+import cardgame.GameManager;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -16,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import java.util.Observer;
 
 /**
@@ -28,16 +31,20 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     private CardModel model;
     private int cartaSlc;
     private int posSlc;
+    private ArrayList<Selecionavel> clicados;
     
     private int turno = 0;
     private int jogadorAtual;
     
     Rectangle[] workspaces;
+    
+    private ArrayList<Selecionavel> selecionados;
 
     public CardController() {
         workspaces = new Rectangle[25];
         cartaSlc = -1;
         posSlc = -1;
+        selecionados = new ArrayList<>();
     }
     
     /*public int getWorkspace (int x, int y){
@@ -81,16 +88,21 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         for(Rectangle reckt : workspaces) {
             reckt.reshape((5*width /2)+(n*width)+3, (margem * (i+1) + height * i)+3, width-6, height-6);
             if (j % 5 == 0)
-                locations[i] = new Point((5*width /2)+(n*width)+3, (margem * (i+1) + height * i)+3);
+                locations[i] = new Point((5*width /2)+(n*width), (margem * (i+1) + height * i));
             j++;
             n = j%5;
             i = j/5;
         }
+        locations[5] = new Point(locations[2].x - width, locations[2].y);
         locations[6] = new Point(110,110);
-        locations[5] = new Point(110,110);
-        model.UpdateBoardLocations(locations, width - 6);
+        model.UpdateBoardLocations(locations, width, height);
     }
     
+    @Override
+    public void mouseClicked(MouseEvent me) {
+    
+    }
+    /*
     @Override
     public void mouseClicked(MouseEvent me) {
         UpdateWorkspaces();
@@ -147,10 +159,10 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         C = null;
         view.repaint();
     }
-
-    @Override
+    */
+    
     public void mousePressed(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
     }
 
     @Override
@@ -175,7 +187,19 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 
     @Override
     public void mouseMoved(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int x = me.getX();
+        int y = me.getY();
+        
+        for(Selecionavel s: selecionados)
+            s.onLeave();
+        selecionados.clear();
+        
+        selecionados = GameManager.getInstance().findSelecionavel(x, y);
+        
+        for(Selecionavel s: selecionados)
+            s.onHover(x, y);
+        
+        view.repaint();
     }
 
     @Override
