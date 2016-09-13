@@ -46,7 +46,7 @@ public class CardModel implements Observer {
             socketLocation[i] = new Point(i*10,i*10);
             socketWidth = 10;
         }
-        //TesteLoucao();
+        TesteLoucao();
         ColocarCartas();
     }
     

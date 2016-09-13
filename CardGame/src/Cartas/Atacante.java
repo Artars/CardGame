@@ -66,7 +66,7 @@ public class Atacante extends Carta implements Atacavel {
     }
     
     
-    public void onClick(BoardHolder b, Point p) {
+    public void onClick(BoardHolder b) {
         int inimigo = (jogador == 1) ? 1:2;
         if (b.getJogador() == jogador && b != boardParent) {
             b.insereCarta(this);

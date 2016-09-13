@@ -7,6 +7,7 @@ package Controller;
 
 import Cartas.Carta;
 import Cartas.Selecionavel;
+import Model.BoardHolder;
 import Model.CardModel;
 import View.BoardFrame;
 import cardgame.GameManager;
@@ -106,25 +107,43 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         int y = me.getY();
         ArrayList <Selecionavel> clicados = GameManager.getInstance().findSelecionavel(x, y); 
         
-        if (clicados.size() > 1 && clicado == null && ((Carta) clicado).isClicado(GameManager.getInstance().getTurno())){
+        if (clicados.size() > 1 && clicado == null && ((Carta) clicado).isClicavel(GameManager.getInstance().getTurno())){
             clicado = clicados.get(1);
         }
-        if (clicado != null){
+        else if (clicado != null){
+            //É o segundo clique
             if (clicados.size() == 1) {
-                if (((Carta) clicado).getJogador() < 3){
-                    clicado = null;
+                //Segundo Clique seleciona Board
+                if (((Carta) clicado).getJogador() < 3 && ((BoardHolder) clicados.get(0)).getJogador() == ((Carta) clicado).getJogador()/2){
+                    //Pegou da Mão e Colocou no Board
+                    //clicado.onClick((BoardHolder) clicados.get(0));
+                    System.out.println("Pegou da Mão e Colocou no Board");
                 }
-                else{
-
+                else if (((Carta) clicado).getJogador() > 2 && ((BoardHolder) clicados.get(0)).getJogador() == ((Carta) clicado).getJogador()/2){
+                    //Pegou do Board e Colocou no mesmo Board
+                    System.out.println("Pegou do Board e Colocou no mesmo Board");
+                }
+                else if (((Carta) clicado).getJogador() > 2 && ((BoardHolder) clicados.get(0)).getJogador() != ((Carta) clicado).getJogador()/2){
+                    //Pegou do Board e Colocou no outro Board
+                    System.out.println("Pegou do Board e Colocou no outro Board");
                 }
             }
             else if (clicados.size() == 2) {
-
+                //Segundo Clique seleciona Carta
+                if (((Carta) clicado).getJogador() > 2 && ((BoardHolder) clicados.get(0)).getJogador() == ((Carta) clicado).getJogador()/2){
+                    //Pegou do Board e Colocou no mesmo Board
+                    System.out.println("Pegou do Board e Colocou no mesmo Board");
+                }
+                else if (((Carta) clicado).getJogador() > 2 && ((BoardHolder) clicados.get(0)).getJogador() != ((Carta) clicado).getJogador()/2){
+                    //Pegou do Board e Colocou no outro Board
+                    System.out.println("Pegou do Board e Colocou no outro Board");
+                }
             }
-            else if (){
-                
+            if (((Carta) clicado).getJogador() < 3 && ((BoardHolder) clicados.get(0)).getJogador() == 0){
+                //Pegou da Mão e Colocou no Descarte
+                System.out.println("Pegou do Board e Colocou no outro Board");
             }
-            else clicado = null;
+            clicado = null;
         }
     }
     /*
