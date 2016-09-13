@@ -31,7 +31,6 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     protected int jogador;
     
     //Variaveis de sistema (Dinamicas)
-    protected boolean enable;
     protected Image sprite;
     protected Rectangle rect;
     protected boolean selecionado;
@@ -52,8 +51,6 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         }
         return 0;
     }
-
-    public abstract boolean Acao(Object o);
     
     private String NumeroToString(){
         switch(this.numero){
@@ -195,14 +192,6 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         selecionado = false;
     }
     
-    public void Enable () {
-        enable = true;
-    }
-    
-    public void Disable() {
-        enable = false;
-    }
-    
     public int getNumero() {
         return numero;
     }
@@ -211,8 +200,8 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         return naipe;
     }
 
-    public boolean isEnabled() {
-        return enable;
+    public void disable() {
+        GameManager.getInstance().removerSelecionavel(this);
     }
 
     public int getJogador() {
@@ -221,6 +210,13 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
 
     public int getMultiplicador() {
         return multiplicador;
+    }
+    
+    public boolean isClicavel(int jogador){
+        if (!realizouAcao && jogador == this.jogador) {
+            return true;
+        }
+        return false;
     }
     
 }

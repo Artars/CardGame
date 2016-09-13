@@ -17,22 +17,6 @@ public class Curandeiro extends Carta {
         super(n);
         this.cura = n;
     }
-    
-    @Override
-    public boolean Acao(Object o) {
-        if (!realizouAcao) {
-            if (o instanceof Atacavel){
-                if(((Carta)o).isEnabled()){
-                    ((Atacavel)o).RecuperarVida(cura * multiplicador);
-                    realizouAcao = true;
-                    return true;
-                }
-            }
-            return false;
-        } else {
-            return false;
-        }
-    }
 
     @Override
     public void onClick() {

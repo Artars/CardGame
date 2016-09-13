@@ -5,6 +5,9 @@
  */
 package Cartas;
 
+import Model.BoardHolder;
+import java.awt.Point;
+
 /**
  *
  * @author Arthur
@@ -31,27 +34,6 @@ public class Atacante extends Carta implements Atacavel {
         vida = maxVida;
         vidaAtual = maxVida;
     }
-
-    @Override
-    public boolean Acao(Object o) {
-        if(!realizouAcao) {
-            if(isEnabled()) {
-                if (o instanceof Atacavel) {
-                    if (((Carta)o).isEnabled()) {
-                       ((Atacavel) o).LevarDano(forca * multiplicador);
-                       realizouAcao = true;
-                        return true;
-                    }
-                }
-                return false;
-            } else {
-                realizouAcao = true;
-                Enable();
-                return true;
-            }
-        }
-        return false;
-    }
     
     @Override
     public void LevarDano(int dano) {
@@ -73,13 +55,33 @@ public class Atacante extends Carta implements Atacavel {
     @Override
     public boolean EstaVivo() {
         if (vida <= 0)
-            Disable();
+            disable();
         return (vida > 0); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void onClick() {
-        
+        if (!realizouAcao)
+            selecionado = true;
     }
     
+    
+    public void onClick(BoardHolder b, Point p) {
+        int inimigo = (jogador == 1) ? 1:2;
+        if (b.getJogador() == jogador && b != boardParent) {
+            b.insereCarta(this);
+            boardParent = b;
+        }
+        else if (b.getJogador() == inimigo) {
+            //Ataca
+        }
+    }
+    
+    public void onClick(BoardHolder b, Atacavel a) {
+        int inimigo = (jogador == 1) ? 1:2;
+        if (b.getJogador() == inimigo) {
+            if ((5 - ((Carta)a).getIndex()) == this.index)
+                a.LevarDano(forca * multiplicador);            
+        }
+    }
 }

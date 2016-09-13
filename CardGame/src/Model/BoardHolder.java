@@ -22,14 +22,14 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     
     private Rectangle rect;
     private Carta[] cartas;
-    private int player;
+    private int jogador;
     private int destaque;
     private int pocketWidth;
     private int pocketHeight;
 
     public BoardHolder(Rectangle rect, int player) {
         this.rect = rect;
-        this.player = player;
+        this.jogador = player;
         this.cartas = new Carta[5];
         this.destaque = -1;
         
@@ -39,7 +39,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     
     public BoardHolder(int player) {
         this.rect = new Rectangle(0,0,0,0);
-        this.player = player;
+        this.jogador = player;
         this.cartas = new Carta[5];
         this.destaque = -1;
         
@@ -56,6 +56,27 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             return true;
         }
         return false;
+    }
+    
+    public boolean insereCarta(Carta c) {
+        int n = destaque;
+        if(destaque != -1 && cartas[n] == null) {
+            cartas[n] = c;
+            cartas[n].setRect(getCardRect(n));
+            cartas[n].setIndex(n);
+            System.out.println("Adicionado carta em " + getCardRect(n));
+            return true;
+        }
+        return false;
+    }
+    
+    public int getIndex(int x, int y) {
+        for(int i = 0; i < 5; i++) {
+            Rectangle frame = getCardRect(i);
+            if (frame.inside(x,y))
+                return i;
+        }
+        return -1;
     }
     
     public void retiraCarta(int n) {
@@ -163,6 +184,10 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     @Override
     public void onLeave() {
         destaque = -1;
+    }
+
+    public int getJogador() {
+        return jogador;
     }
 
     @Override

@@ -5,6 +5,7 @@
  */
 package Cartas;
 
+import Model.BoardHolder;
 import java.awt.Point;
 
 /**
@@ -16,7 +17,6 @@ public class Defensor extends Carta implements Atacavel {
     private float vida;
     private int vidaAtual;
     private int maxVida;
-    private boolean realizouAcao = false;
 
     public Defensor(int n) {
         super(n);
@@ -24,25 +24,6 @@ public class Defensor extends Carta implements Atacavel {
         vidaAtual = maxVida * multiplicador;
     }
    
-    
-    @Override
-    public boolean Acao(Object o) {
-        if(!realizouAcao) {
-            if (isEnabled()) {
-                if (o instanceof Point) {
-                    realizouAcao = true;
-                    return true;
-                }
-                return false;
-            } else {
-                realizouAcao = true;
-                Enable();
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public void LevarDano(int dano) {
         vidaAtual -= dano;
@@ -64,13 +45,38 @@ public class Defensor extends Carta implements Atacavel {
     @Override
     public boolean EstaVivo() {
         if (vidaAtual <= 0)
-            Disable();
+            disable();
         return (vidaAtual > 0); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void onClick() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (!realizouAcao)
+            selecionado = true;
+    }
+    
+    
+    public void onClick(BoardHolder b, Point p) {
+        int inimigo = (jogador == 1) ? 1:2;
+        if (b.getJogador() == jogador) {
+            b.insereCarta(this);
+            boardParent = b;
+        }
+        else if (b.getJogador() == inimigo) {
+            //Ataca
+        }
+    }
+    
+    public void onClick(BoardHolder b, Atacavel a) {
+        int inimigo = (jogador == 1) ? 1:2;
+        if (b.getJogador() == jogador) {
+            int otherIndex = ((Carta)a).getIndex();
+            if (otherIndex != this.index) {
+                b.retiraCarta(otherIndex);
+                
+            }
+                           
+        }
     }
     
 }

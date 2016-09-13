@@ -109,19 +109,23 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         if (clicados.size() > 1 && clicado == null && ((Carta) clicado).isClicado(GameManager.getInstance().getTurno())){
             clicado = clicados.get(1);
         }
-        else if (clicados.size() == 1 && clicado != null) {
-            if (((Carta) clicado).getJogador() < 3){
+        if (clicado != null){
+            if (clicados.size() == 1) {
+                if (((Carta) clicado).getJogador() < 3){
+                    clicado = null;
+                }
+                else{
+
+                }
+            }
+            else if (clicados.size() == 2) {
+
+            }
+            else if (){
                 
             }
-            else{
-                
-            }
+            else clicado = null;
         }
-        else if (clicados.size() == 2 && clicado != null) {
-            
-        }
-        else clicado = null;
-        
     }
     /*
     @Override
