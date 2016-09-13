@@ -9,6 +9,7 @@ import Model.BoardHolder;
 import cardgame.GameManager;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.File;
@@ -162,10 +163,13 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         
         g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);
         
-        if (selecionado) {
-            g.setColor(new java.awt.Color(1,0,0,.5f));
-            g.fillRect(rect.x, rect.y, rect.width, rect.height);
+        g.setColor (new Color(0,0,0,0));
+        if (realizouAcao) {
+            g.setColor (new Color(0.1f,0.1f,0.1f,0.3f));
         }
+        else if (selecionado)
+            g.setColor(new Color(0,1,1,.2f));
+        g.fillRect(rect.x, rect.y, rect.width, rect.height);
         
     }
     
