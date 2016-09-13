@@ -20,11 +20,8 @@ import java.util.Observer;
  */
 public class CardModel implements Observer {
 
-<<<<<<< HEAD
     private Baralho baralho;
-=======
-    Baralho baralho;
->>>>>>> Singleton
+
     private ArrayList<Integer> descarteFixo;
     
     private BoardHolder[] boards;
@@ -38,20 +35,12 @@ public class CardModel implements Observer {
     public CardModel (){
         baralho = new Baralho(52);
         descarteFixo = new ArrayList<>();
-<<<<<<< HEAD
-        maoJogador1 = new Carta[5];
-        maoJogador2 = new Carta[5];
-        boardJogador1 = new Carta[5];
-        boardJogador2 = new Carta[5];
-        descarteDinamico = new Carta[5];
-=======
         boards = new BoardHolder[5];
         boards[0] = new BoardHolder(0);
         boards[1] = new BoardHolder(2);
         boards[2] = new BoardHolder(0);
         boards[3] = new BoardHolder(1);
         boards[4] = new BoardHolder(0);
->>>>>>> Singleton
         socketLocation = new Point[7];
         for (int i =0; i<7; i++){
             socketLocation[i] = new Point(i*10,i*10);
@@ -62,15 +51,10 @@ public class CardModel implements Observer {
     }
     
     public void ColocarCartas(){
-<<<<<<< HEAD
-        maoJogador2[2] = (baralho.retirarCartas(1)).get(0);
-        boardJogador1[4] = (baralho.retirarCartas(1)).get(0);
-        boardJogador2[1] = (baralho.retirarCartas(1)).get(0);
-        maoJogador1[2] = (baralho.retirarCartas(1)).get(0);
+
     }
     
     public void TesteLoucao() {
-=======
         ArrayList<Carta> teste =  baralho.retirarCartas(5);
         System.out.println(boards[0].insereCarta(teste.get(0), 2));
         boards[0].insereCarta(teste.get(1), 0);
@@ -103,15 +87,11 @@ public class CardModel implements Observer {
     */
     
     public void draw(Graphics2D g) {
-<<<<<<< HEAD
-        baralho.Draw(g, 603, 251);
-=======
         //teste.Draw(g);
     }
     
     /*
     public void draw(Graphics2D g) {
->>>>>>> Singleton
         int section = 0;
         for(int i = 0; i < 5; i++) {
             if (maoJogador2[i] != null)
@@ -145,9 +125,6 @@ public class CardModel implements Observer {
     }
     */
     
-<<<<<<< HEAD
-    public void UpdateBoardLocations(Point[] locations, int socketWidth) {
-=======
     private void CreateBaralho(ArrayList<Integer> list){
         for (int i = 0; i < 52; i++)
             list.add(new Integer(i));
@@ -155,7 +132,6 @@ public class CardModel implements Observer {
     }
     
     public void UpdateBoardLocations(Point[] locations, int socketWidth, int socketHeight) {
->>>>>>> Singleton
         int i = 0;
         for (Point p :locations){
             if (i < 5)
@@ -191,7 +167,7 @@ public class CardModel implements Observer {
     public void descarte(Carta cartaSlc){
         
     }
-    
+    /*
     public void pegarCartas (int jogador){
         int n=0;
         ArrayList<Carta> cards;
@@ -239,4 +215,5 @@ public class CardModel implements Observer {
             }
         }
     }
+    */
 }
