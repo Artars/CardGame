@@ -29,22 +29,24 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 
     private BoardFrame view;
     private CardModel model;
-    private int cartaSlc;
-    private int posSlc;
-    private ArrayList<Selecionavel> clicados;
+    private Selecionavel clicado;
+    private ArrayList <Selecionavel> selecionados;
+    /*
+    int cartaSlc;
+    int posSlc.
+    */
     
     private int turno = 0;
     private int jogadorAtual;
     
     Rectangle[] workspaces;
-    
-    private ArrayList<Selecionavel> selecionados;
 
     public CardController() {
         workspaces = new Rectangle[25];
-        cartaSlc = -1;
-        posSlc = -1;
+        /*cartaSlc = -1;
+        posSlc = -1;*/
         selecionados = new ArrayList<>();
+        clicado = null;
     }
     
     /*public int getWorkspace (int x, int y){
@@ -66,13 +68,13 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         UpdateWorkspaces();
     }
     
-    public void setcartaSlc (int cartaSlc){
+ /*   public void setcartaSlc (int cartaSlc){
         this.cartaSlc = cartaSlc;
     }
 
     public void setposSlc (int posSlc){
         this.posSlc = posSlc;
-    }
+    }*/
     
     public void UpdateWorkspaces (){
         int i = 0;
@@ -100,7 +102,26 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     
     @Override
     public void mouseClicked(MouseEvent me) {
-    
+        int x = me.getX();
+        int y = me.getY();
+        ArrayList <Selecionavel> clicados = GameManager.getInstance().findSelecionavel(x, y); 
+        
+        if (clicados.size() > 1 && clicado == null && ((Carta) clicado).isClicado(GameManager.getInstance().getTurno())){
+            clicado = clicados.get(1);
+        }
+        else if (clicados.size() == 1 && clicado != null) {
+            if (((Carta) clicado).getJogador() < 3){
+                
+            }
+            else{
+                
+            }
+        }
+        else if (clicados.size() == 2 && clicado != null) {
+            
+        }
+        else clicado = null;
+        
     }
     /*
     @Override

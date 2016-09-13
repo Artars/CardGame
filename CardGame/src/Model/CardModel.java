@@ -20,29 +20,26 @@ import java.util.Observer;
  */
 public class CardModel implements Observer {
 
-    private ArrayList<Integer> baralho;
+    Baralho baralho;
     private ArrayList<Integer> descarteFixo;
     
-    private Carta[] maoJogador1;
-    private Carta[] maoJogador2;
-    private Carta[] boardJogador1;
-    private Carta[] boardJogador2;
-    private Carta[] descarteDinamico;
+    private BoardHolder[] boards;
     
     //Board Location Reference
     private Point[] socketLocation;
     private int socketWidth;
     
+    private Carta teste;
     
     public CardModel (){
-        baralho = new ArrayList<>();
+        baralho = new Baralho(52);
         descarteFixo = new ArrayList<>();
-        this.CreateBaralho (baralho);
-        maoJogador1 = new Carta[5];
-        maoJogador2 = new Carta[5];
-        boardJogador1 = new Carta[5];
-        boardJogador2 = new Carta[5];
-        descarteDinamico = new Carta[5];
+        boards = new BoardHolder[5];
+        boards[0] = new BoardHolder(0);
+        boards[1] = new BoardHolder(2);
+        boards[2] = new BoardHolder(0);
+        boards[3] = new BoardHolder(1);
+        boards[4] = new BoardHolder(0);
         socketLocation = new Point[7];
         for (int i =0; i<7; i++){
             socketLocation[i] = new Point(i*10,i*10);
@@ -53,17 +50,16 @@ public class CardModel implements Observer {
     }
     
     public void ColocarCartas(){
-        maoJogador2[2] = new Atacante(baralho.get(0));
-        baralho.remove(0);
-        boardJogador1[4] = new Atacante(baralho.get(0));
-        baralho.remove(0);
-        boardJogador2[1] = new Atacante(baralho.get(0));
-        baralho.remove(0);
-        maoJogador1[2] = new Atacante(baralho.get(0));
-        baralho.remove(0);
+        ArrayList<Carta> teste =  baralho.retirarCartas(5);
+        System.out.println(boards[0].insereCarta(teste.get(0), 2));
+        boards[0].insereCarta(teste.get(1), 0);
+        boards[3].insereCarta(teste.get(2), 4);
+        boards[1].insereCarta(teste.get(3), 4);
+        boards[4].insereCarta(teste.get(4), 3);
+        Carta a = new Atacante(100,100,5);
     }
     
-    public void TesteLoucao() {
+    /*public void TesteLoucao() {
         for (int i = 0; i < 0; i++)
             baralho.remove(0);
         for (int i = 0; i < 5; i++) {
@@ -87,7 +83,13 @@ public class CardModel implements Observer {
             baralho.remove(0);
         } 
     }
+    */
     
+    public void draw(Graphics2D g) {
+        //teste.Draw(g);
+    }
+    
+    /*
     public void draw(Graphics2D g) {
         int section = 0;
         for(int i = 0; i < 5; i++) {
@@ -120,6 +122,7 @@ public class CardModel implements Observer {
         }
        
     }
+    */
     
     private void CreateBaralho(ArrayList<Integer> list){
         for (int i = 0; i < 52; i++)
@@ -127,13 +130,18 @@ public class CardModel implements Observer {
         Collections.shuffle(list);
     }
     
-    public void UpdateBoardLocations(Point[] locations, int socketWidth) {
+    public void UpdateBoardLocations(Point[] locations, int socketWidth, int socketHeight) {
         int i = 0;
         for (Point p :locations){
-            socketLocation[i] = p;
+            if (i < 5)
+                boards[i].setRect((int)p.getX(), (int)p.getY(), 5 * socketWidth, socketHeight);
             i++;
         }
+        for (BoardHolder b: boards)
+            b.setPocketDimensions(socketWidth - 6, socketHeight - 6);
         this.socketWidth = socketWidth;
+        
+        baralho.setRect((int) locations[5].getX(), (int) locations[5].getY());
     }
     
     
@@ -144,14 +152,14 @@ public class CardModel implements Observer {
     }
 
     public Carta getMao(int i, int j) {
-        if (i==1) return maoJogador1[j];
-        else if (i==2) return maoJogador2[j];
+        //if (i==1) return maoJogador1[j];
+        //else if (i==2) return maoJogador2[j];
         return null;
     }
 
     public Carta getBoard(int jog,int index) {
-        if (jog==1) return boardJogador1[index];
-        else if (jog==2) return boardJogador2[index];
+        //if (jog==1) return boardJogador1[index];
+        //else if (jog==2) return boardJogador2[index];
         return null;
     }
     

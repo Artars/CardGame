@@ -20,6 +20,8 @@ public class GameManager {
 
    ArrayList<Renderizavel> renderizaveis;
    ArrayList<Selecionavel> selecionaveis;
+   private int turno;
+   private int rodada;
    
    //create an object of SingleObject
    private static GameManager instance = new GameManager();
@@ -29,6 +31,8 @@ public class GameManager {
    private GameManager(){
        renderizaveis = new ArrayList<>();
        selecionaveis = new ArrayList<>();
+       turno = 1;
+       rodada = 0;
    }
 
    //Get the only object available
@@ -74,4 +78,17 @@ public class GameManager {
        return selecao;
    }
    
+    public void trocarTurno() {
+        if (turno == 1) turno = 2;
+        else turno = 1;
+        rodada++;
+    }
+    
+    public int getTurno(){
+        return turno;
+    }
+    
+    public int getRodada(){
+        return rodada;
+    }
 }
