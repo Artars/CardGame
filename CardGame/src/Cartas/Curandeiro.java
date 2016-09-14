@@ -22,17 +22,22 @@ public class Curandeiro extends Carta {
 
     @Override
     public void onClick() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (!realizouAcao)
+            selecionado = true;
     }
 
     @Override
     public void onClick(BoardHolder b, Atacavel a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (b.getJogador() == jogador) {
+                a.recuperarVida(cura * multiplicador);
+                realizouAcao = true;
+                //Se descarta
+        }
     }
 
     @Override
     public void onClick(BoardHolder b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
 }

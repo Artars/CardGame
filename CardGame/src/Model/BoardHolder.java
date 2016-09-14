@@ -20,9 +20,9 @@ import java.awt.Rectangle;
  */
 public class BoardHolder implements Renderizavel, Selecionavel {
     
-    private Rectangle rect;
-    private Carta[] cartas;
-    private int jogador;
+    protected Rectangle rect;
+    protected Carta[] cartas;
+    protected int jogador;
     private int destaque;
     private int pocketWidth;
     private int pocketHeight;
@@ -129,7 +129,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
                 rect.y + 3, pocketWidth, pocketHeight);
     }
     
-    private Rectangle getFrame(int n) {
+    protected Rectangle getFrame(int n) {
         return new Rectangle(rect.x + n *(pocketWidth + 6), rect.y,
                 pocketWidth + 6, pocketHeight + 6);
     }

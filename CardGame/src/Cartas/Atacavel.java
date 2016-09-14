@@ -10,7 +10,8 @@ package Cartas;
  * @author Arthur
  */
 public interface Atacavel {
-    public void LevarDano (int dano);
-    public void RecuperarVida (int cura);
-    public boolean EstaVivo();
+    public void levarDano (int dano);
+    public void recuperarVida (int cura);
+    public boolean estaVivo();
+    public void die();
 }

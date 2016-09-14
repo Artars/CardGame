@@ -36,14 +36,14 @@ public class Atacante extends Carta implements Atacavel {
     }
     
     @Override
-    public void LevarDano(int dano) {
+    public void levarDano(int dano) {
         vidaAtual -= dano;
         vida = (float) vidaAtual/ maxVida;
     }
 
     @Override
-    public void RecuperarVida(int cura) {
-        if (EstaVivo()) {
+    public void recuperarVida(int cura) {
+        if (estaVivo()) {
             vidaAtual += cura;
             if (vidaAtual > maxVida * multiplicador) {
                 vida = maxVida;
@@ -53,7 +53,7 @@ public class Atacante extends Carta implements Atacavel {
     }
 
     @Override
-    public boolean EstaVivo() {
+    public boolean estaVivo() {
         if (vida <= 0)
             disable();
         return (vida > 0); //To change body of generated methods, choose Tools | Templates.
@@ -82,8 +82,14 @@ public class Atacante extends Carta implements Atacavel {
         int inimigo = (jogador == 1) ? 1:2;
         if (b.getJogador() == inimigo) {
             if ((5 - ((Carta)a).getIndex()) == this.index)
-                a.LevarDano(forca * multiplicador);            
+                a.levarDano(forca * multiplicador);            
         }
+    }
+
+    @Override
+    public void die() {
+        boardParent.retiraCarta(index);
+        destroy();
     }
 
 }
