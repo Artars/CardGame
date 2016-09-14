@@ -7,6 +7,7 @@ package Model;
 
 import Cartas.Atacante;
 import Cartas.Carta;
+import Cartas.Defensor;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -55,7 +56,13 @@ public class CardModel implements Observer {
     }
     
     public void TesteLoucao() {
-        ArrayList<Carta> teste =  baralho.retirarCartas(5);
+        ArrayList<Carta> teste =  new ArrayList<>();
+        teste.add(new Atacante(50));
+        teste.add(new Atacante(49));
+        teste.add(new Atacante(48));
+        teste.add(new Defensor(5));
+        teste.add(new Defensor(2));
+        teste.add(new Defensor(7));
         teste.get(0).setJogador(2);
         teste.get(1).setJogador(2);
         teste.get(2).setJogador(1);

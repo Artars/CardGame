@@ -81,8 +81,10 @@ public class Atacante extends Carta implements Atacavel {
     public void onClick(BoardHolder b, Atacavel a) {
         int inimigo = (jogador == 1) ? 1:2;
         if (b.getJogador() == inimigo) {
-            if ((5 - ((Carta)a).getIndex()) == this.index)
+            if ((5 - ((Carta)a).getIndex()) == this.index) {
                 a.levarDano(forca * multiplicador);            
+                System.out.println("Atacar!!!!!!");
+            }
         }
     }
 

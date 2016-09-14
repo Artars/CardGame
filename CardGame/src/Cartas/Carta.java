@@ -186,7 +186,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     public abstract void onClick();
     
     public void onHover(int x, int y) {
-        System.out.println("Passou em mim");
+        //System.out.println("Passou em mim");
         selecionado = true;
     }
     public void onHover(Point p) {
