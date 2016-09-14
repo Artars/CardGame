@@ -17,6 +17,7 @@ public class Defensor extends Carta implements Atacavel {
     private float vida;
     private int vidaAtual;
     private int maxVida;
+    private boolean onBoard;
 
     public Defensor(int n) {
         super(n);
@@ -59,8 +60,10 @@ public class Defensor extends Carta implements Atacavel {
     public void onClick(BoardHolder b) {
         int inimigo = (jogador == 1) ? 1:2;
         if (b.getJogador() == jogador) {
+            boardParent.retiraCarta(index);
             b.insereCarta(this);
             boardParent = b;
+            
         }
         else if (b.getJogador() == inimigo) {
             //Ataca
