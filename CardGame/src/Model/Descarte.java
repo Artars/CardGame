@@ -5,29 +5,42 @@
  */
 package Model;
 
+import Cartas.Carta;
+import cardgame.GameManager;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 /**
  *
  * @author Arthur
  */
-public class DescarteDinamico extends BoardHolder {
+public class Descarte extends BoardHolder {
     
     private boolean over;
+    private int lastIndex;
+    private ArrayList<Integer> descarteFixo;
     
-    public DescarteDinamico(Rectangle rect, int player) {
+    
+    public Descarte(Rectangle rect, int player) {
         super(rect, player);
         over = false;
+        lastIndex = -1;
+        descarteFixo = new ArrayList<>();
+        GameManager.getInstance().setDescarte((Descarte)this);
     }
 
-    public DescarteDinamico(int player) {
+    public Descarte(int player) {
         super(player);
         over = false;
+        lastIndex = -1;
+        descarteFixo = new ArrayList<>();
+        GameManager.getInstance().setDescarte((Descarte)this);
     }
     
+    @Override
     public void draw(Graphics2D g) {
         Color background = new Color(51,105,30);
         for (int i = 0; i < 5; i++) {
@@ -66,6 +79,44 @@ public class DescarteDinamico extends BoardHolder {
     @Override
     public void onLeave() {
         over = false;
+    }
+    
+    private void adicionarCarta(Carta c, int n) {
+        cartas[n] = c;
+        c.setIndex(n);
+        c.setRect(getCardRect(n));
+        c.setRealizouAcao(false);
+    }
+    
+    public void descartaCarta(Carta c) {
+        if (lastIndex < 4) {
+            lastIndex++;
+            adicionarCarta(c, lastIndex);
+        } 
+        //Para o caso do descarte da mesa estar cheio
+        else {
+            //Esvazia a mesa
+            for (int i = 0; i < 5; i++){
+                descarteFixo.add(cartaToInteger(cartas[i]));
+                cartas[i].removeRenderer();
+                cartas[i] = null;
+            }
+            lastIndex = 0;
+            adicionarCarta(c, lastIndex);
+        }
+    }
+    
+    private Integer cartaToInteger(Carta c) {
+        //this.numero = (n % 13) + 1;
+        //this.naipe = n / 13;
+        int result = c.getNaipe() * 13 + c.getNumero() - 1;
+        return result;
+    }
+    
+    public ArrayList<Integer> getDescarte() {
+        ArrayList<Integer> antigas = descarteFixo;
+        descarteFixo = new ArrayList<>();
+        return antigas;
     }
     
 }

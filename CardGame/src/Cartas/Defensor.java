@@ -6,6 +6,8 @@
 package Cartas;
 
 import Model.BoardHolder;
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Point;
 
 /**
@@ -21,14 +23,18 @@ public class Defensor extends Carta implements Atacavel {
 
     public Defensor(int n) {
         super(n);
-        vida = maxVida = 2*n;
+        maxVida = 2*n;
         vidaAtual = maxVida * multiplicador;
+        vida = (float)(vidaAtual / (maxVida * multiplicador));
     }
    
     @Override
     public void levarDano(int dano) {
         vidaAtual -= dano;
-        vida = (float) vidaAtual / maxVida;
+        vida = (float)vidaAtual / (maxVida * multiplicador);
+        System.out.println("Nova vida: " + vida);
+        if (vida <= 0) 
+            die();
     }
 
     @Override
@@ -63,7 +69,8 @@ public class Defensor extends Carta implements Atacavel {
             boardParent.retiraCarta(index);
             b.insereCarta(this);
             boardParent = b;
-            
+            realizouAcao = true;
+            onBoard = true;
         }
         else if (b.getJogador() == inimigo) {
             //Ataca
@@ -71,21 +78,46 @@ public class Defensor extends Carta implements Atacavel {
     }
     
     public void onClick(BoardHolder b, Atacavel a) {
-        int inimigo = (jogador == 1) ? 1:2;
-        if (b.getJogador() == jogador) {
-            int otherIndex = ((Carta)a).getIndex();
-            if (otherIndex != this.index) {
-                b.retiraCarta(otherIndex);
-                
+        if (!realizouAcao && onBoard) {
+            if (b.getJogador() == jogador) {
+                int otherIndex = ((Carta)a).getIndex();
+                if (otherIndex != this.index) {
+                    b.retiraCarta(otherIndex);
+                    b.retiraCarta(index);
+                    b.insereCarta((Carta)a, index);
+                    b.insereCarta(this, otherIndex);
+                    realizouAcao = true;
+                }
+
             }
-                           
         }
     }
 
     @Override
     public void die() {
-        boardParent.retiraCarta(index);
-        destroy();
+        vida = 1;
+        descartar();
+    }
+    
+    @Override
+    public void draw(Graphics2D g) {
+        //int sizeHeight = g.getClip().getBounds().height / 6 - 6;
+        //int sizeWidth = g.getClip().getBounds().width / 10 - 6;
+        int newHeight = (int) ((1 - vida) * rect.height);
+        
+        g.setColor(Color.RED);
+        
+        g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);
+        g.fillRect(rect.x, rect.y, rect.width, newHeight);
+        
+        g.setColor (new Color(0,0,0,0));
+        if (realizouAcao) {
+            g.setColor (new Color(96,125,139, 120));
+        }
+        else if (selecionado)
+            g.setColor(new Color(0,1,1,.2f));
+        g.fillRect(rect.x, rect.y, rect.width, rect.height);
+        
     }
     
 }

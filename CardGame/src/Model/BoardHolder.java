@@ -52,6 +52,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             cartas[n] = c;
             cartas[n].setRect(getCardRect(n));
             cartas[n].setIndex(n);
+            cartas[n].setBoardParent(this);
             System.out.println("Adicionado carta em " + getCardRect(n));
             return true;
         }
@@ -64,6 +65,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             cartas[n] = c;
             cartas[n].setRect(getCardRect(n));
             cartas[n].setIndex(n);
+            cartas[n].setBoardParent(this);
             System.out.println("Adicionado carta em " + getCardRect(n));
             return true;
         }
@@ -178,6 +180,13 @@ public class BoardHolder implements Renderizavel, Selecionavel {
                 destaque = i;
                 break;
             }
+        }
+    }
+    
+    public void resetarAcoes(){
+        for (int i = 0; i < 5; i++) {
+            if (cartas[i] != null)
+                cartas[i].setRealizouAcao(false);
         }
     }
 

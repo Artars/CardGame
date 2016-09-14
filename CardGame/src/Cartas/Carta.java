@@ -156,8 +156,14 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     public int getIndex() {
         return index;
     }
-    
-    
+
+    public BoardHolder getBoardParent() {
+        return boardParent;
+    }
+
+    public void setBoardParent(BoardHolder boardParent) {
+        this.boardParent = boardParent;
+    }
     
     public void draw(Graphics2D g) {
         //int sizeHeight = g.getClip().getBounds().height / 6 - 6;
@@ -167,7 +173,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         
         g.setColor (new Color(0,0,0,0));
         if (realizouAcao) {
-            g.setColor (new Color(0.1f,0.1f,0.1f,0.3f));
+            g.setColor (new Color(96,125,139,120));
         }
         else if (selecionado)
             g.setColor(new Color(0,1,1,.2f));
@@ -209,9 +215,10 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         GameManager.getInstance().removerSelecionavel(this);
     }
     
-    public void destroy(){
+    public void descartar(){
         disable();
-        GameManager.getInstance().removerRender(this);
+        boardParent.retiraCarta(index);
+        GameManager.getInstance().getDescarte().descartaCarta(this);
     }
 
     public int getJogador() {
@@ -233,6 +240,12 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         this.jogador = jogador;
     }
     
-    
+    public void removeRenderer() {
+        GameManager.getInstance().removerRender(this);
+    }
+
+    public void setRealizouAcao(boolean realizouAcao) {
+        this.realizouAcao = realizouAcao;
+    }
     
 }

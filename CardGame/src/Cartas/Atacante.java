@@ -26,22 +26,25 @@ public class Atacante extends Carta implements Atacavel {
         super(x,y,n);
         maxVida = 10 - n;
         forca = n;
-        vida = maxVida/3;
         vidaAtual = maxVida;
+        vida = (float) vidaAtual / (maxVida * multiplicador);
     }
     
     public Atacante(int n) {
         super(n);
         maxVida = 10 - n;
-        forca = n;
-        vida = maxVida/3;
+        forca = 1;
         vidaAtual = maxVida;
+        vida = (float) vidaAtual / (maxVida * multiplicador);
     }
     
     @Override
     public void levarDano(int dano) {
         vidaAtual -= dano;
-        vida = (float) vidaAtual/ maxVida;
+        vida = (float)vidaAtual / (maxVida * multiplicador);
+        System.out.println("Nova vida: " + vida);
+        if (vida <= 0) 
+            die();
     }
 
     @Override
@@ -75,6 +78,7 @@ public class Atacante extends Carta implements Atacavel {
             boardParent.retiraCarta(index);
             b.insereCarta(this);
             boardParent = b;
+            realizouAcao = true;
         }
         else if (b.getJogador() == inimigo) {
             //Ataca
@@ -83,36 +87,38 @@ public class Atacante extends Carta implements Atacavel {
     
     @Override
     public void onClick(BoardHolder b, Atacavel a) {
-        int inimigo = (jogador == 1) ? 1:2;
-        if (b.getJogador() == inimigo) {
-            if ((5 - ((Carta)a).getIndex()) == this.index) {
+        int inimigo = (jogador == 1) ? 2:1;
+        System.out.println("O inimigo e: " + inimigo);
+        if (((Carta) a).getJogador() == inimigo) {
+            System.out.println("O index e: " + (((Carta)a).getIndex()) + "/" + this.index);
+            if ((((Carta)a).getIndex()) == this.index) {
                 a.levarDano(forca * multiplicador);            
                 System.out.println("Atacar!!!!!!");
+                //realizouAcao = true;
             }
         }
     }
 
     @Override
     public void die() {
-        boardParent.retiraCarta(index);
-        destroy();
+        vida = 1;
+        descartar();
     }
     
     @Override
     public void draw(Graphics2D g) {
         //int sizeHeight = g.getClip().getBounds().height / 6 - 6;
         //int sizeWidth = g.getClip().getBounds().width / 10 - 6;
-        float reduction = (float) (vida / maxVida);
-        int newHeight = (int) (reduction * rect.height);
+        int newHeight = (int) ((1 - vida) * rect.height);
         
         g.setColor(Color.RED);
         
         g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);
-        g.fillRect(rect.x, rect.y, rect.width, rect.height - newHeight);
+        g.fillRect(rect.x, rect.y, rect.width, newHeight);
         
         g.setColor (new Color(0,0,0,0));
         if (realizouAcao) {
-            g.setColor (new Color(0.1f,0.1f,0.1f,0.3f));
+            g.setColor (new Color(96,125,139, 120));
         }
         else if (selecionado)
             g.setColor(new Color(0,1,1,.2f));

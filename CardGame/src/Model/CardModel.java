@@ -39,7 +39,7 @@ public class CardModel implements Observer {
         boards = new BoardHolder[5];
         boards[0] = new BoardHolder(0);
         boards[1] = new BoardHolder(2);
-        boards[2] = new DescarteDinamico(0);
+        boards[2] = new Descarte(0);
         boards[3] = new BoardHolder(1);
         boards[4] = new BoardHolder(0);
         socketLocation = new Point[7];

@@ -117,7 +117,8 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         else if (clicado != null){
             //É o segundo clique
             if (clicados.size() == 1) {
-                ((Carta) clicado).onClick((BoardHolder) clicados.get(0));
+                if (clicados.get(0) instanceof BoardHolder )
+                    ((Carta) clicado).onClick((BoardHolder) clicados.get(0));
                 //Segundo Clique seleciona nada
 /*                if (((Carta) clicado).getJogador() == 1){
                     System.out.println("Jogador 1:");

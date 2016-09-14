@@ -32,6 +32,8 @@ public class Curandeiro extends Carta {
                 a.recuperarVida(cura * multiplicador);
                 realizouAcao = true;
                 //Se descarta
+                descartar();
+                
         }
     }
 

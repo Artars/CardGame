@@ -8,6 +8,7 @@ package cardgame;
 import Cartas.Clicavel;
 import Cartas.Renderizavel;
 import Cartas.Selecionavel;
+import Model.Descarte;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Observer;
@@ -20,6 +21,7 @@ public class GameManager {
 
    ArrayList<Renderizavel> renderizaveis;
    ArrayList<Selecionavel> selecionaveis;
+   Descarte descarte;
    private int turno;
    private int rodada;
    
@@ -90,5 +92,13 @@ public class GameManager {
     
     public int getRodada(){
         return rodada;
+    }
+
+    public Descarte getDescarte() {
+        return descarte;
+    }
+
+    public void setDescarte(Descarte descarte) {
+        this.descarte = descarte;
     }
 }
