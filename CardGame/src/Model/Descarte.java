@@ -135,6 +135,10 @@ public class Descarte extends BoardHolder {
         return result;
     }
     
+    public Carta[] getCartas() {
+        return cartas;
+    }
+    
     public ArrayList<Integer> getDescarte() {
         ArrayList<Integer> antigas = descarteFixo;
         descarteFixo = new ArrayList<>();

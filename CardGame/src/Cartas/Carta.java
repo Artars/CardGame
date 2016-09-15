@@ -247,5 +247,10 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     public void setRealizouAcao(boolean realizouAcao) {
         this.realizouAcao = realizouAcao;
     }
+
+    public void setMultiplicador(int multiplicador) {
+        this.multiplicador = multiplicador;
+    }
+    
     
 }

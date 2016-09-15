@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -181,6 +183,41 @@ public class BoardHolder implements Renderizavel, Selecionavel {
                 break;
             }
         }
+    }
+    
+    private void adicionaVetorLista(Carta[] v, ArrayList<Carta> l) {
+        for (Carta c:v)
+            l.add(c);
+    }
+    
+    private void atualizarMultiplicadores() {
+        ArrayList<Carta> cartasOrdenadas = new ArrayList<>();
+        adicionaVetorLista(cartas, cartasOrdenadas);
+        Carta[] descarte = GameManager.getInstance().getDescarte().getCartas();
+        adicionaVetorLista(descarte, cartasOrdenadas);
+        Collections.sort(cartasOrdenadas);
+        
+        ArrayList<Carta> auxiliar = new ArrayList<>();
+        int size = cartasOrdenadas.size();
+        for(int i = 0; i < size; i++) {
+            Carta c = cartasOrdenadas.get(i);
+            Carta outraC = null;
+            
+            if(!auxiliar.isEmpty())
+                auxiliar.get(0);
+            
+            if(outraC == null) {
+                auxiliar.add(c);
+            } 
+            else if (c.getNumero() == outraC.getNumero())
+                auxiliar.add(c);
+            else if (c.getNumero() != outraC.getNumero() || i == size-1) {
+                for (Carta ca:auxiliar)
+                    ca.setMultiplicador(auxiliar.size());
+                auxiliar.clear();
+            }
+        }
+        
     }
     
     public void resetarAcoes(){
