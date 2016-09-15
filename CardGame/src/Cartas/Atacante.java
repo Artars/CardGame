@@ -74,12 +74,21 @@ public class Atacante extends Carta implements Atacavel {
     @Override
     public void onClick(BoardHolder b) {
         int inimigo = (jogador == 1) ? 1:2;
-        if (!onBoard && b.getJogador() == jogador && b != boardParent) {
+        //Se colocar em campo
+        if ((b.getJogador() == jogador) && !onBoard) {
             boardParent.retiraCarta(index);
             b.insereCarta(this);
             boardParent = b;
             realizouAcao = true;
+            onBoard = true;
         }
+        //Descarte
+        else if (b.getJogador() == 0 && !onBoard) {
+            boardParent.retiraCarta(index);
+            b.insereCarta(this);
+            boardParent = b;
+        }
+        //Atacar diretamente o jogador
         else if (b.getJogador() == inimigo) {
             //Ataca
         }
@@ -88,7 +97,8 @@ public class Atacante extends Carta implements Atacavel {
     @Override
     public void onClick(BoardHolder b, Atacavel a) {
         int inimigo = (jogador == 1) ? 2:1;
-        System.out.println("O inimigo e: " + inimigo);
+        
+        //Adicionar condicao onBoard
         if (((Carta) a).getJogador() == inimigo) {
             System.out.println("O index e: " + (((Carta)a).getIndex()) + "/" + this.index);
             if ((((Carta)a).getIndex()) == this.index) {

@@ -88,7 +88,8 @@ public class Descarte extends BoardHolder {
         c.setRealizouAcao(false);
     }
     
-    public void descartaCarta(Carta c) {
+    @Override
+    public boolean insereCarta(Carta c) {
         if (lastIndex < 4) {
             lastIndex++;
             adicionarCarta(c, lastIndex);
@@ -104,6 +105,27 @@ public class Descarte extends BoardHolder {
             lastIndex = 0;
             adicionarCarta(c, lastIndex);
         }
+        return true;
+    }
+    
+    @Override
+    public boolean insereCarta(Carta c, int n) {
+        if (lastIndex < 4) {
+            lastIndex++;
+            adicionarCarta(c, lastIndex);
+        } 
+        //Para o caso do descarte da mesa estar cheio
+        else {
+            //Esvazia a mesa
+            for (int i = 0; i < 5; i++){
+                descarteFixo.add(cartaToInteger(cartas[i]));
+                cartas[i].removeRenderer();
+                cartas[i] = null;
+            }
+            lastIndex = 0;
+            adicionarCarta(c, lastIndex);
+        }
+        return true;
     }
     
     private Integer cartaToInteger(Carta c) {

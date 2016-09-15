@@ -65,21 +65,25 @@ public class Defensor extends Carta implements Atacavel {
     
     public void onClick(BoardHolder b) {
         int inimigo = (jogador == 1) ? 1:2;
+        //Se colocou ou moveu dentro do tabuleiro
         if (b.getJogador() == jogador) {
             boardParent.retiraCarta(index);
             b.insereCarta(this);
             boardParent = b;
-            realizouAcao = true;
+            //realizouAcao = true;
             onBoard = true;
         }
-        else if (b.getJogador() == inimigo) {
-            //Ataca
+        //Foi pra pilha de descarte
+        else if (b.getJogador() == 0) {
+            boardParent.retiraCarta(index);
+            b.insereCarta(this);
+            boardParent = b;
         }
     }
     
     public void onClick(BoardHolder b, Atacavel a) {
         if (!realizouAcao && onBoard) {
-            if (b.getJogador() == jogador) {
+            if (onBoard && b.getJogador() == jogador) {
                 int otherIndex = ((Carta)a).getIndex();
                 if (otherIndex != this.index) {
                     b.retiraCarta(otherIndex);

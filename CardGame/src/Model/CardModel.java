@@ -37,11 +37,11 @@ public class CardModel implements Observer {
         baralho = new Baralho(52);
         descarteFixo = new ArrayList<>();
         boards = new BoardHolder[5];
-        boards[0] = new BoardHolder(0);
+        boards[0] = new BoardHolder(3);
         boards[1] = new BoardHolder(2);
         boards[2] = new Descarte(0);
         boards[3] = new BoardHolder(1);
-        boards[4] = new BoardHolder(0);
+        boards[4] = new BoardHolder(3);
         socketLocation = new Point[7];
         for (int i =0; i<7; i++){
             socketLocation[i] = new Point(i*10,i*10);

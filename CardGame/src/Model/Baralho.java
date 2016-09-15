@@ -90,9 +90,18 @@ public class Baralho implements Renderizavel{
         return c;
     }
     
+    public void fillCards() {
+        ArrayList<Integer> descarte;
+        descarte = GameManager.getInstance().getDescarte().getDescarte();
+        Collections.shuffle(descarte);
+        cartas.addAll(descarte);
+    }
     
     public ArrayList<Carta> retirarCartas(int n) {
         ArrayList<Carta> a = new ArrayList<>();
+        
+        if (cartas.size() < n)
+            fillCards();
         
         for(int i=0; i < n; i++){
             int get = cartas.get(0);
@@ -102,6 +111,7 @@ public class Baralho implements Renderizavel{
         return a;
     }
     
+    @Override
     public void draw(Graphics2D g) {
         g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);   
     }
