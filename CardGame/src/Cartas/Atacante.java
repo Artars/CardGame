@@ -33,7 +33,7 @@ public class Atacante extends Carta implements Atacavel {
     public Atacante(int n) {
         super(n);
         maxVida = 10 - n;
-        forca = 1;
+        forca = n;
         vidaAtual = maxVida;
         vida = (float) vidaAtual / (maxVida * multiplicador);
     }
@@ -104,7 +104,7 @@ public class Atacante extends Carta implements Atacavel {
             if ((((Carta)a).getIndex()) == this.index) {
                 a.levarDano(forca * multiplicador);            
                 System.out.println("Atacar!!!!!!");
-                //realizouAcao = true;
+                realizouAcao = true;
             }
         }
     }
