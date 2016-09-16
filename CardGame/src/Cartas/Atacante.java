@@ -79,7 +79,7 @@ public class Atacante extends Carta implements Atacavel {
             boardParent.retiraCarta(index);
             b.insereCarta(this);
             boardParent = b;
-            realizouAcao = true;
+            //realizouAcao = true;
             onBoard = true;
         }
         //Descarte

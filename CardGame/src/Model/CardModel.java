@@ -62,17 +62,28 @@ public class CardModel implements Observer {
         teste.add(new Atacante(48));
         teste.add(new Defensor(5));
         teste.add(new Defensor(2));
-        teste.add(new Defensor(7));
+        teste.add(new Atacante(48));
+        teste.add(new Atacante(48));
+        teste.add(new Atacante(48));
+        teste.add(new Atacante(48));
         teste.get(0).setJogador(2);
         teste.get(1).setJogador(2);
         teste.get(2).setJogador(1);
         teste.get(3).setJogador(2);
         teste.get(4).setJogador(1);
+        teste.get(5).setJogador(1);
+        teste.get(6).setJogador(1);
+        teste.get(7).setJogador(1);
+        teste.get(8).setJogador(1);
         System.out.println(boards[0].insereCarta(teste.get(0), 2));
         boards[0].insereCarta(teste.get(1), 0);
-        boards[3].insereCarta(teste.get(2), 4);
+        boards[2].insereCarta(teste.get(2), 0);
         boards[1].insereCarta(teste.get(3), 4);
         boards[4].insereCarta(teste.get(4), 3);
+        boards[4].insereCarta(teste.get(5), 1);
+        boards[4].insereCarta(teste.get(6), 2);
+        boards[4].insereCarta(teste.get(7), 4);
+        boards[4].insereCarta(teste.get(8), 0);
         Carta a = new Atacante(100,100,5);
     }
     

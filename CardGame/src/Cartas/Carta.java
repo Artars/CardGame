@@ -45,15 +45,18 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     
     @Override
     public int compareTo(Object t) {
-        if (t instanceof Carta){
-            if (this.numero == ((Carta) t).numero){
-                if (this.naipe == ((Carta) t).naipe)
-                    return 0;
-                return (this.naipe > ((Carta) t).naipe) ? 1:-1;
-            }
-            return (this.numero > ((Carta) t).numero) ? 1:-1;
-        }
+        if(t instanceof Carta)
+            return compareTo((Carta) t);
         return 0;
+    }
+
+    public int compareTo(Carta c) {
+        if (this.numero == c.numero){
+            if (this.naipe == c.naipe)
+                return 0;
+            return (this.naipe > c.naipe) ? 1:-1;
+            }
+            return (this.numero > c.numero) ? 1:-1;
     }
     
     private String NumeroToString(){

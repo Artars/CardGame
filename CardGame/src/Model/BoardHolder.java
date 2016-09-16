@@ -56,6 +56,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             cartas[n].setIndex(n);
             cartas[n].setBoardParent(this);
             System.out.println("Adicionado carta em " + getCardRect(n));
+            atualizarMultiplicadores();
             return true;
         }
         return false;
@@ -69,6 +70,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             cartas[n].setIndex(n);
             cartas[n].setBoardParent(this);
             System.out.println("Adicionado carta em " + getCardRect(n));
+            atualizarMultiplicadores();
             return true;
         }
         return false;
@@ -85,6 +87,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     
     public void retiraCarta(int n) {
         cartas[n] = null;
+        atualizarMultiplicadores();
     }
     
     public Carta getCarta(int n) {
@@ -186,8 +189,12 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     }
     
     private void adicionaVetorLista(Carta[] v, ArrayList<Carta> l) {
-        for (Carta c:v)
-            l.add(c);
+        if (v != null && l != null) {
+            for (Carta c:v) {
+                if (c != null)
+                l.add(c);
+            }
+        }
     }
     
     private void atualizarMultiplicadores() {
@@ -195,6 +202,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         adicionaVetorLista(cartas, cartasOrdenadas);
         Carta[] descarte = GameManager.getInstance().getDescarte().getCartas();
         adicionaVetorLista(descarte, cartasOrdenadas);
+       // cartasOrdenadas.sort(null);
         Collections.sort(cartasOrdenadas);
         
         ArrayList<Carta> auxiliar = new ArrayList<>();
@@ -203,19 +211,22 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             Carta c = cartasOrdenadas.get(i);
             Carta outraC = null;
             
-            if(!auxiliar.isEmpty())
-                auxiliar.get(0);
+            if(outraC != null) {
+                if (i == size-1 || c.getNumero() != (auxiliar.get(0)).getNumero()) {
+                    for (Carta ca:auxiliar)
+                        ca.setMultiplicador(auxiliar.size());
+                    auxiliar.clear();
+                }
+            }
+            
+            if( !(auxiliar.isEmpty()) )
+                outraC = auxiliar.get(0);
             
             if(outraC == null) {
                 auxiliar.add(c);
             } 
             else if (c.getNumero() == outraC.getNumero())
                 auxiliar.add(c);
-            else if (c.getNumero() != outraC.getNumero() || i == size-1) {
-                for (Carta ca:auxiliar)
-                    ca.setMultiplicador(auxiliar.size());
-                auxiliar.clear();
-            }
         }
         
     }
