@@ -114,6 +114,12 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
             clicado.onClick();
             System.out.println("Algo foi selecionado");
         }
+        else if (clicados.size() == 0){
+            clicado = null;
+            GameManager.getInstance().trocarTurno();
+            turno = GameManager.getInstance().getTurno();
+            model.ComprarDeck(turno);
+        }
         else if (clicado != null){
             //É o segundo clique
             if (clicados.size() == 1) {
@@ -184,64 +190,6 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         }
         view.repaint();
     }
-    /*
-    @Override
-    public void mouseClicked(MouseEvent me) {
-        UpdateWorkspaces();
-        int j = 0;
-        Carta C = null;
-        for(Rectangle reckt : workspaces) {
-            if (reckt.inside(me.getX(), me.getY())) {
-                System.out.println("Clicaram no retangulo " + j);
-                if (j >= 5){
-                    if (j < 10 && cartaSlc < 20 && cartaSlc >= 15) {
-                        C = model.getBoard(1,cartaSlc%5);
-
-                        C.Acao(model.getBoard(2,j%5));
-                        System.out.println("Ataque no retangulo " + j);
-                        cartaSlc = -1;
-                    }
-                    else if (j < 15 && j >= 10 && cartaSlc >= 20){
-                        C = model.getMao(1,cartaSlc%5);
-
-                        model.descarte(C);
-                        cartaSlc = -1;
-                        System.out.println("Descarte no retangulo " + j);
-                    }
-                    else if (j < 15 && j >= 10 && cartaSlc == -1) model.pegarCartas(1);
-                    else if (j < 20 && j >= 15){
-                        if (cartaSlc != -1){
-                            if (cartaSlc < 20) C = model.getBoard(1,cartaSlc%5);
-                            else C = model.getMao(1,cartaSlc%5);
-
-                           C.Acao(model.getBoard(1,j%5));
-                           cartaSlc = -1;
-                           System.out.println("Acao no retangulo " + j);
-                        }
-                        else {
-                            if (model.getBoard(1, j%5) != null) cartaSlc = j;
-                            if (cartaSlc != -1) System.out.println("Carta selecionada no retangulo " + j);
-                        } 
-                    }
-                    else if (j < 25 && j >= 10){
-                        if (cartaSlc == -1){
-                            if (model.getMao(1, j%5) != null) cartaSlc = j;
-                            if (cartaSlc != -1) System.out.println("Carta selecionada no retangulo " + j);
-                        }
-                        else cartaSlc = -1;
-                    }
-                    else cartaSlc = -1;
-                }
-                else cartaSlc = -1;
-                break;
-            }
-            else if (j == 24) cartaSlc = -1;
-            j++;
-        }
-        C = null;
-        view.repaint();
-    }
-    */
     
     public void mousePressed(MouseEvent me) {
     

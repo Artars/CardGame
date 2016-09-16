@@ -8,6 +8,7 @@ package Model;
 import Cartas.Atacante;
 import Cartas.Carta;
 import Cartas.Defensor;
+import cardgame.GameManager;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -47,12 +48,49 @@ public class CardModel implements Observer {
             socketLocation[i] = new Point(i*10,i*10);
             socketWidth = 10;
         }
-        TesteLoucao();
-        ColocarCartas();
+        //TesteLoucao();
+        ComprarDeck(1);
     }
     
-    public void ColocarCartas(){
+    public void ComprarDeck(int turno){
+        int i = 0;
+        int vazio = 0;
+        ArrayList <Carta> Comprado = new ArrayList <> ();
+        
+        if (turno == 1){
+            while (i < 5 && vazio < 2){
+                if (boards[4].getCarta(i) == null) vazio++;
+                i++;
+            }
+            if (vazio > 0) Comprado = baralho.retirarCartas(vazio);
 
+            i = 0;
+            while (i < 5 && !Comprado.isEmpty()){
+                if (boards[4].getCarta(i) == null){
+                    boards[4].insereCarta(Comprado.get(0), i);
+                    boards[4].getCarta(i).setJogador(1);
+                    Comprado.remove(0);
+                }
+                i++;
+            }
+        }
+        else{
+            while (i < 5 && vazio < 2){
+                if (boards[0].getCarta(i) == null) vazio++;
+                i++;
+            }
+            if (vazio > 0) Comprado = baralho.retirarCartas(vazio);
+
+            i = 0;
+            while (i < 5 && !Comprado.isEmpty()){
+                if (boards[0].getCarta(i) == null){
+                    boards[0].insereCarta(Comprado.get(0), i);
+                    boards[0].getCarta(i).setJogador(2);
+                    Comprado.remove(0);
+                }
+                i++;
+            }    
+        }
     }
     
     public void TesteLoucao() {
