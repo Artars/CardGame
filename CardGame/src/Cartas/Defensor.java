@@ -18,14 +18,13 @@ import java.awt.Point;
 /*
     Tipo de carta que pode trocar de posição no tabuleiro. Pode trocar de 
 posicao com outra carta.
-
 */
 
 public class Defensor extends Atacavel {
 
     public Defensor(int n) {
         super(n);
-        maxVida = 2*n;
+        maxVida = 2 * this.numero;
         vidaAtual = maxVida * multiplicador;
         vida = (float)(vidaAtual / (maxVida * multiplicador));
     }
@@ -35,8 +34,8 @@ public class Defensor extends Atacavel {
         if (!realizouAcao)
             selecionado = true;
     }
-    
-    
+       
+    @Override
     public void onClick(BoardHolder b) {
         //Se colocou ou moveu dentro do tabuleiro
         if (b.getJogador() == jogador) {
@@ -54,10 +53,11 @@ public class Defensor extends Atacavel {
         }
     }
     
+    @Override
     public void onClick(BoardHolder b, Atacavel a) {
         //Troca de posicao com outra carta
         if (!realizouAcao && onBoard) {
-            if (onBoard && b.getJogador() == jogador) {
+            if (b.getJogador() == jogador && a.isAtacavel()) {
                 int otherIndex = ((Carta)a).getIndex();
                 if (otherIndex != this.index) {
                     b.retiraCarta(otherIndex);
@@ -66,7 +66,6 @@ public class Defensor extends Atacavel {
                     b.insereCarta(this, otherIndex);
                     realizouAcao = true;
                 }
-
             }
         }
     }

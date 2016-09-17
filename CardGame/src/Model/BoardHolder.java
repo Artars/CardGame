@@ -147,28 +147,24 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         Carta[] descarte = GameManager.getInstance().getDescarte().getCartas();
         adicionaVetorLista(descarte, cartasOrdenadas);
         Collections.sort(cartasOrdenadas);
+        System.out.println(cartasOrdenadas);
         
         ArrayList<Carta> auxiliar = new ArrayList<>();
         int size = cartasOrdenadas.size();
         for(int i = 0; i < size; i++) {
             Carta c = cartasOrdenadas.get(i);
-            Carta outraC = null;
             
-            if(outraC != null) {
-                if (i == size-1 || c.getNumero() != (auxiliar.get(0)).getNumero()) {
+            if(!auxiliar.isEmpty()) {
+                Carta outraC = auxiliar.get(0);
+                if (i == size-1 || c.getNumero() != outraC.getNumero()) {
                     for (Carta ca:auxiliar)
                         ca.setMultiplicador(auxiliar.size());
                     auxiliar.clear();
                 }
+                else
+                    auxiliar.add(c);
             }
-            
-            if( !(auxiliar.isEmpty()) )
-                outraC = auxiliar.get(0);
-            
-            if(outraC == null) {
-                auxiliar.add(c);
-            } 
-            else if (c.getNumero() == outraC.getNumero())
+            else
                 auxiliar.add(c);
         }
     }

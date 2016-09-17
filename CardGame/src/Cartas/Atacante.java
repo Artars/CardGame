@@ -20,8 +20,28 @@ public class Atacante extends Atacavel {
     
     public Atacante(int x, int y, int n) {
         super(x,y,n);
-        maxVida = 10 - n;
-        forca = n;
+        switch(numero) {
+            case 1:
+                maxVida = 11;
+                forca = 11;
+                break;
+            case 11:
+                maxVida = 10;
+                forca = 10;
+                break;
+            case 12:
+                maxVida = 15;
+                forca = 10;
+                break;
+            case 13:
+                maxVida = 10;
+                forca = 15;
+                break;    
+            default:
+                maxVida = 12 - n;
+                forca = n;   
+        }
+        
         vidaAtual = maxVida;
         vida = (float) vidaAtual / (maxVida * multiplicador);
     }
@@ -30,7 +50,7 @@ public class Atacante extends Atacavel {
         super(n);
         maxVida = 10 - n;
         forca = n;
-        vidaAtual = maxVida;
+        vidaAtual = maxVida * multiplicador;
         vida = (float) vidaAtual / (maxVida * multiplicador);
     }
 
@@ -67,11 +87,10 @@ public class Atacante extends Atacavel {
     public void onClick(BoardHolder b, Atacavel a) {
         int inimigo = (jogador == 1) ? 2:1;
         
-        
         //Adicionar condicao onBoard
         if (a.getJogador() == inimigo && a.isAtacavel()) {
-            System.out.println("O index e: " + (((Carta)a).getIndex()) + "/" + this.index);
-            if ((((Carta)a).getIndex()) == this.index) {
+            System.out.println("O index e: " + a.getIndex() + "/" + this.index);
+            if (a.getIndex() == this.index) {
                 a.levarDano(forca * multiplicador);            
                 System.out.println("Atacar!!!!!!");
                 realizouAcao = true;

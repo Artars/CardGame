@@ -28,11 +28,13 @@ public class Curandeiro extends Carta {
 
     @Override
     public void onClick(BoardHolder b, Atacavel a) {
-        if (b.getJogador() == jogador) {
-                a.recuperarVida(cura * multiplicador);
-                realizouAcao = true;
-                //Se descarta
-                descartar();
+        if (b.getJogador() == jogador && a.isAtacavel()) {
+            if (a.getNumero() == this.numero)
+                multiplicador ++;
+            a.recuperarVida(cura * multiplicador);
+            realizouAcao = true;
+            //Se descarta
+            descartar();
                 
         }
     }

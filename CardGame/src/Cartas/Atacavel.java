@@ -73,7 +73,7 @@ public abstract class Atacavel extends Carta {
         
         //Desenha um retangulo com o tanto que a carta perdeu de vida
         int newHeight = (int) ((1 - vida) * rect.height);
-        g.setColor(Color.RED);
+        g.setColor(new Color(255,0,120));
         g.fillRect(rect.x, rect.y, rect.width, newHeight);
         
         //Desenha um retangulo transparente com o estado da carta
@@ -85,6 +85,13 @@ public abstract class Atacavel extends Carta {
             g.setColor(new Color(0,1,1,.2f));
         g.fillRect(rect.x, rect.y, rect.width, rect.height);
         
+    }
+    
+    @Override
+    public void setMultiplicador(int n) {
+        multiplicador = n;
+        
+        vidaAtual = (int)(vida * maxVida * n);
     }
     
 }

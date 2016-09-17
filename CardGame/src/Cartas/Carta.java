@@ -45,12 +45,12 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     
     //Construtores -------------------------------------------------------------
     public Carta (int x, int y, int n) {
-        this.numero = (n % 13) + 1;
-        this.naipe = n / 13;
         this.multiplicador = 1;
-        this.selecionado = false;
         this.index = -1;
-        
+        this.selecionado = false;
+        this.naipe = n / 13;
+        this.numero = (n % 13) + 1;
+
         String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
         //imgPatch = "img/2_of_clubs"
         if(this.sprite == null){
@@ -67,11 +67,11 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     }
     
     public Carta (int n) {
-        this.numero = (n % 13) + 1;
-        this.naipe = n / 13;
         this.multiplicador = 1;
         this.index = -1;
         this.selecionado = false;
+        this.naipe = n / 13;
+        this.numero = (n % 13) + 1;
         
         String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
         //imgPatch = "img/2_of_clubs"
