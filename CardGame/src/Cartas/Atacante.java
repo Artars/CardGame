@@ -38,8 +38,8 @@ public class Atacante extends Atacavel {
                 forca = 15;
                 break;    
             default:
-                maxVida = 12 - n;
-                forca = n;   
+                maxVida = 12 - numero;
+                forca = numero;   
         }
         
         vidaAtual = maxVida;

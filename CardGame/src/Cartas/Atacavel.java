@@ -35,7 +35,7 @@ public abstract class Atacavel extends Carta {
 
     public void levarDano(int dano) {
         vidaAtual -= dano;
-        vida = (float)vidaAtual / (maxVida * multiplicador);
+        vida = (float)vidaAtual / (float)(maxVida * multiplicador);
         System.out.println("Nova vida: " + vida);
         if (vida <= 0) 
             die();
@@ -46,14 +46,14 @@ public abstract class Atacavel extends Carta {
             vidaAtual += cura;
             if (vidaAtual > maxVida * multiplicador) {
                 vida = maxVida;
-                vidaAtual = maxVida *multiplicador;
+                vidaAtual = maxVida * multiplicador;
             } 
         }
     }
     
     public boolean estaVivo() {
         if (vida <= 0)
-            disable();
+            die();
         return (vida > 0); //To change body of generated methods, choose Tools | Templates.
     }
     

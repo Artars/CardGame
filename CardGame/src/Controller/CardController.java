@@ -119,6 +119,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
             GameManager.getInstance().trocarTurno();
             turno = GameManager.getInstance().getTurno();
             model.ComprarDeck(turno);
+            view.updateTurnText(turno);
         }
         else if (clicado != null){
             //É o segundo clique
@@ -234,7 +235,15 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Oi");
+        if (ae.getActionCommand() == "Turno") {
+            clicado = null;
+            GameManager.getInstance().trocarTurno();
+            turno = GameManager.getInstance().getTurno();
+            model.ComprarDeck(turno);
+            view.updateTurnText(turno);
+            view.repaint();
+        }
     }
     
     public void startMainWindow(){

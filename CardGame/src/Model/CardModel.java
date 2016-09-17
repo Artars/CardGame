@@ -73,7 +73,7 @@ public class CardModel implements Observer {
                 }
                 i++;
             }
-            boards[3].resetarAcoes();
+            boards[1].resetarAcoes();
         }
         else{
             while (i < 5 && vazio < 2){
@@ -91,7 +91,7 @@ public class CardModel implements Observer {
                 }
                 i++;
             }    
-            boards[1].resetarAcoes();
+            boards[3].resetarAcoes();
         }
     }
     

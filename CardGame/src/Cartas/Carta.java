@@ -188,12 +188,8 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     }
     
     //Funcoes publicas ---------------------------------------------------------
-    public void disable() {
-        GameManager.getInstance().removerSelecionavel(this);
-    }
-    
     public void descartar(){
-        disable();
+        GameManager.getInstance().removerSelecionavel(this);
         boardParent.retiraCarta(index);
         GameManager.getInstance().getDescarte().insereCarta(this);
         realizouAcao = false;
