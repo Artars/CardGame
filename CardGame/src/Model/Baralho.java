@@ -28,10 +28,12 @@ import javax.imageio.ImageIO;
  */
 public class Baralho implements Renderizavel{
     
+    //Variaveis ----------------------------------------------------------------
     private ArrayList<Integer> cartas;
     private Image sprite;
     private Rectangle rect;
 
+    //Construtor -------------------------------------------------------------
     public Baralho(int n) {
         cartas = new ArrayList<>();
         for(int i = 0; i < n; i++)
@@ -50,26 +52,24 @@ public class Baralho implements Renderizavel{
         GameManager.getInstance().adicionarRender(this);
     }
 
-    public void setRect(Rectangle rect) {
-        this.rect = rect;
+    //Funcoes de implementacao obrigatoria -------------------------------------
+    @Override
+    public void draw(Graphics2D g) {
+        g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);   
     }
     
-    public void setRect(int x, int y, int width, int height) {
-        rect = new Rectangle(x,y,width,height);
+    @Override
+    public void removeRenderer() {
+        GameManager.getInstance().removerRender(this);
     }
     
-    public void setRect(int x, int y) {
-        rect.x = x;
-        rect.y = y;
-    }
-    
-    public void shuffle() {
+    //Funcoes Privadas ---------------------------------------------------------
+    private void shuffle() {
         Collections.shuffle(cartas);
     }
     
-    
     private Carta criarCarta(Integer i) {
-        int n = i.intValue();;
+        int n = i;
         Carta c;
         switch (n/13) {
             case 0:
@@ -90,13 +90,14 @@ public class Baralho implements Renderizavel{
         return c;
     }
     
-    public void fillCards() {
+    private void fillCards() {
         ArrayList<Integer> descarte;
         descarte = GameManager.getInstance().getDescarte().getDescarte();
         Collections.shuffle(descarte);
         cartas.addAll(descarte);
     }
     
+    //Funcoes Publicas ---------------------------------------------------------
     public ArrayList<Carta> retirarCartas(int n) {
         ArrayList<Carta> a = new ArrayList<>();
         
@@ -111,8 +112,18 @@ public class Baralho implements Renderizavel{
         return a;
     }
     
-    @Override
-    public void draw(Graphics2D g) {
-        g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);   
+    //Getters e setter ---------------------------------------------------------
+    public void setRect(Rectangle rect) {
+        this.rect = rect;
     }
+    
+    public void setRect(int x, int y, int width, int height) {
+        rect = new Rectangle(x,y,width,height);
+    }
+    
+    public void setRect(int x, int y) {
+        rect.x = x;
+        rect.y = y;
+    }
+    
 }

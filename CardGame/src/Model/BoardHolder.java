@@ -22,6 +22,7 @@ import java.util.Collections;
  */
 public class BoardHolder implements Renderizavel, Selecionavel {
     
+    //Variaveis ----------------------------------------------------------------
     protected Rectangle rect;
     protected Carta[] cartas;
     protected int jogador;
@@ -29,6 +30,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     private int pocketWidth;
     private int pocketHeight;
 
+    //Contrutores --------------------------------------------------------------
     public BoardHolder(Rectangle rect, int player) {
         this.rect = rect;
         this.jogador = player;
@@ -49,98 +51,9 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         GameManager.getInstance().adicionarSelecionavel(this);
     }
     
-    public boolean insereCarta(Carta c, int n) {
-        if(cartas[n] == null) {
-            cartas[n] = c;
-            cartas[n].setRect(getCardRect(n));
-            cartas[n].setIndex(n);
-            cartas[n].setBoardParent(this);
-            System.out.println("Adicionado carta em " + getCardRect(n));
-            atualizarMultiplicadores();
-            return true;
-        }
-        return false;
-    }
-    
-    public boolean insereCarta(Carta c) {
-        int n = destaque;
-        if(destaque != -1 && cartas[n] == null) {
-            cartas[n] = c;
-            cartas[n].setRect(getCardRect(n));
-            cartas[n].setIndex(n);
-            cartas[n].setBoardParent(this);
-            System.out.println("Adicionado carta em " + getCardRect(n));
-            atualizarMultiplicadores();
-            return true;
-        }
-        return false;
-    }
-    
-    public int getIndex(int x, int y) {
-        for(int i = 0; i < 5; i++) {
-            Rectangle frame = getCardRect(i);
-            if (frame.inside(x,y))
-                return i;
-        }
-        return -1;
-    }
-    
-    public void retiraCarta(int n) {
-        cartas[n] = null;
-        atualizarMultiplicadores();
-    }
-    
-    public Carta getCarta(int n) {
-        return cartas[n];
-    }
-    
-    private void ajustCard () {
-        for (Carta c : cartas) {
-            if (c != null) {
-                c.setRect(getCardRect(c.getIndex()));
-                c.setDimension(pocketWidth, pocketHeight);
-            }
-        }
-    }
-    
-    public void setRect (Rectangle r) {
-        this.rect = r;
-        ajustCard();
-    }
-    
-    public void setRect (int x, int y) {
-        this.rect.x = x;
-        this.rect.y = y;
-        ajustCard();
-    }
-    
-    public void setRect (int x, int y, int width, int height) {
-        this.rect = new Rectangle(x,y,width,height);
-        ajustCard();
-    }
-    
-    public void setRect (Point p) {
-        this.rect.x = (int) p.getX();
-        this.rect.y = (int) p.getY();
-        ajustCard();
-    }
-    
-    public void setPocketDimensions (int width, int height) {
-        this.pocketHeight = height;
-        this.pocketWidth = width;
-        ajustCard();
-    }
-    
-    public Rectangle getCardRect(int n) {
-        return new Rectangle(rect.x + n * (pocketWidth + 6) + 3,
-                rect.y + 3, pocketWidth, pocketHeight);
-    }
-    
-    protected Rectangle getFrame(int n) {
-        return new Rectangle(rect.x + n *(pocketWidth + 6), rect.y,
-                pocketWidth + 6, pocketHeight + 6);
-    }
-    
+    //Funcoes de Implementacao Obrigatoria -------------------------------------
+    //Rederizavel
+    @Override
     public void draw(Graphics2D g) {
         Color background = new Color(51,105,30);
         for (int i = 0; i < 5; i++) {
@@ -153,7 +66,13 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             g.fillRect(frame.x, frame.y, frame.width, frame.height);
         }
     }
+    
+    @Override
+    public void removeRenderer() {
+        GameManager.getInstance().removerRender(this);
+    }
 
+    //Clicavel
     @Override
     public boolean isInside(int x, int y) {
         return rect.inside(x, y);
@@ -188,6 +107,31 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         }
     }
     
+    @Override
+    public void onLeave() {
+        destaque = -1;
+    }
+    
+    @Override
+    public void onClick() {
+    
+    }
+    
+    //Funcoes Privadas ---------------------------------------------------------
+    private void ajustCard () {
+        for (Carta c : cartas) {
+            if (c != null) {
+                c.setRect(getCardRect(c.getIndex()));
+                c.setDimension(pocketWidth, pocketHeight);
+            }
+        }
+    }
+    
+    protected Rectangle getFrame(int n) {
+        return new Rectangle(rect.x + n *(pocketWidth + 6), rect.y,
+                pocketWidth + 6, pocketHeight + 6);
+    }
+    
     private void adicionaVetorLista(Carta[] v, ArrayList<Carta> l) {
         if (v != null && l != null) {
             for (Carta c:v) {
@@ -202,7 +146,6 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         adicionaVetorLista(cartas, cartasOrdenadas);
         Carta[] descarte = GameManager.getInstance().getDescarte().getCartas();
         adicionaVetorLista(descarte, cartasOrdenadas);
-       // cartasOrdenadas.sort(null);
         Collections.sort(cartasOrdenadas);
         
         ArrayList<Carta> auxiliar = new ArrayList<>();
@@ -228,7 +171,39 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             else if (c.getNumero() == outraC.getNumero())
                 auxiliar.add(c);
         }
-        
+    }
+    
+    //Funcoes Publicas ---------------------------------------------------------
+    public boolean insereCarta(Carta c, int n) {
+        if(cartas[n] == null) {
+            cartas[n] = c;
+            cartas[n].setRect(getCardRect(n));
+            cartas[n].setIndex(n);
+            cartas[n].setBoardParent(this);
+            System.out.println("Adicionado carta em " + getCardRect(n));
+            atualizarMultiplicadores();
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean insereCarta(Carta c) {
+        int n = destaque;
+        if(destaque != -1 && cartas[n] == null) {
+            cartas[n] = c;
+            cartas[n].setRect(getCardRect(n));
+            cartas[n].setIndex(n);
+            cartas[n].setBoardParent(this);
+            System.out.println("Adicionado carta em " + getCardRect(n));
+            atualizarMultiplicadores();
+            return true;
+        }
+        return false;
+    }
+    
+    public Rectangle getCardRect(int n) {
+        return new Rectangle(rect.x + n * (pocketWidth + 6) + 3,
+                rect.y + 3, pocketWidth, pocketHeight);
     }
     
     public void resetarAcoes(){
@@ -237,18 +212,55 @@ public class BoardHolder implements Renderizavel, Selecionavel {
                 cartas[i].setRealizouAcao(false);
         }
     }
-
-    @Override
-    public void onLeave() {
-        destaque = -1;
+    
+    public void retiraCarta(int n) {
+        cartas[n] = null;
+        atualizarMultiplicadores();
+    }
+    
+    //Getters e Setters --------------------------------------------------------
+    public int getIndex(int x, int y) {
+        for(int i = 0; i < 5; i++) {
+            Rectangle frame = getCardRect(i);
+            if (frame.inside(x,y))
+                return i;
+        }
+        return -1;
+    }
+    
+    public Carta getCarta(int n) {
+        return cartas[n];
+    }   
+    
+    public void setRect (Rectangle r) {
+        this.rect = r;
+        ajustCard();
+    }
+    
+    public void setRect (int x, int y) {
+        this.rect.x = x;
+        this.rect.y = y;
+        ajustCard();
+    }
+    
+    public void setRect (int x, int y, int width, int height) {
+        this.rect = new Rectangle(x,y,width,height);
+        ajustCard();
+    }
+    
+    public void setRect (Point p) {
+        this.rect.x = (int) p.getX();
+        this.rect.y = (int) p.getY();
+        ajustCard();
+    }
+    
+    public void setPocketDimensions (int width, int height) {
+        this.pocketHeight = height;
+        this.pocketWidth = width;
+        ajustCard();
     }
 
     public int getJogador() {
         return jogador;
-    }
-
-    @Override
-    public void onClick() {
-    
     }
 }

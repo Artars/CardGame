@@ -24,25 +24,71 @@ import javax.imageio.ImageIO;
  */
 public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     
-    //Variaveis estáticas da carta
+    //Variaveis estáticas da carta ---------------------------------------------
     protected int numero;
     protected int naipe;
     protected int multiplicador;
     protected int jogador;
     
-    //Variaveis de sistema (Dinamicas)
+    //Variaveis de sistema (Dinamicas) -----------------------------------------
     protected Image sprite;
     protected Rectangle rect;
     protected boolean selecionado;
     protected BoardHolder boardParent;
     protected int index;
-    
     protected boolean realizouAcao = false;
 
+    //Funcoes abstratas --------------------------------------------------------
     public abstract void onClick(BoardHolder b, Atacavel a);
-    
     public abstract void onClick(BoardHolder b);
+    public abstract void onClick();
     
+    //Construtores -------------------------------------------------------------
+    public Carta (int x, int y, int n) {
+        this.numero = (n % 13) + 1;
+        this.naipe = n / 13;
+        this.multiplicador = 1;
+        this.selecionado = false;
+        this.index = -1;
+        
+        String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
+        //imgPatch = "img/2_of_clubs"
+        if(this.sprite == null){
+            try {
+                sprite = ImageIO.read(new File(imgPath));
+            } catch (IOException ex) {
+                Logger.getLogger(Carta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        this.rect = new Rectangle(x,y, 74, 94);
+        GameManager.getInstance().adicionarRender((Renderizavel) this);
+        GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
+    }
+    
+    public Carta (int n) {
+        this.numero = (n % 13) + 1;
+        this.naipe = n / 13;
+        this.multiplicador = 1;
+        this.index = -1;
+        this.selecionado = false;
+        
+        String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
+        //imgPatch = "img/2_of_clubs"
+        if(this.sprite == null){
+            try {
+                sprite = ImageIO.read(new File(imgPath));
+            } catch (IOException ex) {
+                Logger.getLogger(Carta.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        this.rect = new Rectangle(0,0,74,94);
+        GameManager.getInstance().adicionarRender((Renderizavel) this);
+        GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
+    }
+    
+    //Funcoes de implementacao obrigatoria -------------------------------------
     @Override
     public int compareTo(Object t) {
         if(t instanceof Carta)
@@ -59,6 +105,58 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
             return (this.numero > c.numero) ? 1:-1;
     }
     
+    @Override
+    public String toString() {
+        return NumeroToString() + " of " + NaipeToString();
+    }
+    
+    @Override
+    public void draw(Graphics2D g) {
+        //int sizeHeight = g.getClip().getBounds().height / 6 - 6;
+        //int sizeWidth = g.getClip().getBounds().width / 10 - 6;
+        
+        g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);
+        
+        g.setColor (new Color(0,0,0,0));
+        if (realizouAcao) {
+            g.setColor (new Color(96,125,139,120));
+        }
+        else if (selecionado)
+            g.setColor(new Color(0,1,1,.2f));
+        g.fillRect(rect.x, rect.y, rect.width, rect.height);
+    }
+    
+    @Override
+    public boolean isInside(int x, int y) {
+        return rect.inside(x, y);
+    }
+    
+    @Override
+    public boolean isInside(Point p) {
+        return rect.inside((int) p.getX(), (int) p.getY());
+    }
+    
+    @Override
+    public void onHover(int x, int y) {
+        //System.out.println("Passou em mim");
+        selecionado = true;
+    }
+    @Override
+    public void onHover(Point p) {
+        selecionado = true;
+    }
+    
+    @Override
+    public void onLeave() {
+        selecionado = false;
+    }
+    
+    @Override
+    public void removeRenderer() {
+        GameManager.getInstance().removerRender(this);
+    }
+    
+    //Funcoes privadas ---------------------------------------------------------
     private String NumeroToString(){
         switch(this.numero){
             case 1:
@@ -89,51 +187,23 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         }
     }
     
-    
-    public Carta (int x, int y, int n) {
-        this.numero = (n % 13) + 1;
-        this.naipe = n / 13;
-        this.multiplicador = 1;
-        this.selecionado = false;
-        this.index = -1;
-        
-        String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
-        //imgPatch = "img/2_of_clubs"
-        if(this.sprite == null){
-            try {
-                sprite = ImageIO.read(new File(imgPath));
-            } catch (IOException ex) {
-                Logger.getLogger(Carta.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        this.rect = new Rectangle(x,y, 74, 94);
-        GameManager.getInstance().adicionarRender((Renderizavel) this);
-        GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
+    //Funcoes publicas ---------------------------------------------------------
+    public void disable() {
+        GameManager.getInstance().removerSelecionavel(this);
     }
     
-    public Carta (int n) {
-        this.numero = (n % 13) + 1;
-        this.naipe = n / 13;
-        this.multiplicador = 1;
-        this.index = -1;
-        this.jogador = jogador;
-        
-        String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
-        //imgPatch = "img/2_of_clubs"
-        if(this.sprite == null){
-            try {
-                sprite = ImageIO.read(new File(imgPath));
-            } catch (IOException ex) {
-                Logger.getLogger(Carta.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        this.rect = new Rectangle(0,0,74,94);
-        GameManager.getInstance().adicionarRender(this);
-        GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
+    public void descartar(){
+        disable();
+        boardParent.retiraCarta(index);
+        GameManager.getInstance().getDescarte().insereCarta(this);
+        realizouAcao = false;
     }
     
+    public boolean isClicavel(int jogador){
+        return !realizouAcao && jogador == this.jogador;
+    }
+    
+    //Getters e setters --------------------------------------------------------
     public void setRect(int x, int y) {
         rect.x = x;
         rect.y = y;
@@ -166,45 +236,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
 
     public void setBoardParent(BoardHolder boardParent) {
         this.boardParent = boardParent;
-    }
-    
-    public void draw(Graphics2D g) {
-        //int sizeHeight = g.getClip().getBounds().height / 6 - 6;
-        //int sizeWidth = g.getClip().getBounds().width / 10 - 6;
-        
-        g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);
-        
-        g.setColor (new Color(0,0,0,0));
-        if (realizouAcao) {
-            g.setColor (new Color(96,125,139,120));
-        }
-        else if (selecionado)
-            g.setColor(new Color(0,1,1,.2f));
-        g.fillRect(rect.x, rect.y, rect.width, rect.height);
-        
-    }
-    
-    public boolean isInside(int x, int y) {
-        return rect.inside(x, y);
-    }
-    
-    public boolean isInside(Point p) {
-        return rect.inside((int) p.getX(), (int) p.getY());
-    }
-    
-    public abstract void onClick();
-    
-    public void onHover(int x, int y) {
-        //System.out.println("Passou em mim");
-        selecionado = true;
-    }
-    public void onHover(Point p) {
-        selecionado = true;
-    }
-    
-    public void onLeave() {
-        selecionado = false;
-    }
+    }  
     
     public int getNumero() {
         return numero;
@@ -214,15 +246,6 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         return naipe;
     }
 
-    public void disable() {
-        GameManager.getInstance().removerSelecionavel(this);
-    }
-    
-    public void descartar(){
-        disable();
-        boardParent.retiraCarta(index);
-        GameManager.getInstance().getDescarte().insereCarta(this);
-    }
 
     public int getJogador() {
         return jogador;
@@ -232,19 +255,8 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         return multiplicador;
     }
     
-    public boolean isClicavel(int jogador){
-        if (!realizouAcao && jogador == this.jogador) {
-            return true;
-        }
-        return false;
-    }
-
     public void setJogador(int jogador) {
         this.jogador = jogador;
-    }
-    
-    public void removeRenderer() {
-        GameManager.getInstance().removerRender(this);
     }
 
     public void setRealizouAcao(boolean realizouAcao) {
