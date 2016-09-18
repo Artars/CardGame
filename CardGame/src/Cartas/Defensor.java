@@ -47,9 +47,7 @@ public class Defensor extends Atacavel {
         }
         //Foi pra pilha de descarte
         else if (b.getJogador() == 0) {
-            boardParent.retiraCarta(index);
-            b.insereCarta(this);
-            boardParent = b;
+            descartar();
         }
     }
     

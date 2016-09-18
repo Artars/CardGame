@@ -117,6 +117,11 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     
     }
     
+    @Override
+    public Rectangle getRect() {
+        return rect;
+    }
+    
     //Funcoes Privadas ---------------------------------------------------------
     private void ajustCard () {
         for (Carta c : cartas) {
@@ -214,7 +219,6 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         atualizarMultiplicadores();
     }
     
-    //Getters e Setters --------------------------------------------------------
     public int getIndex(int x, int y) {
         for(int i = 0; i < 5; i++) {
             Rectangle frame = getCardRect(i);
@@ -224,6 +228,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         return -1;
     }
     
+    //Getters e Setters --------------------------------------------------------    
     public Carta getCarta(int n) {
         return cartas[n];
     }   

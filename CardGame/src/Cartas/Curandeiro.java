@@ -42,10 +42,7 @@ public class Curandeiro extends Carta {
     @Override
     public void onClick(BoardHolder b) {
         if (b.getJogador() == 0) {
-            boardParent.retiraCarta(index);
-            b.insereCarta(this);
-            boardParent = b;
-            realizouAcao = true;
+            descartar();
         }
     }
     

@@ -152,6 +152,11 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     }
     
     @Override
+    public Rectangle getRect() {
+        return rect;
+    }
+    
+    @Override
     public void removeRenderer() {
         GameManager.getInstance().removerRender(this);
     }
@@ -193,6 +198,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         boardParent.retiraCarta(index);
         GameManager.getInstance().getDescarte().insereCarta(this);
         realizouAcao = false;
+        boardParent = (BoardHolder) GameManager.getInstance().getDescarte();
     }
     
     public boolean isClicavel(int jogador){

@@ -73,9 +73,7 @@ public class Atacante extends Atacavel {
         }
         //Descarte
         else if (b.getJogador() == 0 && !onBoard) {
-            boardParent.retiraCarta(index);
-            b.insereCarta(this);
-            boardParent = b;
+            descartar();
         }
         //Atacar diretamente o jogador
         else if (b.getJogador() == inimigo) {

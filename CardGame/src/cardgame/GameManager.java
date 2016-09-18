@@ -5,7 +5,6 @@
  */
 package cardgame;
 
-import Cartas.Clicavel;
 import Cartas.Renderizavel;
 import Cartas.Selecionavel;
 import Model.Descarte;

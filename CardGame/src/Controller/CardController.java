@@ -33,6 +33,8 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     private CardModel model;
     private Selecionavel clicado;
     private ArrayList <Selecionavel> selecionados;
+    private IndicadorClicado indicador;
+    
     /*
     int cartaSlc;
     int posSlc.
@@ -49,6 +51,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         posSlc = -1;*/
         selecionados = new ArrayList<>();
         clicado = null;
+        indicador = new IndicadorClicado();
     }
     
     /*public int getWorkspace (int x, int y){
@@ -111,21 +114,29 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         
         if (clicados.size() > 1 && clicado == null && ((Carta) clicados.get(1)).isClicavel(turno)){
             clicado = clicados.get(1);
+            indicador.setRect(clicado.getRect());
+            indicador.setEnabled(true);
             clicado.onClick();
             System.out.println("Algo foi selecionado");
         }
         else if (clicados.size() == 0){
             clicado = null;
+            indicador.setEnabled(false);
+            /* Transferido pro botão
             GameManager.getInstance().trocarTurno();
             turno = GameManager.getInstance().getTurno();
             model.ComprarDeck(turno);
             view.updateTurnText(turno);
+            */
         }
         else if (clicado != null){
             //É o segundo clique
             if (clicados.size() == 1) {
-                if (clicados.get(0) instanceof BoardHolder )
-                    ((Carta) clicado).onClick((BoardHolder) clicados.get(0));
+                if (clicados.get(0) instanceof BoardHolder ) {
+                    BoardHolder b = (BoardHolder) clicados.get(0);
+                    if (b.getIndex(x,y) != -1)
+                        ((Carta) clicado).onClick(b);
+                }
                 //Segundo Clique seleciona nada
 /*                if (((Carta) clicado).getJogador() == 1){
                     System.out.println("Jogador 1:");
@@ -162,12 +173,14 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
                     else System.out.println("Fez nada");
                 }*/
                 clicado = null;
+                indicador.setEnabled(false);
                 view.repaint();
                 return;
             }
             else if (clicados.size() == 2) {
                 ((Carta) clicado).onClick((BoardHolder) clicados.get(0), ((Atacavel) clicados.get(1)));
                 clicado = null;
+                indicador.setEnabled(false);
             }
 /*          else if (clicados.size() == 2)
                 //Segundo Clique seleciona Carta

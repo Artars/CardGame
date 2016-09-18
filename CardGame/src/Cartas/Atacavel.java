@@ -45,9 +45,9 @@ public abstract class Atacavel extends Carta {
         if (estaVivo()) {
             vidaAtual += cura;
             if (vidaAtual > maxVida * multiplicador) {
-                vida = maxVida;
                 vidaAtual = maxVida * multiplicador;
-            } 
+            }
+            vida = (float)vidaAtual / (float)(maxVida * multiplicador);
         }
     }
     

@@ -6,6 +6,7 @@
 package Cartas;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 
 /**
  *
@@ -18,4 +19,5 @@ public interface Selecionavel {
     public abstract void onHover(int x, int y);
     public abstract void onHover(Point p);
     public abstract void onLeave();
+    public abstract Rectangle getRect();
 }
