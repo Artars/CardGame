@@ -85,6 +85,22 @@ public abstract class Atacavel extends Carta {
             g.setColor(new Color(0,1,1,.2f));
         g.fillRect(rect.x, rect.y, rect.width, rect.height);
         
+        //Desenha retangulo de multiplicador
+        switch(multiplicador) {
+            case 2:
+                g.setColor (new Color (198,255,0,120));
+                break;
+            case 3:
+                g.setColor (new Color (139,195,74,120));
+                break;
+            case 4:
+                g.setColor (new Color (118,255,3));
+                break;
+            default:
+                g.setColor (new Color(0,0,0,0));
+        }
+        g.fillRect(rect.x, rect.y, rect.width, rect.height);
+        
     }
     
     @Override
