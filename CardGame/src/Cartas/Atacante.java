@@ -48,9 +48,29 @@ public class Atacante extends Atacavel {
     
     public Atacante(int n) {
         super(n);
-        maxVida = 10 - n;
-        forca = n;
-        vidaAtual = maxVida * multiplicador;
+        switch(this.numero) {
+            case 1:
+                maxVida = 11;
+                forca = 11;
+                break;
+            case 11:
+                maxVida = 10;
+                forca = 10;
+                break;
+            case 12:
+                maxVida = 15;
+                forca = 10;
+                break;
+            case 13:
+                maxVida = 10;
+                forca = 15;
+                break;    
+            default:
+                maxVida = 12 - this.numero;
+                forca = this.numero;   
+        }
+        
+        vidaAtual = maxVida;
         vida = (float) vidaAtual / (maxVida * multiplicador);
     }
 
