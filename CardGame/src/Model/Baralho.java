@@ -71,7 +71,7 @@ public class Baralho implements Renderizavel{
     private Carta criarCarta(Integer i) {
         int n = i;
         Carta c;
-        switch (n/13) {
+        switch (n /13) {
             case 0:
                 c = new Defensor(n);
                 break;
@@ -92,7 +92,7 @@ public class Baralho implements Renderizavel{
     
     private void fillCards() {
         ArrayList<Integer> descarte;
-        descarte = GameManager.getInstance().getDescarte().getDescarte();
+        descarte = GameManager.getInstance().getDescarte().getDescarteList();
         Collections.shuffle(descarte);
         cartas.addAll(descarte);
     }

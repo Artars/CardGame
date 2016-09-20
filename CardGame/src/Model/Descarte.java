@@ -139,7 +139,7 @@ public class Descarte extends BoardHolder {
         return cartas;
     }
     
-    public ArrayList<Integer> getDescarte() {
+    public ArrayList<Integer> getDescarteList() {
         ArrayList<Integer> antigas = descarteFixo;
         descarteFixo = new ArrayList<>();
         return antigas;

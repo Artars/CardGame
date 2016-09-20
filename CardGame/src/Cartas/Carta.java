@@ -39,7 +39,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     protected boolean realizouAcao = false;
 
     //Funcoes abstratas --------------------------------------------------------
-    public abstract void onClick(BoardHolder b, Atacavel a);
+    public abstract void onClick(BoardHolder b, Carta c);
     public abstract void onClick(BoardHolder b);
     public abstract void onClick();
     
@@ -48,8 +48,8 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         this.multiplicador = 1;
         this.index = -1;
         this.selecionado = false;
-        this.naipe = n / 13;
-        this.numero = (n % 13) + 1;
+        this.naipe = (n + 1) / 13;
+        this.numero = (n + 1) % 13;
 
         String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
         //imgPatch = "img/2_of_clubs"

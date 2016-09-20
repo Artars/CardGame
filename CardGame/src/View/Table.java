@@ -12,6 +12,7 @@ package View;
 import Cartas.Renderizavel;
 import cardgame.GameManager;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -81,12 +82,13 @@ public class Table extends JPanel {
         Graphics2D g2 = (Graphics2D)g;
         //drawRetangulo2 (g2);
         
+        g2.setFont(new Font( "SansSerif", Font.BOLD, 12 ));
         for(Observer ob : observers){
             ob.update(null, g);
         }
         
         for(Renderizavel r: GameManager.getInstance().getRenderizaveis())
-            r.draw((Graphics2D) g);
+            r.draw((Graphics2D) g2);
     }
 
     

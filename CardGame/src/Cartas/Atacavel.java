@@ -6,6 +6,7 @@
 package Cartas;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 
 /**
@@ -34,7 +35,7 @@ public abstract class Atacavel extends Carta {
     }
 
     public void levarDano(int dano) {
-        vidaAtual -= dano;
+        vidaAtual = vidaAtual - dano;
         vida = (float)vidaAtual / (float)(maxVida * multiplicador);
         System.out.println("Nova vida: " + vida);
         if (vida <= 0) 
@@ -101,12 +102,19 @@ public abstract class Atacavel extends Carta {
         }
         g.fillRect(rect.x, rect.y, rect.width, rect.height);
         
+        g.setFont(new Font( "SansSerif", Font.BOLD, 20 ));
+        g.drawString(String.valueOf(vidaAtual) + "/" + String.valueOf(maxVida),
+                rect.x, rect.y);
+        g.drawString("Batata",
+                rect.x, rect.y);
+        
     }
     
     @Override
     public void setMultiplicador(int n) {
         multiplicador = n;
-        
+        if (multiplicador  < 0)
+            multiplicador = 1;
         vidaAtual = (int)(vida * maxVida * n);
     }
     

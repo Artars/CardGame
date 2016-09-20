@@ -20,7 +20,7 @@ public class Atacante extends Atacavel {
     
     public Atacante(int x, int y, int n) {
         super(x,y,n);
-        switch(numero) {
+        switch(this.numero) {
             case 1:
                 maxVida = 11;
                 forca = 11;
@@ -38,8 +38,8 @@ public class Atacante extends Atacavel {
                 forca = 15;
                 break;    
             default:
-                maxVida = 12 - numero;
-                forca = numero;   
+                maxVida = 12 - this.numero;
+                forca = this.numero;   
         }
         
         vidaAtual = maxVida;
@@ -82,9 +82,14 @@ public class Atacante extends Atacavel {
     }
     
     @Override
-    public void onClick(BoardHolder b, Atacavel a) {
+    public void onClick(BoardHolder b, Carta c) {
         int inimigo = (jogador == 1) ? 2:1;
+        Atacavel a;
         
+        if(c instanceof Atacavel)
+            a = (Atacavel) c;
+        else
+            return;
         //Adicionar condicao onBoard
         if (a.getJogador() == inimigo && a.isAtacavel()) {
             System.out.println("O index e: " + a.getIndex() + "/" + this.index);

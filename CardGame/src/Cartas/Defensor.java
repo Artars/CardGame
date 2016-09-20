@@ -6,9 +6,6 @@
 package Cartas;
 
 import Model.BoardHolder;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Point;
 
 /**
  *
@@ -25,8 +22,8 @@ public class Defensor extends Atacavel {
     public Defensor(int n) {
         super(n);
         maxVida = 2 * this.numero;
-        vidaAtual = maxVida * multiplicador;
-        vida = (float)(vidaAtual / (maxVida * multiplicador));
+        vidaAtual = maxVida;
+        vida = 1;
     }
 
     @Override
@@ -52,7 +49,15 @@ public class Defensor extends Atacavel {
     }
     
     @Override
-    public void onClick(BoardHolder b, Atacavel a) {
+    public void onClick(BoardHolder b, Carta c) {
+        Atacavel a;
+        if(c instanceof Atacavel)
+            a = (Atacavel) c;
+        else {
+            System.out.println("Deu Ruim!");
+            return;
+        }
+            
         //Troca de posicao com outra carta
         if (!realizouAcao && onBoard) {
             if (b.getJogador() == jogador && a.isAtacavel()) {

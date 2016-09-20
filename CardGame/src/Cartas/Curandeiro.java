@@ -27,7 +27,14 @@ public class Curandeiro extends Carta {
     }
 
     @Override
-    public void onClick(BoardHolder b, Atacavel a) {
+    public void onClick(BoardHolder b, Carta c) {
+        Atacavel a;
+        
+        if(c instanceof Atacavel)
+            a = (Atacavel) c;
+        else
+            return;
+        
         if (b.getJogador() == jogador && a.isAtacavel()) {
             if (a.getNumero() == this.numero)
                 multiplicador ++;

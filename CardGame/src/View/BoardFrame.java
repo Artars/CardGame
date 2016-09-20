@@ -108,7 +108,8 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
         turnLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         turnLabel.setText("1");
 
-        turnButton.setText("jButton1");
+        turnButton.setText("Trocar turno");
+        turnButton.setBorder(null);
 
         javax.swing.GroupLayout informationPanelLayout = new javax.swing.GroupLayout(informationPanel);
         informationPanel.setLayout(informationPanelLayout);
