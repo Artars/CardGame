@@ -9,6 +9,7 @@ import Model.BoardHolder;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  *
@@ -120,5 +121,29 @@ public class Atacante extends Atacavel {
             }
         }
     }
+
+    @Override
+    public ArrayList<String> getAtributos() {
+        ArrayList<String> atributos = new ArrayList<>();
+        
+        atributos.add("HP: " + String.valueOf(vidaAtual) + "/" + String.valueOf(maxVida * multiplicador));
+        atributos.add("STR: " + String.valueOf(forca * multiplicador));
+        atributos.add("Multi.: x" + String.valueOf(multiplicador));
+        
+        return atributos;
+    }
+
+    @Override
+    public ArrayList<Color> getAtributosColor() {
+        ArrayList<Color> colors = new ArrayList<>();
+        
+        colors.add(Color.RED);
+        colors.add(Color.BLUE);
+        colors.add(Color.ORANGE);
+
+        return colors;
+    }
+    
+    
 
 }

@@ -6,6 +6,8 @@
 package Cartas;
 
 import Model.BoardHolder;
+import java.awt.Color;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,7 +19,7 @@ public class Curandeiro extends Carta {
 
     public Curandeiro(int n) {
         super(n);
-        this.cura = n;
+        this.cura = this.numero;
     }
 
     @Override
@@ -51,6 +53,26 @@ public class Curandeiro extends Carta {
         if (b.getJogador() == 0) {
             descartar();
         }
+    }
+    
+    @Override
+    public ArrayList<String> getAtributos() {
+        ArrayList<String> atributos = new ArrayList<>();
+        
+        atributos.add("Cura: " + String.valueOf(cura));
+        atributos.add("Multi.: x" + String.valueOf(multiplicador));
+        
+        return atributos;
+    }
+
+    @Override
+    public ArrayList<Color> getAtributosColor() {
+        ArrayList<Color> colors = new ArrayList<>();
+        
+        colors.add(Color.RED);
+        colors.add(Color.ORANGE);
+
+        return colors;
     }
     
 }

@@ -75,19 +75,19 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     //Clicavel
     @Override
     public boolean isInside(int x, int y) {
-        return rect.inside(x, y);
+        return rect.contains(x, y);
     }
 
     @Override
     public boolean isInside(Point p) {
-        return rect.inside((int) p.getX(), (int) p.getY());
+        return rect.contains(p);
     }
 
     @Override
     public void onHover(int x, int y) {
         for (int i = 0; i < 5; i++) {
             Rectangle cardZone = getCardRect(i);
-            if(cardZone.inside(x,y)){
+            if(cardZone.contains(x,y)){
                 destaque = i;
                 break;
             }
@@ -100,7 +100,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         int y = (int) p.getY();
         for (int i = 0; i < 5; i++) {
             Rectangle cardZone = getCardRect(i);
-            if(cardZone.inside(x,y)){
+            if(cardZone.contains(x,y)){
                 destaque = i;
                 break;
             }
@@ -222,7 +222,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     public int getIndex(int x, int y) {
         for(int i = 0; i < 5; i++) {
             Rectangle frame = getCardRect(i);
-            if (frame.inside(x,y))
+            if (frame.contains(x,y))
                 return i;
         }
         return -1;

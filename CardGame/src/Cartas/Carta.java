@@ -14,6 +14,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -37,11 +38,14 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     protected BoardHolder boardParent;
     protected int index;
     protected boolean realizouAcao = false;
+    protected PopUp popUp;
 
     //Funcoes abstratas --------------------------------------------------------
     public abstract void onClick(BoardHolder b, Carta c);
     public abstract void onClick(BoardHolder b);
     public abstract void onClick();
+    public abstract ArrayList<String> getAtributos();
+    public abstract ArrayList<Color> getAtributosColor();
     
     //Construtores -------------------------------------------------------------
     public Carta (int x, int y, int n) {
@@ -64,6 +68,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         this.rect = new Rectangle(x,y, 74, 94);
         GameManager.getInstance().adicionarRender((Renderizavel) this);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
+        popUp = new PopUp(this);
     }
     
     public Carta (int n) {
@@ -86,6 +91,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         this.rect = new Rectangle(0,0,74,94);
         GameManager.getInstance().adicionarRender((Renderizavel) this);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
+        popUp = new PopUp(this);
     }
     
     //Funcoes de implementacao obrigatoria -------------------------------------
@@ -128,12 +134,12 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     
     @Override
     public boolean isInside(int x, int y) {
-        return rect.inside(x, y);
+        return rect.contains(x, y);
     }
     
     @Override
     public boolean isInside(Point p) {
-        return rect.inside((int) p.getX(), (int) p.getY());
+        return rect.contains(p);
     }
     
     @Override
@@ -268,6 +274,11 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     public void setMultiplicador(int multiplicador) {
         this.multiplicador = multiplicador;
     }
+    
+    public boolean getSelecionado() {
+        return selecionado;
+    }
+    
     
     
 }

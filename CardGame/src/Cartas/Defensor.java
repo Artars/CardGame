@@ -6,6 +6,8 @@
 package Cartas;
 
 import Model.BoardHolder;
+import java.awt.Color;
+import java.util.ArrayList;
 
 /**
  *
@@ -71,6 +73,26 @@ public class Defensor extends Atacavel {
                 }
             }
         }
+    }
+    
+    @Override
+    public ArrayList<String> getAtributos() {
+        ArrayList<String> atributos = new ArrayList<>();
+        
+        atributos.add("HP: " + String.valueOf(vidaAtual) + "/" + String.valueOf(maxVida * multiplicador));
+        atributos.add("Multi.: x" + String.valueOf(multiplicador));
+        
+        return atributos;
+    }
+
+    @Override
+    public ArrayList<Color> getAtributosColor() {
+        ArrayList<Color> colors = new ArrayList<>();
+        
+        colors.add(Color.RED);
+        colors.add(Color.ORANGE);
+
+        return colors;
     }
 
     
