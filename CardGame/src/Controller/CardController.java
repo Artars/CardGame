@@ -34,11 +34,6 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     private ArrayList <Selecionavel> selecionados;
     private IndicadorClicado indicador;
     
-    /*
-    int cartaSlc;
-    int posSlc.
-    */
-    
     private int turno = 0;
     private int jogadorAtual;
     
@@ -53,15 +48,6 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         indicador = new IndicadorClicado();
     }
     
-    /*public int getWorkspace (int x, int y){
-        int width = view.getBoardPanel().getWidth()/4;   
-        if (x >= width && x <= width*3){
-            int height = view.getBoardPanel().getHeight()/36;
-            i
-        }
-        
-    }*/
-    
     public void addView(Observer view){
         this.view = (BoardFrame)view;
         this.CreateWorkspaces(workspaces);
@@ -71,14 +57,6 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         this.model = (CardModel) model;
         UpdateWorkspaces();
     }
-    
- /*   public void setcartaSlc (int cartaSlc){
-        this.cartaSlc = cartaSlc;
-    }
-
-    public void setposSlc (int posSlc){
-        this.posSlc = posSlc;
-    }*/
     
     public void UpdateWorkspaces (){
         int i = 0;

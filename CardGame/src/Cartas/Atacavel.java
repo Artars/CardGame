@@ -103,7 +103,7 @@ public abstract class Atacavel extends Carta {
         }
         g.fillRect(rect.x, rect.y, rect.width, rect.height);
         
-        if(selecionado) {
+/*        if(selecionado) {
             g.setFont(new Font( "SansSerif", Font.TRUETYPE_FONT, 14 ));
             g.setColor(new Color(255,255,255,200));
             Rectangle popUpRect = new Rectangle(rect.x + rect.width/2, rect.y - rect.height/2, rect.width, (rect.height*3)/8);
@@ -115,7 +115,7 @@ public abstract class Atacavel extends Carta {
             g.setColor(Color.BLACK);
             g.drawString("Mult.: x" + String.valueOf(multiplicador),
                     popUpRect.x, popUpRect.y + lineSize*2);
-        }
+        }*/
         
         if (onBoard) {
             g.setColor(Color.BLACK);

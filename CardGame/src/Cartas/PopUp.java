@@ -30,6 +30,7 @@ public class PopUp implements Renderizavel{
     
     @Override
     public void draw(Graphics2D g) {
+        int i=0;
         if(cartaMae.getSelecionado()) {
             removeRenderer();
             GameManager.getInstance().adicionarRender(this);
@@ -64,6 +65,14 @@ public class PopUp implements Renderizavel{
             g.fillRect(invertedRect.x, invertedRect.y - invertedRect.height,
                     invertedRect.width, invertedRect.height);
             
+            while (i < atributos.size()){
+                Rectangle popUpRect = new Rectangle(invertedRect.x + 3, invertedRect.y - invertedRect.height + (fontSize*i), 
+                        invertedRect.width, (invertedRect.height*3)/8);
+                g.setColor(colors.get(i));
+                g.drawString(atributos.get(i), popUpRect.x, popUpRect.y + fontSize);
+                
+                i++;
+            }
         }
     }
 
