@@ -8,6 +8,7 @@ package cardgame;
 import Cartas.Renderizavel;
 import Cartas.Selecionavel;
 import Model.Descarte;
+import Model.Player;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Observer;
@@ -18,11 +19,13 @@ import java.util.Observer;
  */
 public class GameManager {
 
-   ArrayList<Renderizavel> renderizaveis;
-   ArrayList<Selecionavel> selecionaveis;
-   Descarte descarte;
+   private ArrayList<Renderizavel> renderizaveis;
+   private ArrayList<Selecionavel> selecionaveis;
+   private Descarte descarte;
+   private Player[] players;
    private int turno;
    private int rodada;
+   
    
    //create an object of SingleObject
    private static GameManager instance = new GameManager();
@@ -34,6 +37,7 @@ public class GameManager {
        selecionaveis = new ArrayList<>();
        turno = 1;
        rodada = 0;
+       players = new Player[2];
    }
 
    //Get the only object available
@@ -99,5 +103,27 @@ public class GameManager {
 
     public void setDescarte(Descarte descarte) {
         this.descarte = descarte;
+    }
+    
+    public void setBar(int jogador, javax.swing.JProgressBar barra) {
+        if (jogador < 3 && jogador > 0) {
+            if(players[jogador-1] == null) 
+                players[jogador - 1] = new Player(jogador, 100);
+            players[jogador - 1].setBarra(barra);
+        }
+    }
+    
+    public Player getPlayer(int jogador) {
+        if (jogador < 3 && jogador > 0) {
+            if(players[jogador-1] == null) 
+                players[jogador - 1] = new Player(jogador, 100);
+            return players[jogador - 1];
+        }
+        else
+            return null;
+    }
+    
+    public void gameOver(int jogador) {
+        System.out.println("Jogador " + String.valueOf(jogador) + " perdeu!");
     }
 }

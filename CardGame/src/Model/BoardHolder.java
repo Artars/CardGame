@@ -29,6 +29,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     private int destaque;
     private int pocketWidth;
     private int pocketHeight;
+    private Player player;
 
     //Contrutores --------------------------------------------------------------
     public BoardHolder(Rectangle rect, int player) {
@@ -37,8 +38,9 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         this.cartas = new Carta[5];
         this.destaque = -1;
         
-        GameManager.getInstance().adicionarRender(this);
-        GameManager.getInstance().adicionarSelecionavel(this);
+        GameManager.getInstance().adicionarRender((Renderizavel)this);
+        GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
+        this.player = GameManager.getInstance().getPlayer(player);
     }
     
     public BoardHolder(int player) {
@@ -47,8 +49,9 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         this.cartas = new Carta[5];
         this.destaque = -1;
         
-        GameManager.getInstance().adicionarRender(this);
-        GameManager.getInstance().adicionarSelecionavel(this);
+        GameManager.getInstance().adicionarRender((Renderizavel)this);
+        GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
+        this.player = GameManager.getInstance().getPlayer(player);
     }
     
     //Funcoes de Implementacao Obrigatoria -------------------------------------
@@ -226,6 +229,13 @@ public class BoardHolder implements Renderizavel, Selecionavel {
                 return i;
         }
         return -1;
+    }
+    
+    public void levaDano(int index, int dano) {
+        if(jogador == 1 || jogador == 2) {
+            if (index == destaque && cartas[index] == null)
+                player.perderVida(dano);
+        }
     }
     
     //Getters e Setters --------------------------------------------------------    

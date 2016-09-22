@@ -83,7 +83,7 @@ public class Atacante extends Atacavel {
     
     @Override
     public void onClick(BoardHolder b) {
-        int inimigo = (jogador == 1) ? 1:2;
+        int inimigo = (jogador == 1) ? 2:1;
         //Se colocar em campo
         if ((b.getJogador() == jogador) && !onBoard) {
             boardParent.retiraCarta(index);
@@ -97,8 +97,8 @@ public class Atacante extends Atacavel {
             descartar();
         }
         //Atacar diretamente o jogador
-        else if (b.getJogador() == inimigo) {
-            //Ataca
+        else if (onBoard && b.getJogador() == inimigo) {
+            b.levaDano(index, forca * multiplicador);
         }
     }
     
