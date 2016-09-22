@@ -61,7 +61,7 @@ public class PopUp implements Renderizavel{
                 invertedRect.x = cardRect.x + cardRect.width/2;
             }
             
-            g.setColor(Color.WHITE);
+            g.setColor(Color.LIGHT_GRAY);
             g.fillRect(invertedRect.x, invertedRect.y - invertedRect.height,
                     invertedRect.width, invertedRect.height);
             

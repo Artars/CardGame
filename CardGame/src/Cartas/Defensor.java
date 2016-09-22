@@ -90,7 +90,7 @@ public class Defensor extends Atacavel {
         ArrayList<Color> colors = new ArrayList<>();
         
         colors.add(Color.RED);
-        colors.add(Color.ORANGE);
+        colors.add(Color.DARK_GRAY);
 
         return colors;
     }

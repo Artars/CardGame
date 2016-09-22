@@ -139,7 +139,7 @@ public class Atacante extends Atacavel {
         
         colors.add(Color.RED);
         colors.add(Color.BLUE);
-        colors.add(Color.ORANGE);
+        colors.add(Color.DARK_GRAY);
 
         return colors;
     }
