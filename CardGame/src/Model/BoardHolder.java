@@ -149,7 +149,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         }
     }
     
-    private void atualizarMultiplicadores() {
+    public void atualizarMultiplicadores() {
         ArrayList<Carta> cartasOrdenadas = new ArrayList<>();
         adicionaVetorLista(cartas, cartasOrdenadas);
         Carta[] descarte = GameManager.getInstance().getDescarte().getCartas();
@@ -162,18 +162,27 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         for(int i = 0; i < size; i++) {
             Carta c = cartasOrdenadas.get(i);
             
-            if(!auxiliar.isEmpty()) {
-                Carta outraC = auxiliar.get(0);
-                if (i == size-1 || c.getNumero() != outraC.getNumero()) {
-                    for (Carta ca:auxiliar)
-                        ca.setMultiplicador(auxiliar.size());
-                    auxiliar.clear();
-                }
-                else
-                    auxiliar.add(c);
-            }
-            else
+            if(auxiliar.isEmpty()) {
                 auxiliar.add(c);
+            }
+            else {
+                Carta outraC = auxiliar.get(0);
+                if(outraC != c) {
+                    if(c.getNumero() == outraC.getNumero())
+                        auxiliar.add(c);
+                    else {
+                        for (Carta ca:auxiliar)
+                            ca.setMultiplicador(auxiliar.size());
+                        auxiliar.clear();
+                        auxiliar.add(c);
+                    }    
+                }
+            }
+            if (i == size-1) {
+                for (Carta ca:auxiliar)
+                    ca.setMultiplicador(auxiliar.size());
+                auxiliar.clear();
+            }
         }
     }
     
@@ -185,7 +194,8 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             cartas[n].setIndex(n);
             cartas[n].setBoardParent(this);
             System.out.println("Adicionado carta em " + getCardRect(n));
-            atualizarMultiplicadores();
+            if(jogador == 1 || jogador == 2)
+                atualizarMultiplicadores();
             return true;
         }
         return false;
@@ -199,7 +209,8 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             cartas[n].setIndex(n);
             cartas[n].setBoardParent(this);
             System.out.println("Adicionado carta em " + getCardRect(n));
-            atualizarMultiplicadores();
+            if(jogador == 1 || jogador == 2)
+                atualizarMultiplicadores();
             return true;
         }
         return false;
@@ -219,7 +230,8 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     
     public void retiraCarta(int n) {
         cartas[n] = null;
-        atualizarMultiplicadores();
+        if(jogador == 1 || jogador == 2)
+            atualizarMultiplicadores();
     }
     
     public int getIndex(int x, int y) {

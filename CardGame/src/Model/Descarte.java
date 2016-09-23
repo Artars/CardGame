@@ -22,6 +22,7 @@ public class Descarte extends BoardHolder {
     private boolean over;
     private int lastIndex;
     private ArrayList<Integer> descarteFixo;
+    private BoardHolder[] boardJogadores;
     
     
     public Descarte(Rectangle rect, int player) {
@@ -29,6 +30,7 @@ public class Descarte extends BoardHolder {
         over = false;
         lastIndex = -1;
         descarteFixo = new ArrayList<>();
+        boardJogadores = new BoardHolder[2];
         GameManager.getInstance().setDescarte((Descarte)this);
     }
 
@@ -37,7 +39,19 @@ public class Descarte extends BoardHolder {
         over = false;
         lastIndex = -1;
         descarteFixo = new ArrayList<>();
+        boardJogadores = new BoardHolder[2];
         GameManager.getInstance().setDescarte((Descarte)this);
+    }
+    
+    public void setBoardJogadores(BoardHolder b, int jogador) {
+        if(jogador == 1 || jogador == 2) {
+            boardJogadores[jogador - 1] = b;
+        }
+    }
+    
+    private void updateBoards() {
+        for (BoardHolder b: boardJogadores)
+            b.atualizarMultiplicadores();
     }
     
     @Override
@@ -105,6 +119,7 @@ public class Descarte extends BoardHolder {
             lastIndex = 0;
             adicionarCarta(c, lastIndex);
         }
+        updateBoards();
         return true;
     }
     

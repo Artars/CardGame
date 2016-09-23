@@ -97,32 +97,12 @@ public abstract class Atacavel extends Carta {
                 g.setColor (new Color (139,195,74,120));
                 break;
             case 4:
-                g.setColor (new Color (118,255,3));
+                g.setColor (new Color (118,255,3,120));
                 break;
             default:
                 g.setColor (new Color(0,0,0,0));
         }
         g.fillRect(rect.x, rect.y, rect.width, rect.height);
-        
-/*        if(selecionado) {
-            g.setFont(new Font( "SansSerif", Font.TRUETYPE_FONT, 14 ));
-            g.setColor(new Color(255,255,255,200));
-            Rectangle popUpRect = new Rectangle(rect.x + rect.width/2, rect.y - rect.height/2, rect.width, (rect.height*3)/8);
-            int lineSize = 15;
-            g.fillRect(popUpRect.x - 3, popUpRect.y, popUpRect.width + 3, popUpRect.height);
-            g.setColor(Color.RED);
-            g.drawString("HP: " + String.valueOf(vidaAtual) + "/" + String.valueOf(maxVida),
-                    popUpRect.x, popUpRect.y + lineSize);
-            g.setColor(Color.BLACK);
-            g.drawString("Mult.: x" + String.valueOf(multiplicador),
-                    popUpRect.x, popUpRect.y + lineSize*2);
-        }*/
-        
-        if (onBoard) {
-            g.setColor(Color.BLACK);
-            g.drawString(String.valueOf(vidaAtual) + "/" + String.valueOf(maxVida) + "x" + String.valueOf(multiplicador),
-                    rect.x, rect.y);
-        }
     }
     
     @Override
