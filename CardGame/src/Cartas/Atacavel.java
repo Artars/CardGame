@@ -72,6 +72,7 @@ public abstract class Atacavel extends Carta {
     public void draw(Graphics2D g) {
         //Desenha a imagem da carta
         g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);
+        popUp.draw(g);
         
         //Desenha um retangulo com o tanto que a carta perdeu de vida
         int newHeight = (int) ((1 - vida) * rect.height);

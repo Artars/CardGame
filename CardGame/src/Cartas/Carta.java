@@ -120,6 +120,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     public void draw(Graphics2D g) {
         //int sizeHeight = g.getClip().getBounds().height / 6 - 6;
         //int sizeWidth = g.getClip().getBounds().width / 10 - 6;
+        popUp.draw(g);
         
         g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);
         

@@ -22,7 +22,6 @@ public class PopUp implements Renderizavel{
 
     public PopUp(Carta cartaMae) {
         this.cartaMae = cartaMae;
-        GameManager.getInstance().adicionarRender(this);
         invertedRect = new Rectangle();
     }
     
@@ -32,8 +31,6 @@ public class PopUp implements Renderizavel{
     public void draw(Graphics2D g) {
         int i=0;
         if(cartaMae.getSelecionado()) {
-            removeRenderer();
-            GameManager.getInstance().adicionarRender(this);
             
             Rectangle cardRect = cartaMae.getRect();
             Rectangle bounds = g.getClipBounds();
