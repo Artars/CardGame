@@ -30,6 +30,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     private int pocketWidth;
     private int pocketHeight;
     private Player player;
+    private boolean invertido;
 
     //Contrutores --------------------------------------------------------------
     public BoardHolder(Rectangle rect, int player) {
@@ -92,6 +93,8 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             Rectangle cardZone = getCardRect(i);
             if(cardZone.contains(x,y)){
                 destaque = i;
+                if(invertido)
+                    //destaque = 4 - destaque;
                 break;
             }
         }
@@ -105,6 +108,8 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             Rectangle cardZone = getCardRect(i);
             if(cardZone.contains(x,y)){
                 destaque = i;
+                if(invertido)
+                    destaque = 4 - destaque;
                 break;
             }
         }
@@ -136,6 +141,8 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     }
     
     protected Rectangle getFrame(int n) {
+        if(invertido)
+            n = 4 - n;
         return new Rectangle(rect.x + n *(pocketWidth + 6), rect.y,
                 pocketWidth + 6, pocketHeight + 6);
     }
@@ -171,16 +178,21 @@ public class BoardHolder implements Renderizavel, Selecionavel {
                     if(c.getNumero() == outraC.getNumero())
                         auxiliar.add(c);
                     else {
-                        for (Carta ca:auxiliar)
-                            ca.setMultiplicador(auxiliar.size());
+                        for (Carta ca:auxiliar) {
+                            if(ca.getJogador() != -1)
+                                ca.setMultiplicador(auxiliar.size());
+                        
+                        }
                         auxiliar.clear();
                         auxiliar.add(c);
                     }    
                 }
             }
             if (i == size-1) {
-                for (Carta ca:auxiliar)
-                    ca.setMultiplicador(auxiliar.size());
+                for (Carta ca:auxiliar) {
+                    if(ca.getJogador() != -1)
+                        ca.setMultiplicador(auxiliar.size());                      
+                }
                 auxiliar.clear();
             }
         }
@@ -217,6 +229,8 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     }
     
     public Rectangle getCardRect(int n) {
+        if(invertido)
+            n = 4 - n;
         return new Rectangle(rect.x + n * (pocketWidth + 6) + 3,
                 rect.y + 3, pocketWidth, pocketHeight);
     }
@@ -237,8 +251,9 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     public int getIndex(int x, int y) {
         for(int i = 0; i < 5; i++) {
             Rectangle frame = getCardRect(i);
-            if (frame.contains(x,y))
-                return i;
+            if (frame.contains(x,y)) {
+                    return i;
+            }
         }
         return -1;
     }
@@ -248,6 +263,18 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             if (index == destaque && cartas[index] == null)
                 player.perderVida(dano);
         }
+    }
+    
+    public void cardVisibility(boolean visibility) {
+        for(Carta c:cartas) {
+            if(c != null)
+                c.setEscondido(visibility);
+        }
+    }
+    
+    public void inverter() {
+        invertido = !invertido;
+        ajustCard();
     }
     
     //Getters e Setters --------------------------------------------------------    

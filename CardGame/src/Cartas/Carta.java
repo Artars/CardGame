@@ -33,11 +33,13 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     
     //Variaveis de sistema (Dinamicas) -----------------------------------------
     protected Image sprite;
+    protected Image hiddenSprite;
     protected Rectangle rect;
     protected boolean selecionado;
     protected BoardHolder boardParent;
     protected int index;
     protected boolean realizouAcao = false;
+    protected boolean escondido = false;
     protected PopUp popUp;
 
     //Funcoes abstratas --------------------------------------------------------
@@ -60,6 +62,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         if(this.sprite == null){
             try {
                 sprite = ImageIO.read(new File(imgPath));
+                hiddenSprite = ImageIO.read(new File("img/back.png"));
             } catch (IOException ex) {
                 Logger.getLogger(Carta.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -83,6 +86,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         if(this.sprite == null){
             try {
                 sprite = ImageIO.read(new File(imgPath));
+                hiddenSprite = ImageIO.read(new File("img/back.png"));
             } catch (IOException ex) {
                 Logger.getLogger(Carta.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -120,6 +124,11 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     public void draw(Graphics2D g) {
         //int sizeHeight = g.getClip().getBounds().height / 6 - 6;
         //int sizeWidth = g.getClip().getBounds().width / 10 - 6;
+        if(escondido){
+            g.drawImage(hiddenSprite, rect.x, rect.y, rect.width, rect.height, null);
+            return;
+        }
+        
         popUp.draw(g);
         
         g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);
@@ -203,6 +212,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     public void descartar(){
         GameManager.getInstance().removerSelecionavel(this);
         boardParent.retiraCarta(index);
+        jogador = -1;
         GameManager.getInstance().getDescarte().insereCarta(this);
         realizouAcao = false;
         boardParent = (BoardHolder) GameManager.getInstance().getDescarte();
@@ -277,7 +287,11 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     }
     
     public boolean getSelecionado() {
-        return selecionado;
+        return selecionado && !escondido;
+    }
+
+    public void setEscondido(boolean escondido) {
+        this.escondido = escondido;
     }
     
     

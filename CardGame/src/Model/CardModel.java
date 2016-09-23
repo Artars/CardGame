@@ -53,6 +53,21 @@ public class CardModel {
         ComprarDeck(1);
     }
     
+    public void trocarTurno(int turno) {      
+        ComprarDeck(turno);
+        
+        boolean hidePlayer1 = (turno == 1)? false:true;
+        boards[4].cardVisibility(hidePlayer1);
+        boards[0].cardVisibility(!hidePlayer1);
+        boards[1].inverter();
+        boards[3].inverter();
+        
+        java.awt.Rectangle aux;
+        aux = boards[1].getRect();
+        boards[1].setRect(boards[3].getRect());
+        boards[3].setRect(aux);
+    }
+    
     public void ComprarDeck(int turno){
         int i = 0;
         int vazio = 0;

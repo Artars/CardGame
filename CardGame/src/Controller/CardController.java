@@ -161,7 +161,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
             clicado = null;
             GameManager.getInstance().trocarTurno();
             turno = GameManager.getInstance().getTurno();
-            model.ComprarDeck(turno);
+            model.trocarTurno(turno);
             view.updateTurnText(turno);
             view.repaint();
         }

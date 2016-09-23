@@ -70,6 +70,12 @@ public abstract class Atacavel extends Carta {
 
     @Override
     public void draw(Graphics2D g) {
+        
+        if(escondido){
+            g.drawImage(hiddenSprite, rect.x, rect.y, rect.width, rect.height, null);
+            return;
+        }
+        
         //Desenha a imagem da carta
         g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);
         popUp.draw(g);
