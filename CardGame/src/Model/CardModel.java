@@ -43,6 +43,8 @@ public class CardModel {
         boards[2] = new Descarte(0);
         boards[3] = new BoardHolder(1);
         boards[4] = new BoardHolder(3);
+        ((Descarte) boards[2]).setBoardJogadores(boards[3], 1);
+        ((Descarte) boards[2]).setBoardJogadores(boards[1], 2);
         socketLocation = new Point[7];
         for (int i =0; i<7; i++){
             socketLocation[i] = new Point(i*10,i*10);
