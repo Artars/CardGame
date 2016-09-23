@@ -13,6 +13,7 @@ import javax.swing.JProgressBar;
  * @author Arthur
  */
 public class Player {
+    //Variaveis ----------------------------------------------------------------
     private int jogador;
     private int vidaMax;
     private int vidaAtual;
@@ -20,6 +21,7 @@ public class Player {
     
     JProgressBar barra;
     
+    //Construtores -------------------------------------------------------------
     public Player(int jogador, int vida) {
         this.jogador = jogador;
         this.vidaAtual = this.vidaMax = vida;
@@ -28,6 +30,15 @@ public class Player {
         barra = null;
     }
     
+    //Funcao Privada -----------------------------------------------------------
+    //Atualiza a barra para o tanto de vida do jogador
+    private void updateBarra(){
+        barra.setString(String.valueOf(vidaAtual) + "/" + String.valueOf(vidaMax));
+        barra.setValue(vidaAtual);
+    }
+    
+    //Funcoes Publicas ---------------------------------------------------------
+    //Define a barra de vida do jogador
     public void setBarra(JProgressBar barra) {
         barra.setMinimum(0);
         barra.setMaximum(vidaMax);
@@ -36,11 +47,7 @@ public class Player {
         updateBarra();
     }
     
-    private void updateBarra(){
-        barra.setString(String.valueOf(vidaAtual) + "/" + String.valueOf(vidaMax));
-        barra.setValue(vidaAtual);
-    }
-    
+    //Retira vida do jogador
     public void perderVida(int dano) {
         vidaAtual -= dano;
         updateBarra();

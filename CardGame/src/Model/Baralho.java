@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
- *
+ *  Classe reponsavel por gerenciar as cartas ainda não colocadas
  * @author Arthur
  */
 public class Baralho implements Renderizavel{
@@ -37,7 +37,7 @@ public class Baralho implements Renderizavel{
     public Baralho(int n) {
         cartas = new ArrayList<>();
         for(int i = 0; i < n; i++)
-            cartas.add(new Integer(i));
+            cartas.add(i);
         shuffle();
         
         if(this.sprite == null){
@@ -64,10 +64,12 @@ public class Baralho implements Renderizavel{
     }
     
     //Funcoes Privadas ---------------------------------------------------------
+    //Embaralha as cartas
     private void shuffle() {
         Collections.shuffle(cartas);
     }
     
+    //Dado um indice i, ele cria uma carta do tipo correto
     private Carta criarCarta(Integer i) {
         int n = i;
         Carta c;
@@ -90,6 +92,7 @@ public class Baralho implements Renderizavel{
         return c;
     }
     
+    //Pega cartas do descarte caso falte do baralho
     private void fillCards() {
         ArrayList<Integer> descarte;
         descarte = GameManager.getInstance().getDescarte().getDescarteList();
@@ -98,6 +101,7 @@ public class Baralho implements Renderizavel{
     }
     
     //Funcoes Publicas ---------------------------------------------------------
+    //Retira uma lista com n cartas
     public ArrayList<Carta> retirarCartas(int n) {
         ArrayList<Carta> a = new ArrayList<>();
         

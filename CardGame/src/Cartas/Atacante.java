@@ -19,6 +19,7 @@ public class Atacante extends Atacavel {
 
     private int forca;
     
+    //Construtor ---------------------------------------------------------------
     public Atacante(int x, int y, int n) {
         super(x,y,n);
         switch(this.numero) {
@@ -75,6 +76,7 @@ public class Atacante extends Atacavel {
         vida = (float) vidaAtual / (maxVida * multiplicador);
     }
 
+    //Funcoes publicas ---------------------------------------------------------
     @Override
     public void onClick() {
         if (!realizouAcao)
@@ -107,16 +109,14 @@ public class Atacante extends Atacavel {
         int inimigo = (jogador == 1) ? 2:1;
         Atacavel a;
         
+        //Verifica se a carta é do tipo que pode ser atacado
         if(c instanceof Atacavel)
             a = (Atacavel) c;
         else
             return;
-        //Adicionar condicao onBoard
         if (a.getJogador() == inimigo && a.isAtacavel()) {
-            System.out.println("O index e: " + a.getIndex() + "/" + this.index);
             if (a.getIndex() == this.index) {
                 a.levarDano(forca * multiplicador);            
-                System.out.println("Atacar!!!!!!");
                 realizouAcao = true;
             }
         }
@@ -143,7 +143,4 @@ public class Atacante extends Atacavel {
 
         return colors;
     }
-    
-    
-
 }

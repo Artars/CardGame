@@ -23,20 +23,11 @@ import java.util.Observer;
 public class CardModel {
 
     private Baralho baralho;
-
-    private ArrayList<Integer> descarteFixo;
-    
     private BoardHolder[] boards;
-    
-    //Board Location Reference
-    private Point[] socketLocation;
-    private int socketWidth;
-    
-    private Carta teste;
+
     
     public CardModel (){
         baralho = new Baralho(52);
-        descarteFixo = new ArrayList<>();
         boards = new BoardHolder[5];
         boards[0] = new BoardHolder(3);
         boards[1] = new BoardHolder(2);
@@ -45,18 +36,15 @@ public class CardModel {
         boards[4] = new BoardHolder(3);
         ((Descarte) boards[2]).setBoardJogadores(boards[3], 1);
         ((Descarte) boards[2]).setBoardJogadores(boards[1], 2);
-        socketLocation = new Point[7];
-        for (int i =0; i<7; i++){
-            socketLocation[i] = new Point(i*10,i*10);
-            socketWidth = 10;
-        }
+
         ComprarDeck(1);
     }
     
+    //Realiza a troca de turno para o jogador "turno"
     public void trocarTurno(int turno) {      
         ComprarDeck(turno);
         
-        boolean hidePlayer1 = (turno == 1)? false:true;
+        boolean hidePlayer1 = (turno == 2);
         boards[4].cardVisibility(hidePlayer1);
         boards[0].cardVisibility(!hidePlayer1);
         boards[1].inverter();
@@ -68,6 +56,7 @@ public class CardModel {
         boards[3].setRect(aux);
     }
     
+    //Compra cartas pra mao do jogador "turno"
     public void ComprarDeck(int turno){
         int i = 0;
         int vazio = 0;
@@ -111,6 +100,7 @@ public class CardModel {
         }
     }
     
+    //Ajusta e posiciona os boards
     public void UpdateBoardLocations(Point[] locations, int socketWidth, int socketHeight) {
         int i = 0;
         for (Point p :locations){
@@ -121,8 +111,6 @@ public class CardModel {
         
         for (BoardHolder b: boards)
             b.setPocketDimensions(socketWidth - 6, socketHeight - 6);
-        this.socketWidth = socketWidth;
-        System.out.println(socketHeight + "x" + socketWidth);
         
         baralho.setRect((int) locations[5].getX() + (6 * socketWidth) + 3, 
                 (int) locations[5].getY() + 3, socketWidth - 6, socketHeight - 6);

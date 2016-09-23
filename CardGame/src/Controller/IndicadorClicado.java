@@ -12,19 +12,21 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 /**
- *
+ * Objeto com funcao de demonstrar o que foi selecionado
  * @author Arthur
  */
 public class IndicadorClicado implements Renderizavel {
 
+    //Variaveis ----------------------------------------------------------------
     private Rectangle rect;
     private boolean enabled;
     
+    //Construtor
     public IndicadorClicado() {
         enabled = false;
     }
     
-    
+    //Funcoes ------------------------------------------------------------------
     @Override
     public void draw(Graphics2D g) {
         if (enabled) {
@@ -38,10 +40,12 @@ public class IndicadorClicado implements Renderizavel {
         GameManager.getInstance().removerRender(this, 1);
     }
 
+    //Define a sua localização e tamanho do objeto
     public void setRect(Rectangle rect) {
         this.rect = rect;
     }
 
+    //Torna o objeto visivel ou nao
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
         if (enabled)

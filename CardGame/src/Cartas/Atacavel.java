@@ -21,12 +21,13 @@ funcoes relacionadas à ela.
 */
 
 public abstract class Atacavel extends Carta {
-    
+    //Variaveis ----------------------------------------------------------------
     protected int vidaAtual;
     protected int maxVida;
     protected float vida;
     protected boolean onBoard;
 
+    //Construtores -------------------------------------------------------------
     public Atacavel(int x, int y, int n) {
         super(x, y, n);
     }
@@ -35,39 +36,7 @@ public abstract class Atacavel extends Carta {
         super(n);
     }
 
-    public void levarDano(int dano) {
-        vidaAtual = vidaAtual - dano;
-        vida = (float)vidaAtual / (float)(maxVida * multiplicador);
-        System.out.println("Nova vida: " + vida);
-        if (vida <= 0) 
-            die();
-    }
-    
-    public void recuperarVida(int cura) {
-        if (estaVivo()) {
-            vidaAtual += cura;
-            if (vidaAtual > maxVida * multiplicador) {
-                vidaAtual = maxVida * multiplicador;
-            }
-            vida = (float)vidaAtual / (float)(maxVida * multiplicador);
-        }
-    }
-    
-    public boolean estaVivo() {
-        if (vida <= 0)
-            die();
-        return (vida > 0); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public void die() {
-        vida = 1;
-        descartar();
-    }
-    
-    public boolean isAtacavel(){
-        return onBoard;
-    }
-
+    //Funcoes substituidas (Override)-------------------------------------------
     @Override
     public void draw(Graphics2D g) {
         
@@ -117,6 +86,45 @@ public abstract class Atacavel extends Carta {
         if (multiplicador  < 0)
             multiplicador = 1;
         vidaAtual = (int)(vida * maxVida * n);
+    }
+    
+    //Funcoes publicas ---------------------------------------------------------
+    //Realiza dano na carta
+    public void levarDano(int dano) {
+        vidaAtual = vidaAtual - dano;
+        vida = (float)vidaAtual / (float)(maxVida * multiplicador);
+        System.out.println("Nova vida: " + vida);
+        if (vida <= 0) 
+            die();
+    }
+    
+    //Recupera vida da carta
+    public void recuperarVida(int cura) {
+        if (estaVivo()) {
+            vidaAtual += cura;
+            if (vidaAtual > maxVida * multiplicador) {
+                vidaAtual = maxVida * multiplicador;
+            }
+            vida = (float)vidaAtual / (float)(maxVida * multiplicador);
+        }
+    }
+    
+    //Retorna se a carta esta viva
+    public boolean estaVivo() {
+        if (vida <= 0)
+            die();
+        return (vida > 0); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    //Faz a carta morrer
+    public void die() {
+        vida = 1;
+        descartar();
+    }
+    
+    //Retorna se a carta pode ser atacada
+    public boolean isAtacavel(){
+        return onBoard;
     }
     
 }

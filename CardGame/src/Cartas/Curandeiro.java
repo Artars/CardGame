@@ -28,6 +28,7 @@ public class Curandeiro extends Carta {
             selecionado = true;
     }
 
+    //Funcoes publicas ---------------------------------------------------------
     @Override
     public void onClick(BoardHolder b, Carta c) {
         Atacavel a;

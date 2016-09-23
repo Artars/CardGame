@@ -46,13 +46,11 @@ public class Main {
                 Table board = new Table();
                 BoardFrame view = new BoardFrame(board);
                 CardModel model = new CardModel();
-                board.registerObserver(view);
                 CardController controller = new CardController();
                 controller.addView(view);
                 controller.addModel(model);
                 view.addController(controller);
                 controller.startMainWindow();
-                //BoardFrame().setVisible(true);
             }
         });
     }

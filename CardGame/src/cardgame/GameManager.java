@@ -19,6 +19,7 @@ import java.util.Observer;
  */
 public class GameManager {
 
+   //Variaveis------------------------------------------------------------------
    private ArrayList<ArrayList<Renderizavel>> camadasRenderizaveis;
    private ArrayList<Selecionavel> selecionaveis;
    private Descarte descarte;
@@ -26,13 +27,14 @@ public class GameManager {
    private int turno;
    private int rodada;
    
-   
    //create an object of SingleObject
    private static GameManager instance = new GameManager();
 
+   //Construtor-----------------------------------------------------------------
+   
    //make the constructor private so that this class cannot be
    //instantiated
-   private GameManager(){
+    private GameManager(){
        camadasRenderizaveis = new ArrayList<>();
        selecionaveis = new ArrayList<>();
        turno = 1;
@@ -40,33 +42,44 @@ public class GameManager {
        players = new Player[2];
    }
 
+    
+    //Funcos Publicas ----------------------------------------------------------
    //Get the only object available
-   public static GameManager getInstance(){
+    public static GameManager getInstance(){
       return instance;
-   }
+    }
    
-   public void adicionarRender(Renderizavel r, int camada) {
+    /*
+    Adiciona um renderizavel à uma camada de renderização. Camadas superiores
+    sao desenhadas por cima
+    */
+    public void adicionarRender(Renderizavel r, int camada) {
        while ( (camada + 1) > camadasRenderizaveis.size())
            camadasRenderizaveis.add(new ArrayList<Renderizavel>());
        camadasRenderizaveis.get(camada).add(r);
-   }
+    }
    
-   public void removerRender(Renderizavel r, int camada) {
+    //Remove um renderizavel de uma camada
+    public void removerRender(Renderizavel r, int camada) {
        camadasRenderizaveis.get(camada).remove(r);
-   }
+    }
    
-   public void adicionarSelecionavel(Selecionavel s) {
+    //Adiciona um selecionavel à lista de objetos que podem ser clicados
+    public void adicionarSelecionavel(Selecionavel s) {
        selecionaveis.add(s);
-   }
+    }
    
-   public void removerSelecionavel(Selecionavel s) {
+    //Remove um selecionavel da lista, tornando-o não interagivel
+    public void removerSelecionavel(Selecionavel s) {
        selecionaveis.remove(s);
-   }
+    }
 
+    //Retorna a lista com as diferentes camadas de renderizacao
     public ArrayList<ArrayList<Renderizavel>> getRenderizaveis() {
         return camadasRenderizaveis;
     }
    
+    //Procura nos selecionaveis o objeto desejado, dado um x e um y
     public ArrayList<Selecionavel> findSelecionavel(int x, int y) {
        ArrayList<Selecionavel> selecao = new ArrayList<>();
        for (Selecionavel s : selecionaveis) {
@@ -74,8 +87,9 @@ public class GameManager {
                selecao.add(s);
        }
        return selecao;
-   }
+    }
     
+    //Procura nos selecionaveis o objeto desejado, dado um ponto p
     public ArrayList<Selecionavel> findSelecionavel(Point p) {
        ArrayList<Selecionavel> selecao = new ArrayList<>();
        for (Selecionavel s : selecionaveis) {
@@ -83,40 +97,47 @@ public class GameManager {
                selecao.add(s);
        }
        return selecao;
-   }
+    }
    
+    //Realiza a troca de turno do jogador 1 para 2 e vice-versa
     public void trocarTurno() {
         if (turno == 1) turno = 2;
         else turno = 1;
         rodada++;
     }
     
+    //Retorna o turno (1 ou 2)
     public int getTurno(){
         return turno;
     }
     
+    //Retorna que rodada se encontra o jogo
     public int getRodada(){
         return rodada;
     }
 
+    //Retorna o descarte
     public Descarte getDescarte() {
         return descarte;
     }
 
+    //Define o descarte
     public void setDescarte(Descarte descarte) {
         this.descarte = descarte;
     }
     
+    //Adiciona a barra de vida ao jogador (1 ou 2)
     public void setBar(int jogador, javax.swing.JProgressBar barra) {
-        if (jogador < 3 && jogador > 0) {
+        if (jogador == 1 || jogador == 2) {
             if(players[jogador-1] == null) 
                 players[jogador - 1] = new Player(jogador, 100);
             players[jogador - 1].setBarra(barra);
         }
     }
     
+    //Retorna o jogador desejado (1 ou 2)
     public Player getPlayer(int jogador) {
-        if (jogador < 3 && jogador > 0) {
+        if (jogador == 1 || jogador == 2) {
             if(players[jogador-1] == null) 
                 players[jogador - 1] = new Player(jogador, 100);
             return players[jogador - 1];
@@ -125,6 +146,7 @@ public class GameManager {
             return null;
     }
     
+    //Funcao que inicia o fim dos tempos
     public void gameOver(int jogador) {
         System.out.println("Jogador " + String.valueOf(jogador) + " perdeu!");
     }

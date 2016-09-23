@@ -46,7 +46,9 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     public abstract void onClick(BoardHolder b, Carta c);
     public abstract void onClick(BoardHolder b);
     public abstract void onClick();
+    //Retorna os atributos a serem mostrados no PopUp
     public abstract ArrayList<String> getAtributos();
+    //Retorna as cores dos atributos a serem mostrados no PopUp
     public abstract ArrayList<Color> getAtributosColor();
     
     //Construtores -------------------------------------------------------------
@@ -57,8 +59,8 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         this.naipe = (n + 1) / 13;
         this.numero = (n + 1) % 13;
 
+        //O caminho é da forma "img/2_of_clubs"
         String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
-        //imgPatch = "img/2_of_clubs"
         if(this.sprite == null){
             try {
                 sprite = ImageIO.read(new File(imgPath));
@@ -81,8 +83,8 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         this.naipe = n / 13;
         this.numero = (n % 13) + 1;
         
+        //O caminho é da forma "img/2_of_clubs"
         String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
-        //imgPatch = "img/2_of_clubs"
         if(this.sprite == null){
             try {
                 sprite = ImageIO.read(new File(imgPath));
@@ -122,8 +124,6 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     
     @Override
     public void draw(Graphics2D g) {
-        //int sizeHeight = g.getClip().getBounds().height / 6 - 6;
-        //int sizeWidth = g.getClip().getBounds().width / 10 - 6;
         if(escondido){
             g.drawImage(hiddenSprite, rect.x, rect.y, rect.width, rect.height, null);
             return;
@@ -154,7 +154,6 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     
     @Override
     public void onHover(int x, int y) {
-        //System.out.println("Passou em mim");
         selecionado = true;
     }
     @Override
@@ -178,6 +177,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     }
     
     //Funcoes privadas ---------------------------------------------------------
+    //Transforma o numero da carta em String
     private String NumeroToString(){
         switch(this.numero){
             case 1:
@@ -193,6 +193,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         }
     }
     
+    //Transforma o naipe em uma String
     private String NaipeToString(){
         switch(this.naipe){
             case 0:
@@ -209,6 +210,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     }
     
     //Funcoes publicas ---------------------------------------------------------
+    //Descarta a carta e desativa ela
     public void descartar(){
         GameManager.getInstance().removerSelecionavel(this);
         boardParent.retiraCarta(index);
@@ -218,6 +220,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         boardParent = (BoardHolder) GameManager.getInstance().getDescarte();
     }
     
+    //Retorna se a carta pode ser clicada ou nao, dado um jogador
     public boolean isClicavel(int jogador){
         return !realizouAcao && jogador == this.jogador;
     }

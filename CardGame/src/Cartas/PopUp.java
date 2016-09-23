@@ -12,12 +12,16 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 /**
- *
  * @author Arthur
+ * Classe que mostra status da carta sobre ela
  */
+
+
+
 public class PopUp implements Renderizavel{
     //Define ponto inferior equerdo do Retangulo
     private Rectangle invertedRect;
+    //Referencia a carta mae
     private Carta cartaMae;
 
     public PopUp(Carta cartaMae) {

@@ -56,7 +56,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     }
     
     //Funcoes de Implementacao Obrigatoria -------------------------------------
-    //Rederizavel
+    //Rederizavel -------
     @Override
     public void draw(Graphics2D g) {
         Color background = new Color(51,105,30);
@@ -76,7 +76,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         GameManager.getInstance().removerRender(this,0);
     }
 
-    //Clicavel
+    //Clicavel ----------
     @Override
     public boolean isInside(int x, int y) {
         return rect.contains(x, y);
@@ -131,6 +131,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     }
     
     //Funcoes Privadas ---------------------------------------------------------
+    //Ajusta o tamanho e posições das cartas
     private void ajustCard () {
         for (Carta c : cartas) {
             if (c != null) {
@@ -140,6 +141,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         }
     }
     
+    //Retorna as posições e tamanhos de cada retangulo do tabuleiro
     protected Rectangle getFrame(int n) {
         if(invertido)
             n = 4 - n;
@@ -147,6 +149,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
                 pocketWidth + 6, pocketHeight + 6);
     }
     
+    //Adiciona um vetor a uma lista
     private void adicionaVetorLista(Carta[] v, ArrayList<Carta> l) {
         if (v != null && l != null) {
             for (Carta c:v) {
@@ -156,13 +159,16 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         }
     }
     
+    /*
+        Atualiza o multiplicador de todas as cartas
+        Para isso conta com as cartas desse board e do descarte
+    */
     public void atualizarMultiplicadores() {
         ArrayList<Carta> cartasOrdenadas = new ArrayList<>();
         adicionaVetorLista(cartas, cartasOrdenadas);
         Carta[] descarte = GameManager.getInstance().getDescarte().getCartas();
         adicionaVetorLista(descarte, cartasOrdenadas);
         Collections.sort(cartasOrdenadas);
-        System.out.println(cartasOrdenadas);
         
         ArrayList<Carta> auxiliar = new ArrayList<>();
         int size = cartasOrdenadas.size();
@@ -199,6 +205,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     }
     
     //Funcoes Publicas ---------------------------------------------------------
+    //Insere carta na posição n do board
     public boolean insereCarta(Carta c, int n) {
         if(cartas[n] == null) {
             cartas[n] = c;
@@ -213,6 +220,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         return false;
     }
     
+    //Insere a carta na posicao em que o mouse se encontra sobre
     public boolean insereCarta(Carta c) {
         int n = destaque;
         if(destaque != -1 && cartas[n] == null) {
@@ -228,6 +236,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         return false;
     }
     
+    //Retorna a posicao e tamanho da carta de indice n
     public Rectangle getCardRect(int n) {
         if(invertido)
             n = 4 - n;
@@ -235,6 +244,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
                 rect.y + 3, pocketWidth, pocketHeight);
     }
     
+    //Reinicia as ações de todas as cartas
     public void resetarAcoes(){
         for (int i = 0; i < 5; i++) {
             if (cartas[i] != null)
@@ -242,12 +252,14 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         }
     }
     
+    //Retira a carta na posicao n
     public void retiraCarta(int n) {
         cartas[n] = null;
         if(jogador == 1 || jogador == 2)
             atualizarMultiplicadores();
     }
     
+    //Retorna o indice da carta localizada nas coordenadas x e y. -1 se não há carta
     public int getIndex(int x, int y) {
         for(int i = 0; i < 5; i++) {
             Rectangle frame = getCardRect(i);
@@ -258,6 +270,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         return -1;
     }
     
+    //Realiza dano no jogador
     public void levaDano(int index, int dano) {
         if(jogador == 1 || jogador == 2) {
             if (index == destaque && cartas[index] == null)
@@ -265,6 +278,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         }
     }
     
+    //Determina a visibilidade das cartas
     public void cardVisibility(boolean visibility) {
         for(Carta c:cartas) {
             if(c != null)
@@ -272,6 +286,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         }
     }
     
+    //Inverte o taabuleiro
     public void inverter() {
         invertido = !invertido;
         ajustCard();

@@ -28,6 +28,7 @@ public class Defensor extends Atacavel {
         vida = 1;
     }
 
+    //Funcoes publicas ---------------------------------------------------------
     @Override
     public void onClick() {
         if (!realizouAcao)
@@ -94,6 +95,4 @@ public class Defensor extends Atacavel {
 
         return colors;
     }
-
-    
 }

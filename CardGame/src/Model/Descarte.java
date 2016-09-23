@@ -19,12 +19,13 @@ import java.util.ArrayList;
  */
 public class Descarte extends BoardHolder {
     
+    //Variaveis ----------------------------------------------------------------
     private boolean over;
     private int lastIndex;
     private ArrayList<Integer> descarteFixo;
     private BoardHolder[] boardJogadores;
     
-    
+    //Construtor ---------------------------------------------------------------
     public Descarte(Rectangle rect, int player) {
         super(rect, player);
         over = false;
@@ -43,15 +44,27 @@ public class Descarte extends BoardHolder {
         GameManager.getInstance().setDescarte((Descarte)this);
     }
     
+    //Funcoes Privadas ---------------------------------------------------------
+    //Notifica os boards de alterações
+    private void updateBoards() {
+        for (BoardHolder b: boardJogadores)
+            b.atualizarMultiplicadores();
+    }
+    
+    //Adiciona a carta na posicao indicada
+    private void adicionarCarta(Carta c, int n) {
+        cartas[n] = c;
+        c.setIndex(n);
+        c.setRect(getCardRect(n));
+        c.setRealizouAcao(false);
+    }
+    
+    //Funcoes Publicas ---------------------------------------------------------
+    //Define os boars que o descarte notificará
     public void setBoardJogadores(BoardHolder b, int jogador) {
         if(jogador == 1 || jogador == 2) {
             boardJogadores[jogador - 1] = b;
         }
-    }
-    
-    private void updateBoards() {
-        for (BoardHolder b: boardJogadores)
-            b.atualizarMultiplicadores();
     }
     
     @Override
@@ -95,13 +108,6 @@ public class Descarte extends BoardHolder {
         over = false;
     }
     
-    private void adicionarCarta(Carta c, int n) {
-        cartas[n] = c;
-        c.setIndex(n);
-        c.setRect(getCardRect(n));
-        c.setRealizouAcao(false);
-    }
-    
     @Override
     public boolean insereCarta(Carta c) {
         if (lastIndex < 4) {
@@ -143,17 +149,18 @@ public class Descarte extends BoardHolder {
         return true;
     }
     
+    //Transforma a carta em um int que vai ser armazenado pelo descarte
     private Integer cartaToInteger(Carta c) {
-        //this.numero = (n % 13) + 1;
-        //this.naipe = n / 13;
         int result = c.getNaipe() * 13 + c.getNumero() - 1;
         return result;
     }
     
+    //Retorna o vetor com as cartas
     public Carta[] getCartas() {
         return cartas;
     }
     
+    //Retorna todas as cartas armazenadas no descarte fixo e o limpa
     public ArrayList<Integer> getDescarteList() {
         ArrayList<Integer> antigas = descarteFixo;
         descarteFixo = new ArrayList<>();

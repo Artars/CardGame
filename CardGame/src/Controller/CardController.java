@@ -36,26 +36,25 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     
     private int turno = 0;
     private int jogadorAtual;
-    
-    Rectangle[] workspaces;
 
     public CardController() {
-        workspaces = new Rectangle[25];
         selecionados = new ArrayList<>();
         clicado = null;
         indicador = new IndicadorClicado();
     }
     
+    //Adiciona o view ao controle
     public void addView(Observer view){
         this.view = (BoardFrame)view;
-        this.CreateWorkspaces(workspaces);
     }
     
+    //Adiciona um model ao controle
     public void addModel(CardModel model) {
         this.model = (CardModel) model;
         UpdateWorkspaces();
     }
     
+    //Passa as localizacoes e tamanhos dos retangulos para o model
     public void UpdateWorkspaces (){
         int i = 0;
         int j = 0;
@@ -79,8 +78,9 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         int x = me.getX();
         int y = me.getY();
         ArrayList <Selecionavel> clicados = GameManager.getInstance().findSelecionavel(x, y); 
-        int turno = GameManager.getInstance().getTurno();
+        turno = GameManager.getInstance().getTurno();
         
+        //Seleciona uma carta caso nada esteja selecionado
         if (clicados.size() > 1 && clicado == null){
             Carta c = (Carta) clicados.get(1);
             if (c.isClicavel(turno)) {
@@ -91,12 +91,14 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
                 System.out.println("Algo foi selecionado");
             }
         }
-        else if (clicados.size() == 0){
+        //Nao clicou em nada, deseleciona o que for necessario
+        else if (clicados.isEmpty()){
             clicado = null;
             indicador.setEnabled(false);
         }
+        //Clicou em algum objeto tendo selecionado a carta
         else if (clicado != null){
-            //É o segundo clique
+            //Clicou em apenas um objeto (BoardHolder)
             if (clicados.size() == 1) {
                 if (clicados.get(0) instanceof BoardHolder ) {
                     BoardHolder b = (BoardHolder) clicados.get(0);
@@ -104,6 +106,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
                         ((Carta) clicado).onClick(b);
                 }
             }
+            //Clicou em dois objeto, o boardholder e a carta
             else if (clicados.size() > 1) {
                 ((Carta) clicado).onClick((BoardHolder) clicados.get(0), (Carta) clicados.get(1));
             }
@@ -113,30 +116,32 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         view.repaint();
     }
     
+    @Override
     public void mousePressed(MouseEvent me) {
     
     }
 
     @Override
     public void mouseReleased(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
     public void mouseEntered(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
     public void mouseExited(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
     public void mouseDragged(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
+    }
+    
+    //Se moveu o mouse, procura todos os objetos que estão sobre ele, e comunica os objetos
     @Override
     public void mouseMoved(MouseEvent me) {
         int x = me.getX();
@@ -156,7 +161,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        System.out.println("Oi");
+        //Clicou no botao de troca de turno
         if (ae.getActionCommand() == "Turno") {
             clicado = null;
             GameManager.getInstance().trocarTurno();
@@ -167,22 +172,9 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         }
     }
     
+    //Inicia a janela principaç
     public void startMainWindow(){
         view.setMinimumSize(new Dimension(600, 400));
         view.setVisible(true);
-    }
-
-    private void CreateWorkspaces(Rectangle[] workspaces) {
-        int width = 0;
-        int height = 0;
-        width =  view.getBoardPanel().getBounds().width /10;
-        height = view.getBoardPanel().getBounds().height /6;
-        int margem = height /6;
-     
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++){
-                workspaces[i*5+j] = new Rectangle((5*width /2)+(j*width)+3, (margem * (i+1) + height * i)+3, width-6, height-6);
-            }
-        }
     }
 }
