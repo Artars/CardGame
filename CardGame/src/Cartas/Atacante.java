@@ -101,6 +101,7 @@ public class Atacante extends Atacavel {
         //Atacar diretamente o jogador
         else if (onBoard && b.getJogador() == inimigo) {
             b.levaDano(index, forca * multiplicador);
+            realizouAcao = true;
         }
     }
     
