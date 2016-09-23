@@ -124,7 +124,8 @@ public class CardModel {
         this.socketWidth = socketWidth;
         System.out.println(socketHeight + "x" + socketWidth);
         
-        baralho.setRect((int) locations[5].getX() + 3, (int) locations[5].getY() + 3, socketWidth - 6, socketHeight - 6);
+        baralho.setRect((int) locations[5].getX() + (6 * socketWidth) + 3, 
+                (int) locations[5].getY() + 3, socketWidth - 6, socketHeight - 6);
     }
     
 }
