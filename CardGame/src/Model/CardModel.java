@@ -20,7 +20,7 @@ import java.util.Observer;
  *
  * @author Arthur
  */
-public class CardModel implements Observer {
+public class CardModel {
 
     private Baralho baralho;
 
@@ -149,10 +149,6 @@ public class CardModel implements Observer {
     }
     */
     
-    public void draw(Graphics2D g) {
-        //teste.Draw(g);
-    }
-    
     /*
     public void draw(Graphics2D g) {
         int section = 0;
@@ -201,19 +197,15 @@ public class CardModel implements Observer {
                 boards[i].setRect((int)p.getX(), (int)p.getY(), 5 * socketWidth, socketHeight);
             i++;
         }
+        
         for (BoardHolder b: boards)
             b.setPocketDimensions(socketWidth - 6, socketHeight - 6);
         this.socketWidth = socketWidth;
+        System.out.println(socketHeight + "x" + socketWidth);
         
         baralho.setRect((int) locations[5].getX(), (int) locations[5].getY());
     }
     
-    
-    
-    @Override
-    public void update(Observable o, Object arg) {
-        draw((Graphics2D) arg);
-    }
 
     public Carta getMao(int i, int j) {
         //if (i==1) return maoJogador1[j];

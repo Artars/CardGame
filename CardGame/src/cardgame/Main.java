@@ -46,7 +46,6 @@ public class Main {
                 Table board = new Table();
                 BoardFrame view = new BoardFrame(board);
                 CardModel model = new CardModel();
-                board.registerObserver(model);
                 board.registerObserver(view);
                 CardController controller = new CardController();
                 controller.addView(view);

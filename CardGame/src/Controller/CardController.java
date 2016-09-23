@@ -41,8 +41,6 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 
     public CardController() {
         workspaces = new Rectangle[25];
-        /*cartaSlc = -1;
-        posSlc = -1;*/
         selecionados = new ArrayList<>();
         clicado = null;
         indicador = new IndicadorClicado();
@@ -53,7 +51,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         this.CreateWorkspaces(workspaces);
     }
     
-    public void addModel(Observer model) {
+    public void addModel(CardModel model) {
         this.model = (CardModel) model;
         UpdateWorkspaces();
     }
@@ -61,22 +59,16 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     public void UpdateWorkspaces (){
         int i = 0;
         int j = 0;
-        int n = 0;
-        int width = 0;
-        int height = 0;
-        width =  view.getBoardPanel().getBounds().width /10;
-        height = view.getBoardPanel().getBounds().height /6;
+        int height = view.getBoardPanel().getBounds().height / 5;
+        int width = (int) (0.7 * height);
         int margem = height /6;
         Point[] locations = new Point[7];
         
-        for(Rectangle reckt : workspaces) {
-            reckt.reshape((5*width /2)+(n*width)+3, (margem * (i+1) + height * i)+3, width-6, height-6);
-            if (j % 5 == 0)
-                locations[i] = new Point((5*width /2)+(n*width), (margem * (i+1) + height * i));
-            j++;
-            n = j%5;
-            i = j/5;
+        locations[0] = new Point((11*width /2), (margem * 4 + height * 3));
+        for(i = 1; i < 4; i++) {
+            locations[i] = new Point((5*width /2), (margem * i + height * (i-1)));
         }
+        locations[4] = new Point(0, (margem * 4 + height * 3));
         locations[5] = new Point(locations[2].x - width, locations[2].y);
         locations[6] = new Point(110,110);
         model.UpdateBoardLocations(locations, width, height);
