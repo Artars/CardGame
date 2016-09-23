@@ -35,7 +35,7 @@ public class IndicadorClicado implements Renderizavel {
 
     @Override
     public void removeRenderer() {
-        GameManager.getInstance().removerRender(this);
+        GameManager.getInstance().removerRender(this, 1);
     }
 
     public void setRect(Rectangle rect) {
@@ -45,7 +45,7 @@ public class IndicadorClicado implements Renderizavel {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
         if (enabled)
-            GameManager.getInstance().adicionarRender(this);
+            GameManager.getInstance().adicionarRender(this, 1);
         else
             removeRenderer();
     }

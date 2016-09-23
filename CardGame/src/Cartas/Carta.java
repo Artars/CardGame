@@ -66,7 +66,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         }
         
         this.rect = new Rectangle(x,y, 74, 94);
-        GameManager.getInstance().adicionarRender((Renderizavel) this);
+        GameManager.getInstance().adicionarRender((Renderizavel) this,0);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
         popUp = new PopUp(this);
     }
@@ -89,7 +89,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         }
         
         this.rect = new Rectangle(0,0,74,94);
-        GameManager.getInstance().adicionarRender((Renderizavel) this);
+        GameManager.getInstance().adicionarRender((Renderizavel) this, 0);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
         popUp = new PopUp(this);
     }
@@ -165,7 +165,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     
     @Override
     public void removeRenderer() {
-        GameManager.getInstance().removerRender(this);
+        GameManager.getInstance().removerRender(this, 0);
     }
     
     //Funcoes privadas ---------------------------------------------------------

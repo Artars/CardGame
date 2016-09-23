@@ -38,7 +38,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         this.cartas = new Carta[5];
         this.destaque = -1;
         
-        GameManager.getInstance().adicionarRender((Renderizavel)this);
+        GameManager.getInstance().adicionarRender((Renderizavel)this,0);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
         this.player = GameManager.getInstance().getPlayer(player);
     }
@@ -49,7 +49,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         this.cartas = new Carta[5];
         this.destaque = -1;
         
-        GameManager.getInstance().adicionarRender((Renderizavel)this);
+        GameManager.getInstance().adicionarRender((Renderizavel)this,0);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
         this.player = GameManager.getInstance().getPlayer(player);
     }
@@ -72,7 +72,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     
     @Override
     public void removeRenderer() {
-        GameManager.getInstance().removerRender(this);
+        GameManager.getInstance().removerRender(this,0);
     }
 
     //Clicavel

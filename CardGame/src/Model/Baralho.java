@@ -49,7 +49,7 @@ public class Baralho implements Renderizavel{
         }
         
         rect = new Rectangle(0,0,74,94);
-        GameManager.getInstance().adicionarRender(this);
+        GameManager.getInstance().adicionarRender(this, 0);
     }
 
     //Funcoes de implementacao obrigatoria -------------------------------------
@@ -60,7 +60,7 @@ public class Baralho implements Renderizavel{
     
     @Override
     public void removeRenderer() {
-        GameManager.getInstance().removerRender(this);
+        GameManager.getInstance().removerRender(this, 0);
     }
     
     //Funcoes Privadas ---------------------------------------------------------

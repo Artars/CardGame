@@ -23,6 +23,7 @@ public class PopUp implements Renderizavel{
     public PopUp(Carta cartaMae) {
         this.cartaMae = cartaMae;
         invertedRect = new Rectangle();
+        GameManager.getInstance().adicionarRender(this, 1);
     }
     
     
@@ -75,7 +76,7 @@ public class PopUp implements Renderizavel{
 
     @Override
     public void removeRenderer() {
-        GameManager.getInstance().removerRender(this);
+        GameManager.getInstance().removerRender(this, 1);
     }
     
 }

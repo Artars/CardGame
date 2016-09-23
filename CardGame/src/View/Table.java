@@ -87,8 +87,10 @@ public class Table extends JPanel {
             ob.update(null, g);
         }
         
-        for(Renderizavel r: GameManager.getInstance().getRenderizaveis())
-            r.draw((Graphics2D) g2);
+        for(ArrayList<Renderizavel> a: GameManager.getInstance().getRenderizaveis()){ 
+            for(Renderizavel r: a)
+                r.draw((Graphics2D) g2);
+        }
     }
 
     

@@ -19,7 +19,7 @@ import java.util.Observer;
  */
 public class GameManager {
 
-   private ArrayList<Renderizavel> renderizaveis;
+   private ArrayList<ArrayList<Renderizavel>> camadasRenderizaveis;
    private ArrayList<Selecionavel> selecionaveis;
    private Descarte descarte;
    private Player[] players;
@@ -33,7 +33,7 @@ public class GameManager {
    //make the constructor private so that this class cannot be
    //instantiated
    private GameManager(){
-       renderizaveis = new ArrayList<>();
+       camadasRenderizaveis = new ArrayList<>();
        selecionaveis = new ArrayList<>();
        turno = 1;
        rodada = 0;
@@ -45,12 +45,14 @@ public class GameManager {
       return instance;
    }
    
-   public void adicionarRender(Renderizavel r) {
-       renderizaveis.add(r);
+   public void adicionarRender(Renderizavel r, int camada) {
+       while ( (camada + 1) > camadasRenderizaveis.size())
+           camadasRenderizaveis.add(new ArrayList<Renderizavel>());
+       camadasRenderizaveis.get(camada).add(r);
    }
    
-   public void removerRender(Renderizavel r) {
-       renderizaveis.remove(r);
+   public void removerRender(Renderizavel r, int camada) {
+       camadasRenderizaveis.get(camada).remove(r);
    }
    
    public void adicionarSelecionavel(Selecionavel s) {
@@ -61,8 +63,8 @@ public class GameManager {
        selecionaveis.remove(s);
    }
 
-    public ArrayList<Renderizavel> getRenderizaveis() {
-        return renderizaveis;
+    public ArrayList<ArrayList<Renderizavel>> getRenderizaveis() {
+        return camadasRenderizaveis;
     }
    
     public ArrayList<Selecionavel> findSelecionavel(int x, int y) {
