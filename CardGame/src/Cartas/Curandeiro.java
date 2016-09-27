@@ -60,6 +60,7 @@ public class Curandeiro extends Carta {
     public ArrayList<String> getAtributos() {
         ArrayList<String> atributos = new ArrayList<>();
         
+        atributos.add("Curandeiro");
         atributos.add("Cura: " + String.valueOf(cura));
         atributos.add("Multi.: x" + String.valueOf(multiplicador));
         
@@ -70,6 +71,7 @@ public class Curandeiro extends Carta {
     public ArrayList<Color> getAtributosColor() {
         ArrayList<Color> colors = new ArrayList<>();
         
+        colors.add(Color.DARK_GRAY);
         colors.add(Color.RED);
         colors.add(Color.DARK_GRAY);
 

@@ -80,6 +80,7 @@ public class Defensor extends Atacavel {
     public ArrayList<String> getAtributos() {
         ArrayList<String> atributos = new ArrayList<>();
         
+        atributos.add("Defensor");
         atributos.add("HP: " + String.valueOf(vidaAtual) + "/" + String.valueOf(maxVida * multiplicador));
         atributos.add("Multi.: x" + String.valueOf(multiplicador));
         
@@ -90,6 +91,7 @@ public class Defensor extends Atacavel {
     public ArrayList<Color> getAtributosColor() {
         ArrayList<Color> colors = new ArrayList<>();
         
+        colors.add(Color.DARK_GRAY);
         colors.add(Color.RED);
         colors.add(Color.DARK_GRAY);
 
