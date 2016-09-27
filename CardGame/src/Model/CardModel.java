@@ -42,18 +42,25 @@ public class CardModel {
     
     //Realiza a troca de turno para o jogador "turno"
     public void trocarTurno(int turno) {      
-        ComprarDeck(turno);
         
-        boolean hidePlayer1 = (turno == 2);
-        boards[4].cardVisibility(hidePlayer1);
-        boards[0].cardVisibility(!hidePlayer1);
-        boards[1].inverter();
-        boards[3].inverter();
+        boolean esconderTudo = (turno == 0);
+        for(BoardHolder b:boards)
+            b.cardVisibility(esconderTudo);
         
-        java.awt.Rectangle aux;
-        aux = boards[1].getRect();
-        boards[1].setRect(boards[3].getRect());
-        boards[3].setRect(aux);
+        if(!esconderTudo) {
+            ComprarDeck(turno);
+            
+            boolean hidePlayer1 = (turno == 2);
+            boards[4].cardVisibility(hidePlayer1);
+            boards[0].cardVisibility(!hidePlayer1);
+            boards[1].inverter();
+            boards[3].inverter();
+
+            java.awt.Rectangle aux;
+            aux = boards[1].getRect();
+            boards[1].setRect(boards[3].getRect());
+            boards[3].setRect(aux);
+        }
     }
     
     //Compra cartas pra mao do jogador "turno"

@@ -101,11 +101,10 @@ public class GameManager {
        return selecao;
     }
    
-    //Realiza a troca de turno do jogador 1 para 2 e vice-versa
-    public void trocarTurno() {
-        if (turno == 1) turno = 2;
-        else turno = 1;
-        rodada++;
+    //Realiza a troca de turno do jogador 1 para 2 e vice-versa  
+    public void trocarTurno(int turno) {
+        this.turno = turno;
+        if (turno != 0) rodada++;
     }
     
     //Retorna o turno (1 ou 2)

@@ -157,7 +157,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="turnButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Trocar turno"/>
+            <Property name="text" type="java.lang.String" value="Terminar turno"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>

@@ -22,6 +22,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Observer;
+import javax.swing.JButton;
 
 /**
  *
@@ -162,14 +163,31 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
 
     @Override
     public void actionPerformed(ActionEvent ae) {
+        int turno = GameManager.getInstance().getTurno();
+        
         //Clicou no botao de troca de turno
         if (ae.getActionCommand() == "Turno") {
-            clicado = null;
-            GameManager.getInstance().trocarTurno();
-            turno = GameManager.getInstance().getTurno();
-            model.trocarTurno(turno);
-            view.updateTurnText(turno);
-            view.repaint();
+            JButton Turno = (JButton) ae.getSource();
+            
+            if (Turno.getText().contains("Trocar turno")){
+                clicado = null;
+                
+                if (Turno.getText().contains("1"))GameManager.getInstance().trocarTurno(2);
+                else GameManager.getInstance().trocarTurno(1);
+                
+                Turno.setText("Terminar turno");
+                turno = GameManager.getInstance().getTurno();
+                model.trocarTurno(turno);
+                view.updateTurnText(turno);
+                view.repaint();
+            }
+            else if (Turno.getText() == "Terminar turno"){
+                clicado = null;
+                Turno.setText("Trocar turno " + turno);
+                GameManager.getInstance().trocarTurno(0);
+                model.trocarTurno(0);
+                view.repaint();
+            }
         }
     }
     
