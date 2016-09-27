@@ -9,6 +9,7 @@ import Controller.CardController;
 import Model.CardModel;
 import View.BoardFrame;
 import View.Table;
+import cardgame.GameManager;
 
 /**
  *
@@ -43,14 +44,7 @@ public class Main {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Table board = new Table();
-                BoardFrame view = new BoardFrame(board);
-                CardModel model = new CardModel();
-                CardController controller = new CardController();
-                controller.addView(view);
-                controller.addModel(model);
-                view.addController(controller);
-                controller.startMainWindow();
+                GameManager.getInstance().startMenu();
             }
         });
     }

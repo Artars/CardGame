@@ -10,6 +10,7 @@ import Cartas.Selecionavel;
 import Model.BoardHolder;
 import Model.CardModel;
 import View.BoardFrame;
+import View.Table;
 import cardgame.GameManager;
 import java.awt.Dimension;
 import java.awt.Point;

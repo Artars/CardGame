@@ -7,8 +7,13 @@ package cardgame;
 
 import Cartas.Renderizavel;
 import Cartas.Selecionavel;
+import Controller.CardController;
+import Model.CardModel;
 import Model.Descarte;
 import Model.Player;
+import View.BoardFrame;
+import View.Table;
+import View.TelaInicial;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Observer;
@@ -26,6 +31,7 @@ public class GameManager {
    private Player[] players;
    private int turno;
    private int rodada;
+   private SceneManager sceneManager;
    
    //create an object of SingleObject
    private static GameManager instance = new GameManager();
@@ -35,11 +41,7 @@ public class GameManager {
    //make the constructor private so that this class cannot be
    //instantiated
     private GameManager(){
-       camadasRenderizaveis = new ArrayList<>();
-       selecionaveis = new ArrayList<>();
-       turno = 1;
-       rodada = 0;
-       players = new Player[2];
+       sceneManager = new SceneManager();
    }
 
     
@@ -149,5 +151,20 @@ public class GameManager {
     //Funcao que inicia o fim dos tempos
     public void gameOver(int jogador) {
         System.out.println("Jogador " + String.valueOf(jogador) + " perdeu!");
+        players = new Player[2];
+        startMenu();
+    }
+    
+    public void startMenu(){
+        sceneManager.startMenu();
+    }
+    
+    public void startGame(){
+        camadasRenderizaveis = new ArrayList<>();
+        selecionaveis = new ArrayList<>();
+        turno = 1;
+        rodada = 0;
+        players = new Player[2];
+        sceneManager.startGame();
     }
 }
