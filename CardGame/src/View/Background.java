@@ -61,9 +61,10 @@ public class Background extends JPanel {
     @Override
     public void paintComponent(Graphics g)
     {
+        super.paintComponent(g);
         System.out.println("Batata");
         Graphics2D g2 = (Graphics2D )g;
-        g2.drawImage(background, 0, 0, g.getClipBounds().width, g.getClipBounds().height, null);
+        g2.drawImage(background, 0, 0, getWidth(), getHeight(), null);
         System.out.println("Batata");
     }
 

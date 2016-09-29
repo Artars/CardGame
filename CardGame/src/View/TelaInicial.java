@@ -7,7 +7,11 @@ package View;
 
 import Cartas.Carta;
 import cardgame.GameManager;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -23,14 +27,33 @@ public class TelaInicial extends javax.swing.JFrame {
     /**
      * Creates new form TelaInicial
 ////     */
+    Background board;
     
-    public TelaInicial(Back back) {
+    public TelaInicial(Background back) {
         initComponents();
-        jPanel2.add(back);
         //jPanel2.add(back);
-        repaint();
+        init(back);
     }
     
+    
+    private void init(Background board){
+      
+        Dimension area = new Dimension(boardPanel.getWidth(), boardPanel.getHeight());
+        
+        jBInit.setVisible(false);
+        
+        this.board = board;
+        this.board.setPreferredSize(area);//set dimensao do painel de desenho
+        this.board.setBackground(new Color(124,179,66));//set cor de fundo       
+        this.boardPanel.setLayout(new GridLayout(1, 1));
+        
+        // o board que nos interessa nao é o do Swing padrao, mas a classe Tabuleiro jPanel que criamos !!!
+        this.boardPanel.add(board);
+        board.add(jBInit, new Integer(1), 0);
+        jBInit.setLocation((boardPanel.getWidth()-jBInit.getWidth())/2, 
+                (boardPanel.getHeight()-jBInit.getHeight())/2);
+        jBInit.setVisible(true);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,10 +64,12 @@ public class TelaInicial extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        boardPanel = new javax.swing.JPanel();
         jBInit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(905, 612));
+        setResizable(false);
 
         jBInit.setText("Começar o jogo");
         jBInit.addActionListener(new java.awt.event.ActionListener() {
@@ -53,32 +78,32 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(154, Short.MAX_VALUE)
+        javax.swing.GroupLayout boardPanelLayout = new javax.swing.GroupLayout(boardPanel);
+        boardPanel.setLayout(boardPanelLayout);
+        boardPanelLayout.setHorizontalGroup(
+            boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, boardPanelLayout.createSequentialGroup()
+                .addContainerGap(204, Short.MAX_VALUE)
                 .addComponent(jBInit)
-                .addGap(139, 139, 139))
+                .addGap(185, 185, 185))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(145, Short.MAX_VALUE)
+        boardPanelLayout.setVerticalGroup(
+            boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, boardPanelLayout.createSequentialGroup()
+                .addContainerGap(140, Short.MAX_VALUE)
                 .addComponent(jBInit)
-                .addGap(132, 132, 132))
+                .addGap(137, 137, 137))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(boardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -96,7 +121,7 @@ public class TelaInicial extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel boardPanel;
     private javax.swing.JButton jBInit;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

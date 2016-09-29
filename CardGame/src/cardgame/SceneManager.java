@@ -7,7 +7,6 @@ package cardgame;
 
 import Controller.CardController;
 import Model.CardModel;
-import View.Back;
 import View.Background;
 import View.BoardFrame;
 import View.Table;
@@ -25,7 +24,7 @@ public class SceneManager {
     public void startMenu(){
         if(actualWindow != null)
             actualWindow.setVisible(false);
-        Back b = new Back();
+        Background b = new Background();
         TelaInicial menu = new TelaInicial(b);
         actualWindow = menu;
         menu.setVisible(true);
