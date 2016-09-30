@@ -30,51 +30,60 @@ public class Defensor extends Atacavel {
 
     //Funcoes publicas ---------------------------------------------------------
     @Override
-    public void onClick() {
-        if (!realizouAcao)
-            selecionado = true;
+    public void onClick(Object[] args) {
+        int size = 0;
+        if(args != null)
+            size = args.length;
+        
+        try {
+            switch(size) {
+                case 0:
+                    if (!realizouAcao)
+                        selecionado = true;
+                    break;
+                
+                case 1:
+                    //Se colocou ou moveu dentro do tabuleiro
+                    BoardHolder b1 = (BoardHolder) args[0];
+                    if (b1.getJogador() == jogador) {
+                        boardParent.retiraCarta(index);
+                        b1.insereCarta(this);
+                        boardParent = b1;
+                        realizouAcao = true;
+                        onBoard = true;
+                    }
+                    //Foi pra pilha de descarte
+                    else if (b1.getJogador() == 0) {
+                        descartar();
+                    }
+                    break;
+                
+                default:
+                    BoardHolder b = (BoardHolder) args[0];
+                    Atacavel a = (Atacavel) args[1];
+                    
+                    //Troca de posicao com outra carta
+                    if (!realizouAcao && onBoard) {
+                        if (b.getJogador() == jogador && a.isAtacavel()) {
+                            int otherIndex = ((Carta)a).getIndex();
+                            if (otherIndex != this.index) {
+                                b.retiraCarta(otherIndex);
+                                b.retiraCarta(index);
+                                b.insereCarta((Carta)a, index);
+                                b.insereCarta(this, otherIndex);
+                                realizouAcao = true;
+                            }
+                        }
+                    }
+                    
+            }
+        
+        }
+        catch(ClassCastException e) {
+        
+        }
     }
        
-    @Override
-    public void onClick(BoardHolder b) {
-        //Se colocou ou moveu dentro do tabuleiro
-        if (b.getJogador() == jogador) {
-            boardParent.retiraCarta(index);
-            b.insereCarta(this);
-            boardParent = b;
-            realizouAcao = true;
-            onBoard = true;
-        }
-        //Foi pra pilha de descarte
-        else if (b.getJogador() == 0) {
-            descartar();
-        }
-    }
-    
-    @Override
-    public void onClick(BoardHolder b, Carta c) {
-        Atacavel a;
-        if(c instanceof Atacavel)
-            a = (Atacavel) c;
-        else {
-            System.out.println("Deu Ruim!");
-            return;
-        }
-            
-        //Troca de posicao com outra carta
-        if (!realizouAcao && onBoard) {
-            if (b.getJogador() == jogador && a.isAtacavel()) {
-                int otherIndex = ((Carta)a).getIndex();
-                if (otherIndex != this.index) {
-                    b.retiraCarta(otherIndex);
-                    b.retiraCarta(index);
-                    b.insereCarta((Carta)a, index);
-                    b.insereCarta(this, otherIndex);
-                    realizouAcao = true;
-                }
-            }
-        }
-    }
     
     @Override
     public ArrayList<String> getAtributos() {

@@ -14,18 +14,42 @@ import java.awt.Rectangle;
  * @author Arthur
  */
 public interface Selecionavel {
-    //Retorna se as coordenadas x e y se encontram dentro do objeto
+    /**
+     * Retorna se as coordenadas x e y se encontram dentro do objeto
+     * @param x
+     * @param y
+     * @return 
+     */
     public abstract boolean isInside(int x, int y);
-    //Retorna se o ponto se encontra dentro do objeto
+    /**
+     * Retorna se o ponto se encontra dentro do objeto
+     * @param p
+     * @return 
+     */
     public abstract boolean isInside(Point p);
-    //Funcao realizada ao se clicar em um objeto
-    public abstract void onClick();
-    //Funcao chamada ao se passar o mouse sobre o objeto nas coordenadas x e y
+    /**
+     * Funcao realizada ao se clicar em um objeto, com argumentos opcionais
+     * @param args 
+     */
+    public abstract void onClick(Object[] args);
+    /**
+     * Funcao chamada ao se passar o mouse sobre o objeto nas coordenadas x e y
+     * @param x
+     * @param y 
+     */
     public abstract void onHover(int x, int y);
-    //Funcao chamada ao se passar o mouse sobre o objeto no ponto p
+    /**
+     * Funcao chamada ao se passar o mouse sobre o objeto no ponto p
+     * @param p 
+     */
     public abstract void onHover(Point p);
-    //Funcao chamada quando o mouse sai de sobre o objeto
+    /**
+     * Funcao chamada quando o mouse sai de sobre o objeto
+     */
     public abstract void onLeave();
-    //Retorna o retangulo com area clicavel do objeto
+    /**
+     * Retorna o retangulo com area clicavel do objeto
+     * @return rect
+     */
     public abstract Rectangle getRect();
 }

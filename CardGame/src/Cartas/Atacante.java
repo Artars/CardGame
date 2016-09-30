@@ -78,48 +78,55 @@ public class Atacante extends Atacavel {
 
     //Funcoes publicas ---------------------------------------------------------
     @Override
-    public void onClick() {
-        if (!realizouAcao)
-            selecionado = true;
-    }
-    
-    @Override
-    public void onClick(BoardHolder b) {
+    public void onClick(Object[] args) throws IllegalArgumentException {
+        int size = 0;
+        if(args != null)
+            size = args.length;
         int inimigo = (jogador == 1) ? 2:1;
-        //Se colocar em campo
-        if ((b.getJogador() == jogador) && !onBoard) {
-            boardParent.retiraCarta(index);
-            b.insereCarta(this);
-            boardParent = b;
-            realizouAcao = true;
-            onBoard = true;
-        }
-        //Descarte
-        else if (b.getJogador() == 0 && !onBoard) {
-            descartar();
-        }
-        //Atacar diretamente o jogador
-        else if (onBoard && b.getJogador() == inimigo) {
-            b.levaDano(index, forca * multiplicador);
-            realizouAcao = true;
-        }
-    }
-    
-    @Override
-    public void onClick(BoardHolder b, Carta c) {
-        int inimigo = (jogador == 1) ? 2:1;
-        Atacavel a;
         
-        //Verifica se a carta é do tipo que pode ser atacado
-        if(c instanceof Atacavel)
-            a = (Atacavel) c;
-        else
-            return;
-        if (a.getJogador() == inimigo && a.isAtacavel()) {
-            if (a.getIndex() == this.index) {
-                a.levarDano(forca * multiplicador);            
-                realizouAcao = true;
+        try {
+            switch(size) {
+                case 0:
+                    if (!realizouAcao)
+                        selecionado = true;
+                    break;
+
+                //Caso tenha clicado só no board
+                case 1:
+                    //Se colocar em campo
+                    BoardHolder b = (BoardHolder) args[0];
+                    if ((b.getJogador() == jogador) && !onBoard) {
+                        boardParent.retiraCarta(index);
+                        b.insereCarta(this);
+                        boardParent = b;
+                        realizouAcao = true;
+                        onBoard = true;
+                    }
+                    //Descarte
+                    else if (b.getJogador() == 0 && !onBoard) {
+                        descartar();
+                    }
+                    //Atacar diretamente o jogador
+                    else if (onBoard && b.getJogador() == inimigo) {
+                        b.levaDano(index, forca * multiplicador);
+                        realizouAcao = true;
+                    }
+                    break;
+
+                default:
+                    Atacavel a = (Atacavel) args[1];
+
+                    if (a.getJogador() == inimigo && a.isAtacavel()) {
+                        if (a.getIndex() == this.index) {
+                            a.levarDano(forca * multiplicador);            
+                            realizouAcao = true;
+                        }
+                    }
+                    break;
             }
+        }
+        catch (ClassCastException e){
+            
         }
     }
 

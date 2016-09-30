@@ -20,7 +20,8 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
- *
+ * Clase abstrata de carta, base para todas as cartas presentes no jogo
+ * 
  * @author Arthur
  */
 public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
@@ -43,15 +44,24 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     protected PopUp popUp;
 
     //Funcoes abstratas --------------------------------------------------------
-    public abstract void onClick(BoardHolder b, Carta c);
-    public abstract void onClick(BoardHolder b);
-    public abstract void onClick();
-    //Retorna os atributos a serem mostrados no PopUp
+    /**
+     * Retorna os atributos a serem mostrados no PopUp
+     * @return atributos
+     */
     public abstract ArrayList<String> getAtributos();
-    //Retorna as cores dos atributos a serem mostrados no PopUp
+    /**
+     * Retorna as cores dos atributos a serem mostrados no PopUp
+     * @return coresAtributos
+     */
     public abstract ArrayList<Color> getAtributosColor();
     
     //Construtores -------------------------------------------------------------
+    /**
+     * Inicializa a carta, onde n é a carta do baralho e x e y as coordenadas da carta
+     * @param x
+     * @param y
+     * @param n 
+     */
     public Carta (int x, int y, int n) {
         this.multiplicador = 1;
         this.index = -1;
@@ -76,6 +86,10 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         popUp = new PopUp(this);
     }
     
+    /**
+     * Inicializa a carta, onde n é a carta do baralho
+     * @param n 
+     */
     public Carta (int n) {
         this.multiplicador = 1;
         this.index = -1;
@@ -103,11 +117,20 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     //Funcoes de implementacao obrigatoria -------------------------------------
     @Override
     public int compareTo(Object t) {
-        if(t instanceof Carta)
-            return compareTo((Carta) t);
-        return 0;
+        try {
+            Carta c = (Carta) t;
+            return compareTo(c);
+        }
+        catch(ClassCastException e) {
+            return 0;
+        }
     }
 
+    /**
+     * Compara a carta com outra carta
+     * @param c
+     * @return 
+     */
     public int compareTo(Carta c) {
         if (this.numero == c.numero){
             if (this.naipe == c.naipe)
@@ -129,16 +152,33 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
             return;
         }
         
+        //Desenha a imagem da carta
+        g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);
         popUp.draw(g);
         
-        g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);
-        
+        //Desenha um retangulo transparente com o estado da carta
         g.setColor (new Color(0,0,0,0));
         if (realizouAcao) {
-            g.setColor (new Color(96,125,139,120));
+            g.setColor (new Color(96,125,139, 120));
         }
         else if (selecionado)
             g.setColor(new Color(0,1,1,.2f));
+        g.fillRect(rect.x, rect.y, rect.width, rect.height);
+        
+        //Desenha retangulo de multiplicador
+        switch(multiplicador) {
+            case 2:
+                g.setColor (new Color (198,255,0,120));
+                break;
+            case 3:
+                g.setColor (new Color (139,195,74,120));
+                break;
+            case 4:
+                g.setColor (new Color (118,255,3,120));
+                break;
+            default:
+                g.setColor (new Color(0,0,0,0));
+        }
         g.fillRect(rect.x, rect.y, rect.width, rect.height);
     }
     
@@ -177,7 +217,10 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     }
     
     //Funcoes privadas ---------------------------------------------------------
-    //Transforma o numero da carta em String
+    /**
+     * Transforma o numero da carta em String
+     * @return numero
+     */
     private String NumeroToString(){
         switch(this.numero){
             case 1:
@@ -193,7 +236,10 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         }
     }
     
-    //Transforma o naipe em uma String
+    /**
+     * Transforma o naipe em uma String
+     * @return naipe
+     */
     private String NaipeToString(){
         switch(this.naipe){
             case 0:
@@ -210,7 +256,9 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     }
     
     //Funcoes publicas ---------------------------------------------------------
-    //Descarta a carta e desativa ela
+    /**
+     * Descarta a carta e desativa ela
+     */
     public void descartar(){
         GameManager.getInstance().removerSelecionavel(this);
         boardParent.retiraCarta(index);
@@ -220,79 +268,155 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         boardParent = (BoardHolder) GameManager.getInstance().getDescarte();
     }
     
-    //Retorna se a carta pode ser clicada ou nao, dado um jogador
+    /**
+     * Retorna se a carta pode ser clicada ou nao, dado um jogador
+     * @param jogador
+     * @return clicavel
+     */
     public boolean isClicavel(int jogador){
         return !realizouAcao && jogador == this.jogador;
     }
     
     //Getters e setters --------------------------------------------------------
+    /**
+     * Seta Rect
+     * @param x
+     * @param y 
+     */
     public void setRect(int x, int y) {
         rect.x = x;
         rect.y = y;
     }
     
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param width
+     * @param height 
+     */
     public void setRect(int x, int y, int width, int height) {
         rect = new Rectangle(x,y,width,height);
     }
 
+    /**
+     * 
+     * @param rect 
+     */
     public void setRect(Rectangle rect) {
         this.rect = rect;
     }
     
+    /**
+     * 
+     * @param width
+     * @param height 
+     */
     public void setDimension(int width, int height) {
         rect.width = width;
         rect.height = height;
     }
 
+    /**
+     * 
+     * @param index 
+     */
     public void setIndex(int index) {
         this.index = index;
     }
-
+    
+    /**
+     * 
+     * @return index
+     */
     public int getIndex() {
         return index;
     }
 
+    /**
+     * 
+     * @return boardParent
+     */
     public BoardHolder getBoardParent() {
         return boardParent;
     }
 
+    /**
+     * 
+     * @param boardParent 
+     */
     public void setBoardParent(BoardHolder boardParent) {
         this.boardParent = boardParent;
     }  
     
+    /**
+     * 
+     * @return 
+     */
     public int getNumero() {
         return numero;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getNaipe() {
         return naipe;
     }
 
-
+    /**
+     * 
+     * @return 
+     */
     public int getJogador() {
         return jogador;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public int getMultiplicador() {
         return multiplicador;
     }
     
+    /**
+     * 
+     * @param jogador 
+     */
     public void setJogador(int jogador) {
         this.jogador = jogador;
     }
 
+    /**
+     * 
+     * @param realizouAcao 
+     */
     public void setRealizouAcao(boolean realizouAcao) {
         this.realizouAcao = realizouAcao;
     }
 
+    /**
+     * 
+     * @param multiplicador 
+     */
     public void setMultiplicador(int multiplicador) {
         this.multiplicador = multiplicador;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public boolean getSelecionado() {
         return selecionado && !escondido;
     }
 
+    /**
+     * 
+     * @param escondido 
+     */
     public void setEscondido(boolean escondido) {
         this.escondido = escondido;
     }

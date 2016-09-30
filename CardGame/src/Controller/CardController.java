@@ -35,6 +35,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     private Selecionavel clicado;
     private ArrayList <Selecionavel> selecionados;
     private IndicadorClicado indicador;
+    private TurnScreen turnScreen;
     
     private int turno = 0;
     private int jogadorAtual;
@@ -43,11 +44,13 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         selecionados = new ArrayList<>();
         clicado = null;
         indicador = new IndicadorClicado();
+        turnScreen = new TurnScreen();
     }
     
     //Adiciona o view ao controle
     public void addView(Observer view){
         this.view = (BoardFrame)view;
+        turnScreen.setRect(this.view.getBoardPanel().getBounds());
     }
     
     //Adiciona um model ao controle
@@ -89,7 +92,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
                 clicado = clicados.get(1);
                 indicador.setRect(clicado.getRect());
                 indicador.setEnabled(true);
-                clicado.onClick();
+                clicado.onClick(null);
                 System.out.println("Algo foi selecionado");
             }
         }
@@ -100,17 +103,8 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         }
         //Clicou em algum objeto tendo selecionado a carta
         else if (clicado != null){
-            //Clicou em apenas um objeto (BoardHolder)
-            if (clicados.size() == 1) {
-                if (clicados.get(0) instanceof BoardHolder ) {
-                    BoardHolder b = (BoardHolder) clicados.get(0);
-                    if (b.getIndex(x,y) != -1)
-                        ((Carta) clicado).onClick(b);
-                }
-            }
-            //Clicou em dois objeto, o boardholder e a carta
-            else if (clicados.size() > 1) {
-                ((Carta) clicado).onClick((BoardHolder) clicados.get(0), (Carta) clicados.get(1));
+            if (clicados.size() > 0) {
+                clicado.onClick(clicados.toArray());
             }
             clicado = null;
             indicador.setEnabled(false);
@@ -166,12 +160,12 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         int turno = GameManager.getInstance().getTurno();
         
         //Clicou no botao de troca de turno
-        if (ae.getActionCommand() == "Turno") {
+        if (ae.getActionCommand().equals("Turno")) {
             JButton Turno = (JButton) ae.getSource();
+            clicado = null;
+            indicador.setEnabled(false);
             
             if (Turno.getText().contains("Trocar turno")){
-                clicado = null;
-                
                 if (Turno.getText().contains("1"))GameManager.getInstance().trocarTurno(2);
                 else GameManager.getInstance().trocarTurno(1);
                 
@@ -179,19 +173,22 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
                 turno = GameManager.getInstance().getTurno();
                 model.trocarTurno(turno);
                 view.updateTurnText(turno);
+                turnScreen.setEnable(false);
                 view.repaint();
             }
-            else if (Turno.getText() == "Terminar turno"){
-                clicado = null;
+            else if (Turno.getText().equals("Terminar turno")){
                 Turno.setText("Trocar turno " + turno);
                 GameManager.getInstance().trocarTurno(0);
                 model.trocarTurno(0);
+                turnScreen.setEnable(true);
                 view.repaint();
             }
         }
     }
     
-    //Inicia a janela principaç
+    /**
+     * Inicia a janela principal
+     */
     public void startMainWindow(){
         view.setMinimumSize(new Dimension(600, 400));
         view.setVisible(true);

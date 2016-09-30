@@ -33,6 +33,10 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
         GameManager.getInstance().setBar(2, barraJogador2);
     }
     
+    /**
+     * Inicia o a janela com o panel desejado
+     * @param board 
+     */
     private void init(Table board){
       
         Dimension area = new Dimension(boardPanel.getWidth(), boardPanel.getHeight());
@@ -46,6 +50,10 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
         this.boardPanel.add(board);  
     }
     
+    /**
+     * Adiciona os controles de mouse e resposta aos butões ao controller
+     * @param controller 
+     */
     public void addController(CardController controller){
         this.controller = controller;
         this.board.addMouseListener(controller);
@@ -206,10 +214,19 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
     private javax.swing.JLabel turnLabel;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Atualiza o texto do botão de turno para o número colocado
+     * @param player 
+     */
     public void updateTurnText(int player) {
         turnLabel.setText(String.valueOf(player));
     }
     
+    /**
+     * Mantido apenas por questão de compatibilidade
+     * @param o
+     * @param o1 
+     */
     @Override
     public void update(Observable o, Object o1) {
         

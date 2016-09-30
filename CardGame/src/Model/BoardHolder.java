@@ -121,7 +121,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     }
     
     @Override
-    public void onClick() {
+    public void onClick(Object[] args) {
     
     }
     

@@ -39,45 +39,12 @@ public abstract class Atacavel extends Carta {
     //Funcoes substituidas (Override)-------------------------------------------
     @Override
     public void draw(Graphics2D g) {
-        
-        if(escondido){
-            g.drawImage(hiddenSprite, rect.x, rect.y, rect.width, rect.height, null);
-            return;
-        }
-        
-        //Desenha a imagem da carta
-        g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);
-        popUp.draw(g);
-        
+        super.draw(g);
+
         //Desenha um retangulo com o tanto que a carta perdeu de vida
         int newHeight = (int) ((1 - vida) * rect.height);
         g.setColor(new Color(255,0,0,120));
         g.fillRect(rect.x, rect.y, rect.width, newHeight);
-        
-        //Desenha um retangulo transparente com o estado da carta
-        g.setColor (new Color(0,0,0,0));
-        if (realizouAcao) {
-            g.setColor (new Color(96,125,139, 120));
-        }
-        else if (selecionado)
-            g.setColor(new Color(0,1,1,.2f));
-        g.fillRect(rect.x, rect.y, rect.width, rect.height);
-        
-        //Desenha retangulo de multiplicador
-        switch(multiplicador) {
-            case 2:
-                g.setColor (new Color (198,255,0,120));
-                break;
-            case 3:
-                g.setColor (new Color (139,195,74,120));
-                break;
-            case 4:
-                g.setColor (new Color (118,255,3,120));
-                break;
-            default:
-                g.setColor (new Color(0,0,0,0));
-        }
-        g.fillRect(rect.x, rect.y, rect.width, rect.height);
     }
     
     @Override

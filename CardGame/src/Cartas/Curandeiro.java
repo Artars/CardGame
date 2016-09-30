@@ -23,39 +23,44 @@ public class Curandeiro extends Carta {
     }
 
     @Override
-    public void onClick() {
-        if (!realizouAcao)
-            selecionado = true;
-    }
-
-    //Funcoes publicas ---------------------------------------------------------
-    @Override
-    public void onClick(BoardHolder b, Carta c) {
-        Atacavel a;
-        
-        if(c instanceof Atacavel)
-            a = (Atacavel) c;
-        else
-            return;
-        
-        if (b.getJogador() == jogador && a.isAtacavel()) {
-            if (a.getNumero() == this.numero)
-                multiplicador ++;
-            a.recuperarVida(cura * multiplicador);
-            realizouAcao = true;
-            //Se descarta
-            descartar();
+    public void onClick(Object[] args) {
+        int size = 0;
+        if(args != null)
+            size = args.length;
+        try{
+            switch(size) {
+                case 0:
+                    if (!realizouAcao)
+                        selecionado = true;
+                    break;
+                    
+                case 1:
+                    BoardHolder b = (BoardHolder) args[0];
+                    if (b.getJogador() == 0) {
+                        descartar();
+                    }
+                    break;
                 
+                case 2:
+                    BoardHolder b1 = (BoardHolder) args[0];
+                    Atacavel a = (Atacavel) args[1];
+                    if (b1.getJogador() == jogador && a.isAtacavel()) {
+                        if (a.getNumero() == this.numero)
+                            multiplicador ++;
+                        a.recuperarVida(cura * multiplicador);
+                        realizouAcao = true;
+                        //Se descarta
+                        descartar();
+
+                    }
+            }
+        }
+        catch(ClassCastException e) {
+        
         }
     }
 
-    @Override
-    public void onClick(BoardHolder b) {
-        if (b.getJogador() == 0) {
-            descartar();
-        }
-    }
-    
+    //Funcoes publicas ---------------------------------------------------------    
     @Override
     public ArrayList<String> getAtributos() {
         ArrayList<String> atributos = new ArrayList<>();
