@@ -62,10 +62,8 @@ public class Background extends JPanel {
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        System.out.println("Batata");
         Graphics2D g2 = (Graphics2D )g;
         g2.drawImage(background, 0, 0, getWidth(), getHeight(), null);
-        System.out.println("Batata");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
