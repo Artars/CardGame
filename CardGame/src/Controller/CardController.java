@@ -57,6 +57,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     public void addModel(CardModel model) {
         this.model = (CardModel) model;
         UpdateWorkspaces();
+        model.ComprarDeck(1);
     }
     
     //Passa as localizacoes e tamanhos dos retangulos para o model

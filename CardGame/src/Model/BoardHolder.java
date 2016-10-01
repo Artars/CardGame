@@ -209,7 +209,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     public boolean insereCarta(Carta c, int n) {
         if(cartas[n] == null) {
             cartas[n] = c;
-            cartas[n].setRect(getCardRect(n));
+            cartas[n].tween(getCardRect(n));
             cartas[n].setIndex(n);
             cartas[n].setBoardParent(this);
             System.out.println("Adicionado carta em " + getCardRect(n));
@@ -225,7 +225,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         int n = destaque;
         if(destaque != -1 && cartas[n] == null) {
             cartas[n] = c;
-            cartas[n].setRect(getCardRect(n));
+            cartas[n].tween(getCardRect(n));
             cartas[n].setIndex(n);
             cartas[n].setBoardParent(this);
             System.out.println("Adicionado carta em " + getCardRect(n));

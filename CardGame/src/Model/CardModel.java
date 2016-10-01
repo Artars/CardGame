@@ -37,7 +37,6 @@ public class CardModel {
         ((Descarte) boards[2]).setBoardJogadores(boards[3], 1);
         ((Descarte) boards[2]).setBoardJogadores(boards[1], 2);
 
-        ComprarDeck(1);
     }
     
     //Realiza a troca de turno para o jogador "turno"

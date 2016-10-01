@@ -277,6 +277,13 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         return !realizouAcao && jogador == this.jogador;
     }
     
+    public void tween(java.awt.Rectangle dest) {
+        TransladationTween t = new TransladationTween(this);
+        t.setTarget(dest, .5f);
+        Thread thread = new Thread(t);
+        thread.start();
+    }
+    
     //Getters e setters --------------------------------------------------------
     /**
      * Seta Rect

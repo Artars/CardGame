@@ -65,11 +65,11 @@ public class Defensor extends Atacavel {
                     //Troca de posicao com outra carta
                     if (!realizouAcao && onBoard) {
                         if (b.getJogador() == jogador && a.isAtacavel()) {
-                            int otherIndex = ((Carta)a).getIndex();
+                            int otherIndex = a.getIndex();
                             if (otherIndex != this.index) {
                                 b.retiraCarta(otherIndex);
                                 b.retiraCarta(index);
-                                b.insereCarta((Carta)a, index);
+                                b.insereCarta(a, index);
                                 b.insereCarta(this, otherIndex);
                                 realizouAcao = true;
                             }
@@ -83,7 +83,6 @@ public class Defensor extends Atacavel {
         
         }
     }
-       
     
     @Override
     public ArrayList<String> getAtributos() {

@@ -89,6 +89,7 @@ public class Baralho implements Renderizavel{
             default:
                 c = new Defensor(n);
         }
+        c.setRect(new Rectangle(rect));
         return c;
     }
     

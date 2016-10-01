@@ -47,7 +47,12 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
         this.boardPanel.setLayout(new GridLayout(1, 1));
         
         // o board que nos interessa nao é o do Swing padrao, mas a classe Tabuleiro jPanel que criamos !!!
-        this.boardPanel.add(board);  
+        this.boardPanel.add(board); 
+        
+        //Repaint Thread
+        RepaintThread r = new RepaintThread(this);
+        Thread t = new Thread(r);
+        t.start();
     }
     
     /**
