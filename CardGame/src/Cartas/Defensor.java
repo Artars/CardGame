@@ -45,6 +45,8 @@ public class Defensor extends Atacavel {
                 case 1:
                     //Se colocou ou moveu dentro do tabuleiro
                     BoardHolder b1 = (BoardHolder) args[0];
+                    if(b1.getIndex() == -1)
+                        return;
                     if (b1.getJogador() == jogador) {
                         boardParent.retiraCarta(index);
                         b1.insereCarta(this);

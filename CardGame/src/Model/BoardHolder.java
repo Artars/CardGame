@@ -270,6 +270,10 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         return -1;
     }
     
+    public int getIndex() {
+        return destaque;
+    }
+    
     //Realiza dano no jogador
     public void levaDano(int index, int dano) {
         if(jogador == 1 || jogador == 2) {
