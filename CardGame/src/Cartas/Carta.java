@@ -279,17 +279,27 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     
     public void move(java.awt.Rectangle dest) {
         TransladationTween t = new TransladationTween(this);
-        t.setTarget(dest, .5f);
+        t.addTarget(dest, .5f);
+        Thread thread = new Thread(t);
+        thread.start();
+    }
+    
+    public void movePath(java.awt.Rectangle[] points, float[] intervals) {
+         TransladationTween t = new TransladationTween(this);
+        for (int i = 0; i < points.length; i++) {
+            t.addTarget(points[i], intervals[i]);
+        }
         Thread thread = new Thread(t);
         thread.start();
     }
     
     public void grow(float scale) {
         ScaleTween t = new ScaleTween(this);
-        t.setScale(scale, 0.5f);
+        t.setScale(scale, .5f);
         Thread thread = new Thread(t);
         thread.start();
     }
+    
     
     //Getters e setters --------------------------------------------------------
     /**

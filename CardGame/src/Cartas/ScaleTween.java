@@ -15,7 +15,7 @@ public class ScaleTween implements Runnable{
     Selecionavel parent;
     float dt = 0.01f;
     private int steps;
-    Rectangle originalRect;  
+    Rectangle originalRect;
     float scale;
     
     //SpeedParams
@@ -37,6 +37,7 @@ public class ScaleTween implements Runnable{
     
     public void setScale(float scale, float duration) {
         duration *= 0.5f;
+        this.scale = scale;
         originalRect = new Rectangle(parent.getRect());
         
         Rectangle target = new Rectangle(originalRect);
@@ -54,16 +55,12 @@ public class ScaleTween implements Runnable{
 
     @Override
     public void run() {   
-        currentX = parent.getRect().x;
-        currentY = parent.getRect().y;
-        currentWidth = parent.getRect().width;
-        currentHeight = parent.getRect().height;
+        currentX = 0;
+        currentY = 0;
+        currentWidth = 0;
+        currentHeight = 0;
         for(int i = 0; i < steps/2; i++) {
-            currentX += speedX * dt;
-            currentY += speedY * dt;
-            currentWidth += speedWidth * dt;
-            currentHeight += speedHeight * dt;
-            parent.getRect().setRect(currentX, currentY, currentWidth, currentHeight);
+            loopBody();
             try {
                 Thread.sleep((int) (dt * 1000));
             }
@@ -76,12 +73,9 @@ public class ScaleTween implements Runnable{
         speedWidth *= -1;
         speedHeight *= -1;
         
+        currentX = currentY = currentWidth = currentHeight = 0;
         for(int i = 0; i < steps/2; i++) {
-            currentX += speedX * dt;
-            currentY += speedY * dt;
-            currentWidth += speedWidth * dt;
-            currentHeight += speedHeight * dt;
-            parent.getRect().setRect(currentX, currentY, currentWidth, currentHeight);
+            loopBody();
             try {
                 Thread.sleep((int) (dt * 1000));
             }
@@ -90,8 +84,36 @@ public class ScaleTween implements Runnable{
             }
         }
         
-        
-        parent.getRect().setRect(originalRect);
+        parent.getRect().height = originalRect.height;
+        parent.getRect().width = originalRect.width;
+    }
+    
+    private void loopBody() {
+        Rectangle deltaRect = new Rectangle();
+            currentX += speedX * dt;
+            currentY += speedY * dt;
+            currentWidth += speedWidth * dt;
+            currentHeight += speedHeight * dt;
+            if(Math.abs(currentX) >= 1) {
+                deltaRect.x = (int) currentX;
+                currentX = 0;
+            }
+            if(Math.abs(currentY) >= 1) {
+                deltaRect.y = (int) currentY;
+                currentY = 0;
+            }
+            if(Math.abs(currentWidth) >= 1) {
+                deltaRect.width = (int) currentWidth;
+                currentWidth = 0;
+            }
+            if(Math.abs(currentHeight) >= 1) {
+                deltaRect.height = (int) currentHeight;
+                currentHeight = 0;
+            }
+            parent.getRect().x += deltaRect.x;
+            parent.getRect().y += deltaRect.y;
+            parent.getRect().width += deltaRect.width;
+            parent.getRect().height += deltaRect.height;
     }
     
 }

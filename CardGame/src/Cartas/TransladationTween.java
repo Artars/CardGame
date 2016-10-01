@@ -7,6 +7,7 @@ package Cartas;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 /**
  *
@@ -15,7 +16,8 @@ import java.awt.Rectangle;
 public class TransladationTween implements Runnable {
 
     private Selecionavel parent;
-    private Rectangle target;
+    private ArrayList<Rectangle> targets;
+    private ArrayList<Float> durations; 
     private float speedX;
     private float speedY;
     private float speedWidth;
@@ -29,11 +31,17 @@ public class TransladationTween implements Runnable {
     
     public TransladationTween (Selecionavel parent) {
         this.parent = parent;
+        this.targets = new ArrayList<>();
+        this.durations = new ArrayList<>();
     }
     
-    public void setTarget(Rectangle targetRect, float time) {
+    public void addTarget(Rectangle targetRect, float time) {
+        targets.add(targetRect);
+        durations.add(time);
+    }
+    
+    public void setTarget(Rectangle target, float time) {
         Rectangle parRect = parent.getRect();
-        target = targetRect;
         speedX = ((target.x - parRect.x) / time);
         speedY = ((target.y - parRect.y) / time);
         speedWidth = ((target.width - parRect.width) / time);
@@ -43,24 +51,53 @@ public class TransladationTween implements Runnable {
     
     @Override
     public void run() {   
-        currentX = parent.getRect().x;
-        currentY = parent.getRect().y;
-        currentWidth = parent.getRect().width;
-        currentHeight = parent.getRect().height;
-        for(int i = 0; i < steps; i++) {
+        int i = 0;
+        while (i < targets.size()) {
+            setTarget(targets.get(i), durations.get(i));
+            currentX = 0;
+            currentY = 0;
+            currentWidth = 0;
+            currentHeight = 0;
+            for(int j = 0; j < steps; j++) {
+                loopBody();
+                try {
+                    Thread.sleep((int) (dt * 1000));
+                }
+                catch(InterruptedException e) {
+                    break;
+                }
+            }
+            i++;
+        }
+        parent.getRect().setRect(targets.get(targets.size() - 1));
+    }
+    
+    private void loopBody() {
+        Rectangle deltaRect = new Rectangle();
             currentX += speedX * dt;
             currentY += speedY * dt;
             currentWidth += speedWidth * dt;
             currentHeight += speedHeight * dt;
-            parent.getRect().setRect(currentX, currentY, currentWidth, currentHeight);
-            try {
-                Thread.sleep((int) (dt * 1000));
+            if(Math.abs(currentX) >= 1) {
+                deltaRect.x = (int) currentX;
+                currentX = 0;
             }
-            catch(InterruptedException e) {
-                break;
+            if(Math.abs(currentY) >= 1) {
+                deltaRect.y = (int) currentY;
+                currentY = 0;
             }
-        }
-        parent.getRect().setRect(target);
+            if(Math.abs(currentWidth) >= 1) {
+                deltaRect.width = (int) currentWidth;
+                currentWidth = 0;
+            }
+            if(Math.abs(currentHeight) >= 1) {
+                deltaRect.height = (int) currentHeight;
+                currentHeight = 0;
+            }
+            parent.getRect().x += deltaRect.x;
+            parent.getRect().y += deltaRect.y;
+            parent.getRect().width += deltaRect.width;
+            parent.getRect().height += deltaRect.height;
     }
     
 }

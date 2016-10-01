@@ -112,6 +112,7 @@ public class Atacante extends Atacavel {
                     else if (onBoard && b.getJogador() == inimigo) {
                         b.levaDano(index, forca * multiplicador);
                         realizouAcao = true;
+                        attackMovement();
                     }
                     break;
 
@@ -122,6 +123,7 @@ public class Atacante extends Atacavel {
                         if (a.getIndex() == this.index) {
                             a.levarDano(forca * multiplicador);            
                             realizouAcao = true;
+                            attackMovement();
                         }
                     }
                     break;
@@ -154,5 +156,16 @@ public class Atacante extends Atacavel {
         colors.add(Color.DARK_GRAY);
 
         return colors;
+    }
+    
+    private void attackMovement() {
+        java.awt.Rectangle[] points = new java.awt.Rectangle[2];
+        points[0] = new java.awt.Rectangle(rect);
+        points[1] = new java.awt.Rectangle(rect);
+        points[0].y -= 25;
+        float[] durations = new float[2];
+        durations[0] = durations[1] = 0.25f;
+        movePath(points, durations);
+        grow(2f);
     }
 }
