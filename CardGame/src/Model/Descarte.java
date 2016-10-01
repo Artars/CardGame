@@ -55,7 +55,7 @@ public class Descarte extends BoardHolder {
     private void adicionarCarta(Carta c, int n) {
         cartas[n] = c;
         c.setIndex(n);
-        c.tween(getCardRect(n));
+        c.move(getCardRect(n));
         c.setRealizouAcao(false);
         
     }

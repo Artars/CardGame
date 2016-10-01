@@ -89,6 +89,7 @@ public class Atacante extends Atacavel {
                 case 0:
                     if (!realizouAcao)
                         selecionado = true;
+                    grow(1.5f);
                     break;
 
                 //Caso tenha clicado só no board

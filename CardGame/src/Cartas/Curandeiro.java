@@ -32,6 +32,7 @@ public class Curandeiro extends Carta {
                 case 0:
                     if (!realizouAcao)
                         selecionado = true;
+                    grow(1.5f);
                     break;
                     
                 case 1:

@@ -40,6 +40,7 @@ public class Defensor extends Atacavel {
                 case 0:
                     if (!realizouAcao)
                         selecionado = true;
+                    grow(1.5f);
                     break;
                 
                 case 1:
