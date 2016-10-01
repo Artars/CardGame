@@ -95,9 +95,8 @@ public class Atacante extends Atacavel {
                 case 1:
                     //Se colocar em campo
                     BoardHolder b = (BoardHolder) args[0];
-                    if(b.getIndex() == -1)
-                        return;
-                    if ((b.getJogador() == jogador) && !onBoard) {
+                    
+                    if ((b.getJogador() == jogador) && !onBoard && b.getIndex() == -1) {
                         boardParent.retiraCarta(index);
                         b.insereCarta(this);
                         boardParent = b;
