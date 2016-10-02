@@ -22,7 +22,7 @@ public class TransladationTween implements Runnable {
     private float speedY;
     private float speedWidth;
     private float speedHeight;
-    private float dt = 0.01f;
+    private float dt = 0.015f;
     private float currentX;
     private float currentY;
     private float currentWidth;
