@@ -35,6 +35,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     //Variaveis de sistema (Dinamicas) -----------------------------------------
     protected Image sprite;
     protected Image hiddenSprite;
+    private int layer = 0;
     protected Rectangle rect;
     protected boolean selecionado;
     protected BoardHolder boardParent;
@@ -81,7 +82,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         }
         
         this.rect = new Rectangle(x,y, 74, 94);
-        GameManager.getInstance().adicionarRender((Renderizavel) this,0);
+        GameManager.getInstance().adicionarRender((Renderizavel) this,layer);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
         popUp = new PopUp(this);
     }
@@ -109,7 +110,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         }
         
         this.rect = new Rectangle(0,0,74,94);
-        GameManager.getInstance().adicionarRender((Renderizavel) this, 0);
+        GameManager.getInstance().adicionarRender((Renderizavel) this, layer);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
         popUp = new PopUp(this);
     }
@@ -213,7 +214,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     
     @Override
     public void removeRenderer() {
-        GameManager.getInstance().removerRender(this, 0);
+        GameManager.getInstance().removerRender(this, layer);
     }
     
     //Funcoes privadas ---------------------------------------------------------
@@ -298,6 +299,12 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         t.setScale(scale, .5f);
         Thread thread = new Thread(t);
         thread.start();
+    }
+    
+    public void changeLayer(int newLayer) {
+        GameManager.getInstance().removerRender(this, layer);
+        layer = newLayer;
+        GameManager.getInstance().adicionarRender(this, layer);
     }
     
     

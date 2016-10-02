@@ -27,8 +27,8 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     protected Carta[] cartas;
     protected int jogador;
     private int destaque;
-    private int pocketWidth;
-    private int pocketHeight;
+    protected int pocketWidth;
+    protected int pocketHeight;
     private Player player;
     private boolean invertido;
 

@@ -24,6 +24,7 @@ public class Descarte extends BoardHolder {
     private int lastIndex;
     private ArrayList<Integer> descarteFixo;
     private BoardHolder[] boardJogadores;
+    Carta lastCard;
     
     //Construtor ---------------------------------------------------------------
     public Descarte(Rectangle rect, int player) {
@@ -120,7 +121,21 @@ public class Descarte extends BoardHolder {
             //Esvazia a mesa
             for (int i = 0; i < 5; i++){
                 descarteFixo.add(cartaToInteger(cartas[i]));
-                cartas[i].removeRenderer();
+                java.awt.Rectangle destino = new java.awt.Rectangle(rect);
+                destino.x -= pocketWidth + 6;
+                destino.y += 3;
+                destino.width = pocketWidth;
+                destino.height = pocketHeight;
+                cartas[i].move(destino);
+                if(i==4) {
+                    if (lastCard != null)
+                        lastCard.removeRenderer();
+                    lastCard = cartas[4];
+                    cartas[4].changeLayer(1);
+                }
+            }
+            for (int i = 0; i < 5; i++){
+                //cartas[i].removeRenderer();
                 cartas[i] = null;
             }
             lastIndex = 0;
@@ -165,6 +180,8 @@ public class Descarte extends BoardHolder {
     public ArrayList<Integer> getDescarteList() {
         ArrayList<Integer> antigas = descarteFixo;
         descarteFixo = new ArrayList<>();
+        lastCard.removeRenderer();
+        lastCard = null;
         return antigas;
     }
     
