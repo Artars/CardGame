@@ -6,6 +6,7 @@
 package Cartas;
 
 import Model.BoardHolder;
+import cardgame.GameManager;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -113,6 +114,7 @@ public class Atacante extends Atacavel {
                         b.levaDano(index, forca * multiplicador);
                         realizouAcao = true;
                         attackMovement();
+                        GameManager.getInstance().log("Ataca," + this.toString() + "," + "Jogador");
                     }
                     break;
 
@@ -124,6 +126,7 @@ public class Atacante extends Atacavel {
                             a.levarDano(forca * multiplicador);            
                             realizouAcao = true;
                             attackMovement();
+                            GameManager.getInstance().log("Ataca," + this.toString() + "," + a.toString());
                         }
                     }
                     break;

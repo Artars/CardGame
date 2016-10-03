@@ -32,6 +32,7 @@ public class GameManager {
    private int turno;
    private int rodada;
    private SceneManager sceneManager;
+   private Logger logger;
    
    //create an object of SingleObject
    private static GameManager instance = new GameManager();
@@ -136,6 +137,10 @@ public class GameManager {
         }
     }
     
+    public void setLog(javax.swing.JTextArea textArea) {
+        logger = new Logger(textArea);
+    }
+    
     //Retorna o jogador desejado (1 ou 2)
     public Player getPlayer(int jogador) {
         if (jogador == 1 || jogador == 2) {
@@ -164,6 +169,11 @@ public class GameManager {
         turno = 1;
         rodada = 0;
         players = new Player[2];
+        logger = null;
         sceneManager.startGame();
+    }
+    
+    public void log(String s) {
+        logger.addLog(s);
     }
 }
