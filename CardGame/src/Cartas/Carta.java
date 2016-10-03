@@ -301,6 +301,13 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         thread.start();
     }
     
+    public void grow(float scale, float duration) {
+        ScaleTween t = new ScaleTween(this);
+        t.setScale(scale, duration);
+        Thread thread = new Thread(t);
+        thread.start();
+    }
+    
     public void changeLayer(int newLayer) {
         GameManager.getInstance().removerRender(this, layer);
         layer = newLayer;

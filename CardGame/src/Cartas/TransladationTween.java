@@ -22,7 +22,7 @@ public class TransladationTween implements Runnable {
     private float speedY;
     private float speedWidth;
     private float speedHeight;
-    private float dt = 0.015f;
+    private float dt = 0.01f;
     private float currentX;
     private float currentY;
     private float currentWidth;
@@ -80,19 +80,19 @@ public class TransladationTween implements Runnable {
             currentHeight += speedHeight * dt;
             if(Math.abs(currentX) >= 1) {
                 deltaRect.x = (int) currentX;
-                currentX = 0;
+                currentX -= (int) currentX;
             }
             if(Math.abs(currentY) >= 1) {
                 deltaRect.y = (int) currentY;
-                currentY = 0;
+                currentY -= (int) currentY;
             }
             if(Math.abs(currentWidth) >= 1) {
                 deltaRect.width = (int) currentWidth;
-                currentWidth = 0;
+                currentWidth -= (int) currentWidth;
             }
             if(Math.abs(currentHeight) >= 1) {
                 deltaRect.height = (int) currentHeight;
-                currentHeight = 0;
+                currentHeight -= (int) currentHeight;
             }
             parent.getRect().x += deltaRect.x;
             parent.getRect().y += deltaRect.y;

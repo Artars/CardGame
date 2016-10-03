@@ -159,13 +159,17 @@ public class Atacante extends Atacavel {
     }
     
     private void attackMovement() {
-        java.awt.Rectangle[] points = new java.awt.Rectangle[2];
+        java.awt.Rectangle[] points = new java.awt.Rectangle[3];
         points[0] = new java.awt.Rectangle(rect);
         points[1] = new java.awt.Rectangle(rect);
-        points[0].y -= 25;
-        float[] durations = new float[2];
-        durations[0] = durations[1] = 0.25f;
+        points[2] = new java.awt.Rectangle(rect);
+        points[0].y += 20;
+        points[1].y -= 20;
+        float[] durations = new float[3];
+        durations[0] = 0.25f;
+        durations[1] = 0.125f;
+        durations[2] = 0.125f;
         movePath(points, durations);
-        grow(2f);
     }
+    
 }

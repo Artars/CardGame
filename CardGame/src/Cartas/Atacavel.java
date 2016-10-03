@@ -63,8 +63,9 @@ public abstract class Atacavel extends Carta {
         System.out.println("Nova vida: " + vida);
         if (vida <= 0) 
             die();
-        else
+        else {
             grow(0.5f);
+        }
     }
     
     //Recupera vida da carta
