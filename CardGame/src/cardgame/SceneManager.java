@@ -12,6 +12,7 @@ import View.BoardFrame;
 import View.Table;
 import View.TelaInicial;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 /**
  *
@@ -20,6 +21,13 @@ import javax.swing.JFrame;
 public class SceneManager {
     
     JFrame actualWindow;
+    Timer animationTimer;
+    
+    public SceneManager () {
+        actualWindow = null;
+        animationTimer = new Timer(10,null);
+        animationTimer.start();
+    }
     
     public void startMenu(){
         if(actualWindow != null)
@@ -45,4 +53,15 @@ public class SceneManager {
         actualWindow = view;
     }
     
+    public void redraw(){
+        actualWindow.repaint();
+    }
+    
+    public Timer getAnimator() {
+        return animationTimer;
+    }
+    
+    public void resetAnimator() {
+        animationTimer = new Timer(10, null);
+    }
 }

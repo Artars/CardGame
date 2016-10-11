@@ -278,22 +278,44 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         return !realizouAcao && jogador == this.jogador;
     }
     
+    /*
     public void move(java.awt.Rectangle dest) {
         TransladationTween t = new TransladationTween(this);
         t.addTarget(dest, .5f);
         Thread thread = new Thread(t);
         thread.start();
     }
+    */
+    
+    public void move(java.awt.Rectangle dest) {
+        TransladationAnimation a = new TransladationAnimation(this);
+        a.addTarget(dest, .5f);
+    }
     
     public void movePath(java.awt.Rectangle[] points, float[] intervals) {
-         TransladationTween t = new TransladationTween(this);
+        TransladationAnimation a = new TransladationAnimation(this);
+        for (int i = 0; i < points.length; i++) {
+            a.addTarget(points[i], intervals[i]);
+        }
+    }
+    
+    /*
+    public void movePath(java.awt.Rectangle[] points, float[] intervals) {
+        TransladationTween t = new TransladationTween(this);
         for (int i = 0; i < points.length; i++) {
             t.addTarget(points[i], intervals[i]);
         }
         Thread thread = new Thread(t);
         thread.start();
     }
+    */
     
+    public void grow(float scale, float duration) {
+        ScaleAnimation a = new ScaleAnimation(this);
+        a.setScale(scale, duration);
+    }
+    
+    /*
     public void grow(float scale) {
         ScaleTween t = new ScaleTween(this);
         t.setScale(scale, .5f);
@@ -308,6 +330,14 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         thread.start();
     }
     
+    public void grow(float scale, float duration, float delay) {
+        ScaleTween t = new ScaleTween(this);
+        t.setScale(scale, duration);
+        t.setDelay(delay);
+        Thread thread = new Thread(t);
+        thread.start();
+    }
+    */
     public void changeLayer(int newLayer) {
         GameManager.getInstance().removerRender(this, layer);
         layer = newLayer;

@@ -176,4 +176,12 @@ public class GameManager {
     public void log(String s) {
         logger.addLog(s);
     }
+    
+    public void redraw(){
+        sceneManager.redraw();
+    }
+    
+    public javax.swing.Timer getAnimator() {
+        return sceneManager.getAnimator();
+    }
 }

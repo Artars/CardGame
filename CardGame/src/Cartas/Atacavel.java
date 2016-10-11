@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -64,7 +66,11 @@ public abstract class Atacavel extends Carta {
         if (vida <= 0) 
             die();
         else {
-            grow(0.5f);
+            ScaleAnimation a = new ScaleAnimation(this);
+            a.setDelay(0.375f);
+            a.setScale(0.5f, 0.25f);
+            
+            //grow(0.5f, 0.25f);
         }
     }
     

@@ -5,7 +5,10 @@
  */
 package Cartas;
 
+import cardgame.GameManager;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,13 +16,17 @@ import java.util.logging.Logger;
  *
  * @author Arthur
  */
-public class ScaleTween implements Runnable{
+public class ScaleAnimation implements ActionListener{
     Selecionavel parent;
     float dt = 0.01f;
     private int steps;
+    private int maxSteps;
     Rectangle originalRect;
     private float scale;
     private float delay;
+    private boolean enabled;
+    private boolean shrink;
+    private int delayStep;
     
     //SpeedParams
     float speedX;
@@ -34,9 +41,10 @@ public class ScaleTween implements Runnable{
     private float currentHeight;
 
     
-    public ScaleTween(Selecionavel parent) {
+    public ScaleAnimation(Selecionavel parent) {
         this.parent = parent;
         this.delay = 0;
+        enabled = false;
     }
     
     public void setScale(float scale, float duration) {
@@ -54,59 +62,28 @@ public class ScaleTween implements Runnable{
         speedY = ((target.y - originalRect.y) / duration);
         speedWidth = ((target.width - originalRect.width) / duration);
         speedHeight = ((target.height - originalRect.height) / duration);
-        steps = (int) (duration/dt);
-    }
-    
-    public void setDelay(float delay) {
-        this.delay = delay;
-    }
-
-    @Override
-    public void run() {   
+        maxSteps = (int) (duration/dt);
+        steps = maxSteps;
         currentX = 0;
         currentY = 0;
         currentWidth = 0;
         currentHeight = 0;
         
-        while (delay > 0) {
-            try {
-                Thread.sleep((int) (dt * 1000));
-                delay -= dt;
-            }
-            catch(InterruptedException e) {
-                break;
-            }
-        }
-        
-        for(int i = 0; i < steps/2; i++) {
-            loopBody();
-            try {
-                Thread.sleep((int) (dt * 1000));
-            }
-            catch(InterruptedException e) {
-                break;
-            }
-        }
-        speedX *= -1;
-        speedY *= -1;
-        speedWidth *= -1;
-        speedHeight *= -1;
-        
-        currentX = currentY = currentWidth = currentHeight = 0;
-        for(int i = 0; i < steps/2; i++) {
-            loopBody();
-            try {
-                Thread.sleep((int) (dt * 1000));
-            }
-            catch(InterruptedException ex) {
-                Logger.getLogger(ScaleTween.class.getName()).log(Level.SEVERE, null, ex);
-                break;
-            }
-        }
-        
-        parent.getRect().height = originalRect.height;
-        parent.getRect().width = originalRect.width;
-        redraw();
+        enabled = true;
+        shrink = false;
+        addToListener();
+    }
+    
+    public void setDelay(float delay) {
+        this.delayStep = (int) (delay/dt);
+    }
+    
+    private void addToListener(){
+        GameManager.getInstance().getAnimator().addActionListener(this);
+    }
+    
+    private void removeListener(){
+        GameManager.getInstance().getAnimator().removeActionListener(this);
     }
     
     private void loopBody() {
@@ -143,5 +120,37 @@ public class ScaleTween implements Runnable{
     
     private void redraw() {
         cardgame.GameManager.getInstance().redraw();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        if (delayStep > 0)
+            delayStep--;
+        else {
+            if (enabled) {
+                if(steps > 0) {
+                    loopBody();
+                    steps--;
+                }
+                if(steps < 1) {
+                    if(!shrink) {
+                        shrink = true;
+                        speedX *= -1;
+                        speedY *= -1;
+                        speedWidth *= -1;
+                        speedHeight *= -1;
+
+                        steps = maxSteps;
+                        currentX = currentY = currentWidth = currentHeight = 0;
+                    }
+                    else {
+                        parent.getRect().height = originalRect.height;
+                        parent.getRect().width = originalRect.width;
+                        redraw();
+                        removeListener();
+                    }
+                }
+            }
+        }
     }
 }

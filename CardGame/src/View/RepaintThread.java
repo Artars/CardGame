@@ -21,8 +21,8 @@ public class RepaintThread implements Runnable{
 
     @Override
     public void run() {
-        while(true)
-            frame.repaint();
+        //while(true)
+        //    frame.repaint();
     }
     
 }

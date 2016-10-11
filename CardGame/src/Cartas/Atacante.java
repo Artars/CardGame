@@ -11,6 +11,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -90,7 +92,7 @@ public class Atacante extends Atacavel {
                 case 0:
                     if (!realizouAcao)
                         selecionado = true;
-                    grow(1.5f);
+                    grow(1.5f, 0.5f);
                     break;
 
                 //Caso tenha clicado só no board
@@ -111,10 +113,10 @@ public class Atacante extends Atacavel {
                     }
                     //Atacar diretamente o jogador
                     else if (onBoard && b.getJogador() == inimigo) {
-                        b.levaDano(index, forca * multiplicador);
                         realizouAcao = true;
-                        attackMovement();
                         GameManager.getInstance().log("Ataca," + this.toString() + "," + "Jogador");
+                        attackMovement();
+                        b.levaDano(index, forca * multiplicador);
                     }
                     break;
 
@@ -122,11 +124,11 @@ public class Atacante extends Atacavel {
                     Atacavel a = (Atacavel) args[1];
 
                     if (a.getJogador() == inimigo && a.isAtacavel()) {
-                        if (a.getIndex() == this.index) {
-                            a.levarDano(forca * multiplicador);            
+                        if (a.getIndex() == this.index) {            
                             realizouAcao = true;
-                            attackMovement();
                             GameManager.getInstance().log("Ataca," + this.toString() + "," + a.toString());
+                            attackMovement();
+                            a.levarDano(forca * multiplicador);
                         }
                     }
                     break;
@@ -174,5 +176,15 @@ public class Atacante extends Atacavel {
         durations[2] = 0.125f;
         movePath(points, durations);
     }
-    
+   
+    private void delay(double delay) {
+        Delay d = new Delay(delay);
+        Thread t = new Thread(d);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Atacante.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
