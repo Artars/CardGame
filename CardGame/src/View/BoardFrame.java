@@ -50,10 +50,6 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
         this.boardPanel.add(board); 
         GameManager.getInstance().setLog(logArea);
         
-        //Repaint Thread
-        RepaintThread r = new RepaintThread(this);
-        Thread t = new Thread(r);
-        t.start();
     }
     
     /**

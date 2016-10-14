@@ -97,8 +97,10 @@ public class TransladationAnimation implements ActionListener {
             steps--;
         }
         if(steps < 1) {
-            parent.getRect().setRect(targets.get(0));
-            redraw();
+            if (targets.size() < 2) {
+                parent.getRect().setRect(targets.get(0));
+                redraw();
+            }
             targets.remove(0);
             durations.remove(0);
             targeting = false;

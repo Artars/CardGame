@@ -92,7 +92,7 @@ public class Atacante extends Atacavel {
                 case 0:
                     if (!realizouAcao)
                         selecionado = true;
-                    grow(1.5f, 0.5f);
+                    grow(1.25f, 0.25f);
                     break;
 
                 //Caso tenha clicado só no board
@@ -171,10 +171,13 @@ public class Atacante extends Atacavel {
         points[0].y += 20;
         points[1].y -= 20;
         float[] durations = new float[3];
-        durations[0] = 0.25f;
-        durations[1] = 0.125f;
-        durations[2] = 0.125f;
+        durations[0] = .25f;
+        durations[1] = .125f;
+        durations[2] = .125f;
         movePath(points, durations);
+        ScaleAnimation s = new ScaleAnimation(this);
+        s.setDelay(.25f);
+        s.setScale(1.25f, .125f);
     }
    
     private void delay(double delay) {
