@@ -7,6 +7,7 @@ package Cartas;
 
 import cardgame.GameManager;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class PopUp implements Renderizavel{
     public void draw(Graphics2D g) {
         int i=0;
         if(cartaMae.getSelecionado()) {
+            g.setFont(new Font( "SansSerif", Font.BOLD, 16 ));
             
             Rectangle cardRect = cartaMae.getRect();
             Rectangle bounds = g.getClipBounds();
@@ -43,7 +45,7 @@ public class PopUp implements Renderizavel{
             ArrayList<String> atributos = cartaMae.getAtributos();
             ArrayList<Color> colors = cartaMae.getAtributosColor();
             
-            int fontSize = 19;
+            int fontSize = 17;
             int desirableHeight = (atributos.size() + 1) * fontSize;
             int cardDistance = (cardRect.height) /8;
             
@@ -68,10 +70,11 @@ public class PopUp implements Renderizavel{
                     invertedRect.width, invertedRect.height, 10, 10);
             
             while (i < atributos.size()){
-                Rectangle popUpRect = new Rectangle(invertedRect.x + 3, invertedRect.y - invertedRect.height + (fontSize*i), 
-                        invertedRect.width, (invertedRect.height*3)/8);
+                Rectangle popUpRect = new Rectangle(invertedRect.x + 5, 
+                        invertedRect.y - invertedRect.height + fontSize/3 + (fontSize*(i+1)), 
+                        invertedRect.width, fontSize);
                 g.setColor(colors.get(i));
-                g.drawString(atributos.get(i), popUpRect.x, popUpRect.y + fontSize);
+                g.drawString(atributos.get(i), popUpRect.x, popUpRect.y);
                 
                 i++;
             }

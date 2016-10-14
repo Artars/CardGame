@@ -32,8 +32,6 @@ public class Table extends JPanel {
         
         Graphics2D g2 = (Graphics2D)g;
         
-        g2.setFont(new Font( "SansSerif", Font.BOLD, 12 ));
-        
         //Desenha todas as camadas de renderizavel
         for(ArrayList<Renderizavel> a: GameManager.getInstance().getRenderizaveis()){ 
             for(Renderizavel r: a)
