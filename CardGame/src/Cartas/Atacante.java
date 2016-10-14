@@ -3,6 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+/*
+MODELO
+Função, Nome1, Nome2, Tabuleiro1, Posicao1, Tabuleiro2, Posicao2
+
+Ataque
+Ataque, Nome1, Nome2, Tabuleiro1, Posicao1, Tabuleiro2, Posicao2
+
+Curar
+Curar, Nome1, Nome2, Tabuleiro1, Posicao1, Tabuleiro2, Posicao2
+
+Mover
+Mover, Nome1, Nome2, Tabuleiro1, Posicao1, Tabuleiro2, Posicao2
+
+Descartar
+Descartar, Nome1, Tabuleiro1, Posicao1
+
+Trocar de Turno
+Turno, Nome1
+*/
 package Cartas;
 
 import Model.BoardHolder;
