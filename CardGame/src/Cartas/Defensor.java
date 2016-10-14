@@ -50,25 +50,16 @@ public class Defensor extends Atacavel {
                     if (b1.getJogador() == jogador && b1.getIndex() != -1) {
                         boardParent.retiraCarta(index);
                         b1.insereCarta(this);
-                        if(!onBoard)
-                            GameManager.getInstance().log(
-                                "Mover" + "," + this.toString() + "," + "tabuleiro "
-                                + this.boardParent + "," + this.boardParent + "," + this.index
-                                + "," + b1 + "," + b1.getIndex());
-                        else
-                            GameManager.getInstance().log(
-                            "Mover" + "," + this.toString() + "," + "posição "
-                            + b1.getIndex() + "," + this.boardParent + "," + this.index
+                        GameManager.getInstance().log(
+                            "Mover" + "," + this.toString() + "," + (b1.getIndex()+1) 
+                            + "," + this.boardParent + "," + this.index
                             + "," + b1 + "," + b1.getIndex());
                         boardParent = b1;
                         realizouAcao = true;
                         onBoard = true;
                     }
                     //Foi pra pilha de descarte
-                    else if (b1.getJogador() == 0 && !onBoard) {
-                            GameManager.getInstance().log(    
-                            "Descarte," + this.toString() + "," +
-                            this.boardParent + "," + this.index);
+                    else if (b1.getJogador() == 0 && !onBoard) {      
                         descartar();
                     }
                     break;

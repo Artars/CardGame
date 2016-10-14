@@ -51,19 +51,21 @@ public class Logger {
         String[] parts = command.split(",");
         
         String formatado;
-        switch(parts.length) {
-            case 7:
-                formatado = parts[0] + ": '" + parts[1] + "' em '" + parts[2] + "'";
-                break;
-            case 4:
-                formatado =  parts[0] + ": '" + parts[1] + "'";
-                break;
-            case 2:
-                formatado = parts[0] + " do jogador " + parts[1];
-                break;
-            default:
-                formatado = "Batata";
-        }
+        if(parts[0].equals("Ataque"))
+            formatado = "'" + parts[1] + "' atacou '" + parts[2] + "'";
+        else if (parts[0].equals("Cura"))
+            formatado =  "'" + parts[1] + "' curou '" + parts[2] + "'";
+        else if (parts[0].equals("Mover"))
+            formatado = "'" + parts[1] + "' se moveu para a posição " + parts[2];
+        else if (parts[0].equals("Trocou"))
+            formatado = "'" + parts[1] + "' trocou de posicao com '" + parts[2] + "'";
+        else if (parts[0].equals("Descarte"))
+            formatado = "'" + parts[1] + "' foi descartado";
+        else if (parts[0].equals("Turno"))
+            formatado = "\n" + "--- " + "Turno do jogador " + parts[1] + " ---";
+        else
+            formatado = "Batata";
+    
         logArea.append(formatado + "\n");
         
     }

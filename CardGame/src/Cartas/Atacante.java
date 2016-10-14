@@ -105,8 +105,8 @@ public class Atacante extends Atacavel {
                         boardParent.retiraCarta(index);
                         b.insereCarta(this);
                         GameManager.getInstance().log(
-                            "Mover" + "," + this.toString() + "," + "tabuleiro "
-                            + this.boardParent + "," + this.boardParent + "," + this.index
+                            "Mover" + "," + this.toString() + "," + (b.getIndex()+1)  
+                            + "," + this.boardParent + "," + this.index
                             + "," + b + "," + b.getIndex());
                         boardParent = b;
                         realizouAcao = true;
@@ -114,9 +114,6 @@ public class Atacante extends Atacavel {
                     }
                     //Descarte
                     else if (b.getJogador() == 0 && !onBoard) {
-                            GameManager.getInstance().log(    
-                            "Descarte," + this.toString() + "," +
-                            this.boardParent + "," + this.index);
                         descartar();
                     }
                     //Atacar diretamente o jogador

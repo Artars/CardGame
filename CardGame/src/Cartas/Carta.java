@@ -298,6 +298,9 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
      * Descarta a carta e desativa ela
      */
     public void descartar(){
+        GameManager.getInstance().log(    
+                            "Descarte," + this.toString() + "," +
+                            this.boardParent + "," + this.index);
         GameManager.getInstance().removerSelecionavel(this);
         boardParent.retiraCarta(index);
         jogador = -1;

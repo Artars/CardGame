@@ -39,9 +39,6 @@ public class Curandeiro extends Carta {
                 case 1:
                     BoardHolder b = (BoardHolder) args[0];
                     if (b.getJogador() == 0) {
-                            GameManager.getInstance().log(    
-                            "Descarte," + this.toString() + "," +
-                            this.boardParent + "," + this.index);
                         descartar();
                     }
                     break;
