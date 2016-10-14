@@ -6,6 +6,7 @@
 package Cartas;
 
 import Model.BoardHolder;
+import cardgame.GameManager;
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -49,12 +50,25 @@ public class Defensor extends Atacavel {
                     if (b1.getJogador() == jogador && b1.getIndex() != -1) {
                         boardParent.retiraCarta(index);
                         b1.insereCarta(this);
+                        if(!onBoard)
+                            GameManager.getInstance().log(
+                                "Mover" + "," + this.toString() + "," + "tabuleiro "
+                                + this.boardParent + "," + this.boardParent + "," + this.index
+                                + "," + b1 + "," + b1.getIndex());
+                        else
+                            GameManager.getInstance().log(
+                            "Mover" + "," + this.toString() + "," + "posição "
+                            + b1.getIndex() + "," + this.boardParent + "," + this.index
+                            + "," + b1 + "," + b1.getIndex());
                         boardParent = b1;
                         realizouAcao = true;
                         onBoard = true;
                     }
                     //Foi pra pilha de descarte
                     else if (b1.getJogador() == 0 && !onBoard) {
+                            GameManager.getInstance().log(    
+                            "Descarte," + this.toString() + "," +
+                            this.boardParent + "," + this.index);
                         descartar();
                     }
                     break;
@@ -68,6 +82,10 @@ public class Defensor extends Atacavel {
                         if (b.getJogador() == jogador && a.isAtacavel()) {
                             int otherIndex = a.getIndex();
                             if (otherIndex != this.index) {
+                                GameManager.getInstance().log(
+                            "Trocou" + "," + this.toString() + "," + a
+                            + "," + this.boardParent + "," + this.index
+                            + "," + a + "," + a.getIndex());
                                 b.retiraCarta(otherIndex);
                                 b.retiraCarta(index);
                                 b.insereCarta(a, index);

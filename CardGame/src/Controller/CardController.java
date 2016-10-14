@@ -167,11 +167,13 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
             indicador.setEnabled(false);
             
             if (Turno.getText().contains("Trocar turno")){
+                
                 if (Turno.getText().contains("1"))GameManager.getInstance().trocarTurno(2);
                 else GameManager.getInstance().trocarTurno(1);
                 
                 Turno.setText("Terminar turno");
                 turno = GameManager.getInstance().getTurno();
+                GameManager.getInstance().log("Turno," + turno);
                 model.trocarTurno(turno);
                 view.updateTurnText(turno);
                 turnScreen.setEnable(false);

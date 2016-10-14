@@ -6,6 +6,7 @@
 package Cartas;
 
 import Model.BoardHolder;
+import cardgame.GameManager;
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -38,6 +39,9 @@ public class Curandeiro extends Carta {
                 case 1:
                     BoardHolder b = (BoardHolder) args[0];
                     if (b.getJogador() == 0) {
+                            GameManager.getInstance().log(    
+                            "Descarte," + this.toString() + "," +
+                            this.boardParent + "," + this.index);
                         descartar();
                     }
                     break;
@@ -49,6 +53,10 @@ public class Curandeiro extends Carta {
                         if (a.getNumero() == this.numero)
                             multiplicador ++;
                         a.recuperarVida(cura * multiplicador);
+                            GameManager.getInstance().log(
+                            "Cura," + this.toString() + "," + a.toString() + "," +
+                            this.boardParent + "," + this.index + "," +
+                            a.getBoardParent() + "," + a.getIndex());
                         realizouAcao = true;
                         //Se descarta
                         descartar();

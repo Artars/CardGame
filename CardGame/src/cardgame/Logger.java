@@ -12,6 +12,27 @@ import javax.swing.JTextArea;
  *
  * @author Arthur
  */
+
+/*
+MODELO
+Função, Nome1, Nome2, Tabuleiro1, Posicao1, Tabuleiro2, Posicao2
+
+Ataque
+Ataque, Nome1, Nome2, Tabuleiro1, Posicao1, Tabuleiro2, Posicao2
+
+Curar
+Curar, Nome1, Nome2, Tabuleiro1, Posicao1, Tabuleiro2, Posicao2
+
+Mover
+Mover, Nome1, Nome2, Tabuleiro1, Posicao1, Tabuleiro2, Posicao2
+
+Descartar
+Descartar, Nome1, Tabuleiro1, Posicao1
+
+Trocar de Turno
+Turno, Nome1
+*/
+
 public class Logger {
     JTextArea logArea;
     ArrayList<String> commands;
@@ -35,7 +56,7 @@ public class Logger {
                 formatado = parts[0] + ": '" + parts[1] + "' em '" + parts[2] + "'";
                 break;
             case 4:
-                formatado =  parts[0] + ": '" + parts[1];
+                formatado =  parts[0] + ": '" + parts[1] + "'";
                 break;
             case 2:
                 formatado = parts[0] + " do jogador " + parts[1];

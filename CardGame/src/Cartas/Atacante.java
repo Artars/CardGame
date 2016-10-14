@@ -4,25 +4,6 @@
  * and open the template in the editor.
  */
 
-/*
-MODELO
-Função, Nome1, Nome2, Tabuleiro1, Posicao1, Tabuleiro2, Posicao2
-
-Ataque
-Ataque, Nome1, Nome2, Tabuleiro1, Posicao1, Tabuleiro2, Posicao2
-
-Curar
-Curar, Nome1, Nome2, Tabuleiro1, Posicao1, Tabuleiro2, Posicao2
-
-Mover
-Mover, Nome1, Nome2, Tabuleiro1, Posicao1, Tabuleiro2, Posicao2
-
-Descartar
-Descartar, Nome1, Tabuleiro1, Posicao1
-
-Trocar de Turno
-Turno, Nome1
-*/
 package Cartas;
 
 import Model.BoardHolder;
@@ -133,12 +114,18 @@ public class Atacante extends Atacavel {
                     }
                     //Descarte
                     else if (b.getJogador() == 0 && !onBoard) {
+                            GameManager.getInstance().log(    
+                            "Descarte," + this.toString() + "," +
+                            this.boardParent + "," + this.index);
                         descartar();
                     }
                     //Atacar diretamente o jogador
                     else if (onBoard && b.getJogador() == inimigo) {
                         realizouAcao = true;
-                        GameManager.getInstance().log("Ataca," + this.toString() + "," + "Jogador");
+                            GameManager.getInstance().log(
+                            "Ataque," + this.toString() + "," + "jogador" + "," +
+                            this.boardParent + "," + this.index + "," +
+                            b + "," + b.getIndex());
                         attackMovement();
                         b.levaDano(index, forca * multiplicador);
                     }
