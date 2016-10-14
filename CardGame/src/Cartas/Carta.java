@@ -162,8 +162,6 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         if (realizouAcao) {
             g.setColor (new Color(96,125,139, 120));
         }
-        else if (selecionado)
-            g.setColor(new Color(0,1,1,.2f));
         g.fillRect(rect.x, rect.y, rect.width, rect.height);
         
         //Desenha retangulo de multiplicador

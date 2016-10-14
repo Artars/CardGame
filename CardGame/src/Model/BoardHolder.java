@@ -60,6 +60,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     @Override
     public void draw(Graphics2D g) {
         Color background = new Color(51,105,30);
+        Color destaqueColor = new Color(120,144,156);
         g.setColor(Color.RED);
         g.fillRect(rect.x,rect.y,rect.width,rect.height);
         for (int i = 0; i < 5; i++) {

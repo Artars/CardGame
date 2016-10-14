@@ -20,18 +20,32 @@ public class IndicadorClicado implements Renderizavel {
     //Variaveis ----------------------------------------------------------------
     private Rectangle rect;
     private boolean enabled;
+    private int width;
     
     //Construtor
     public IndicadorClicado() {
         enabled = false;
+        width = 6;
     }
     
     //Funcoes ------------------------------------------------------------------
     @Override
     public void draw(Graphics2D g) {
         if (enabled) {
-            g.setColor(new Color(255,255,0,120));
-            g.fillRect(rect.x,rect.y,rect.width,rect.height);
+            Rectangle dRect = new Rectangle(this.rect);
+            
+            dRect.x -= width / 2;
+            dRect.y -= width / 2;
+            dRect.width += width - 1;
+            dRect.height += width - 1;
+            
+            
+            g.setColor(new Color(118,255,3, 200));
+            for(int i = 0; i < width; i++) {
+                g.drawRoundRect(dRect.x + i, dRect.y + i, dRect.width - 2*i, dRect.height - 2*i, 
+                        2*(width -i), 3*(width - i));
+                //g.drawRoundRect(100, 100, 50, 100, 10, 10);
+            }
         }
     }
 
