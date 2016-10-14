@@ -99,7 +99,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         this.numero = (n % 13) + 1;
         
         //O caminho é da forma "img/2_of_clubs"
-        String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
+        String imgPath = "img/" + this.SourceNumero() + "_of_" + this.SourceNaipe() + ".png";
         if(this.sprite == null){
             try {
                 sprite = ImageIO.read(new File(imgPath));
@@ -143,7 +143,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     
     @Override
     public String toString() {
-        return NumeroToString() + " of " + NaipeToString();
+        return NumeroToString() + " de " + NaipeToString();
     }
     
     @Override

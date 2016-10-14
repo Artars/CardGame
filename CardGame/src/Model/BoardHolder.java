@@ -132,6 +132,11 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         return rect;
     }
     
+    @Override
+    public String toString(){
+        return String.valueOf(jogador);
+    }
+    
     //Funcoes Privadas ---------------------------------------------------------
     //Ajusta o tamanho e posições das cartas
     private void ajustCard () {

@@ -30,11 +30,24 @@ public class Logger {
         String[] parts = command.split(",");
         
         String formatado;
-        if(parts.length == 3)
-            formatado = parts[1] + " " + parts [0] + " " + parts[2];
-        else
-            formatado = "Batata";
+        switch(parts.length) {
+            case 7:
+                formatado = parts[0] + ": '" + parts[1] + "' em '" + parts[2] + "'";
+                break;
+            case 4:
+                formatado =  parts[0] + ": '" + parts[1];
+                break;
+            case 2:
+                formatado = parts[0] + " do jogador " + parts[1];
+                break;
+            default:
+                formatado = "Batata";
+        }
         logArea.append(formatado + "\n");
         
+    }
+    
+    private String melhoraVerbo(String s) {
+        return null;
     }
 }

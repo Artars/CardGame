@@ -103,6 +103,10 @@ public class Atacante extends Atacavel {
                     if ((b.getJogador() == jogador) && !onBoard && b.getIndex() != -1) {
                         boardParent.retiraCarta(index);
                         b.insereCarta(this);
+                        GameManager.getInstance().log(
+                            "Mover" + "," + this.toString() + "," + "tabuleiro "
+                            + this.boardParent + "," + this.boardParent + "," + this.index
+                            + "," + b + "," + b.getIndex());
                         boardParent = b;
                         realizouAcao = true;
                         onBoard = true;
@@ -126,7 +130,10 @@ public class Atacante extends Atacavel {
                     if (a.getJogador() == inimigo && a.isAtacavel()) {
                         if (a.getIndex() == this.index) {            
                             realizouAcao = true;
-                            GameManager.getInstance().log("Ataca," + this.toString() + "," + a.toString());
+                            GameManager.getInstance().log(
+                            "Ataque," + this.toString() + "," + a.toString() + "," +
+                            this.boardParent + "," + this.index + "," +
+                            a.getBoardParent() + "," + a.getIndex());
                             attackMovement();
                             a.levarDano(forca * multiplicador);
                         }
