@@ -71,7 +71,7 @@ public class Baralho implements Renderizavel{
     
     //Dado um indice i, ele cria uma carta do tipo correto
     private Carta criarCarta(Integer i) {
-        int n = i;
+        int n = 1;
         Carta c;
         switch (n /13) {
             case 0:

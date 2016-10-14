@@ -55,7 +55,7 @@ public class PopUp implements Renderizavel{
                 invertedRect.y = cardRect.y - cardDistance;
             }
             
-            invertedRect.width = cardRect.width;
+            invertedRect.width = (cardRect.width * 3) /2;
             
             if((cardRect.x + cardRect.width/2) > bounds.getWidth()) {
                 invertedRect.x = cardRect.x - cardRect.width / 2;
@@ -63,9 +63,9 @@ public class PopUp implements Renderizavel{
                 invertedRect.x = cardRect.x + cardRect.width/2;
             }
             
-            g.setColor(Color.LIGHT_GRAY);
-            g.fillRect(invertedRect.x, invertedRect.y - invertedRect.height,
-                    invertedRect.width, invertedRect.height);
+            g.setColor(new Color(207,216,220));
+            g.fillRoundRect(invertedRect.x, invertedRect.y - invertedRect.height,
+                    invertedRect.width, invertedRect.height, 10, 10);
             
             while (i < atributos.size()){
                 Rectangle popUpRect = new Rectangle(invertedRect.x + 3, invertedRect.y - invertedRect.height + (fontSize*i), 

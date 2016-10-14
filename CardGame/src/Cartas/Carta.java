@@ -160,20 +160,20 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         //Desenha um retangulo transparente com o estado da carta
         g.setColor (new Color(0,0,0,0));
         if (realizouAcao) {
-            g.setColor (new Color(96,125,139, 120));
+            g.setColor (new Color(0,0,0, 120));
         }
         g.fillRect(rect.x, rect.y, rect.width, rect.height);
         
         //Desenha retangulo de multiplicador
         switch(multiplicador) {
             case 2:
-                g.setColor (new Color (198,255,0,120));
+                g.setColor (new Color (178,235,242,120));
                 break;
             case 3:
-                g.setColor (new Color (139,195,74,120));
+                g.setColor (new Color (33,150,243,120));
                 break;
             case 4:
-                g.setColor (new Color (118,255,3,120));
+                g.setColor (new Color (63,81,181,120));
                 break;
             default:
                 g.setColor (new Color(0,0,0,0));

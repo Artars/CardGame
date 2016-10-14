@@ -110,6 +110,8 @@ public class Defensor extends Atacavel {
         atributos.add("Defensor");
         atributos.add("HP: " + String.valueOf(vidaAtual) + "/" + String.valueOf(maxVida * multiplicador));
         atributos.add("Multi.: x" + String.valueOf(multiplicador));
+        if(realizouAcao)
+            atributos.add("Realizou ação");
         
         return atributos;
     }
@@ -121,6 +123,8 @@ public class Defensor extends Atacavel {
         colors.add(Color.DARK_GRAY);
         colors.add(Color.RED);
         colors.add(Color.DARK_GRAY);
+        if(realizouAcao)
+            colors.add(Color.BLACK);
 
         return colors;
     }
