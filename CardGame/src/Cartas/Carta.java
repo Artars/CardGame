@@ -71,7 +71,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         this.numero = (n + 1) % 13;
 
         //O caminho é da forma "img/2_of_clubs"
-        String imgPath = "img/" + this.NumeroToString() + "_of_" + this.NaipeToString() + ".png";
+        String imgPath = "img/" + this.SourceNumero() + "_of_" + this.SourceNaipe() + ".png";
         if(this.sprite == null){
             try {
                 sprite = ImageIO.read(new File(imgPath));
@@ -225,23 +225,43 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     private String NumeroToString(){
         switch(this.numero){
             case 1:
-                return "ace";
+                return "Ás";
             case 11:
-                return "jack";
+                return "Valete";
             case 12:
-                return "queen";
+                return "Dama";
             case 13:
-                return "king";
+                return "Rei";
             default:
                 return String.valueOf(this.numero);
         }
     }
-    
+
     /**
      * Transforma o naipe em uma String
      * @return naipe
      */
     private String NaipeToString(){
+        switch(this.naipe){
+            case 0:
+                return "Paus";
+            case 1:
+                return "Ouros";
+            case 2:
+                return "Copas";
+            case 3:
+                return "Espadas";
+            default:
+                return "Paus";
+        }
+    }
+
+    
+    /**
+     * Transforma o naipe em uma String
+     * @return naipe
+     */
+    private String SourceNaipe(){
         switch(this.naipe){
             case 0:
                 return "clubs";
@@ -253,6 +273,25 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
                 return "spades";
             default:
                 return "clubs";
+        }
+    }
+ 
+    /**
+     * Transforma o numero da carta em String
+     * @return numero
+     */
+    private String SourceNumero(){
+        switch(this.numero){
+            case 1:
+                return "ace";
+            case 11:
+                return "jack";
+            case 12:
+                return "queen";
+            case 13:
+                return "king";
+            default:
+                return String.valueOf(this.numero);
         }
     }
     
