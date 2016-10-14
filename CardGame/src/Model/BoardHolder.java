@@ -13,6 +13,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -287,7 +288,8 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         if(jogador == 1 || jogador == 2) {
             if (index == destaque && cartas[index] == null) {
                 player.perderVida(dano);
-                grow(2f,1f);
+                BlinkingAnimation b = new BlinkingAnimation(getCardRect(index));
+                b.setDuration(1f);
             }
         }
     }
@@ -349,4 +351,68 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     public int getJogador() {
         return jogador;
     }
+}
+
+class BlinkingAnimation implements java.awt.event.ActionListener, Renderizavel {
+
+    private Rectangle rect;
+    private int steps = 0;
+    private int blinkInterval = 8;
+    private int blinkCounter = 0;
+    private float dt = 0.01f;
+    private Color color = new Color(255,0,0,200);
+    private boolean isVisible = false;
+    
+    public BlinkingAnimation(Rectangle rect) {
+        this.rect = new Rectangle(rect);
+        GameManager.getInstance().adicionarRender(this, 1);
+    }
+    
+    public void setDuration(float duration) {
+        steps = (int) (duration / 0.01f);
+        addToListener();
+    }
+    
+    public void setColor(Color c){
+        color = c;
+    }
+    
+    private void addToListener(){
+        GameManager.getInstance().getAnimator().addActionListener(this);
+    }
+    
+    private void removeListener(){
+        GameManager.getInstance().getAnimator().removeActionListener(this);
+    }
+    
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        if(steps > 0) {
+            steps--;
+            blinkCounter--;
+            if(blinkCounter < 1) {
+                blinkCounter = blinkInterval;
+                isVisible = !isVisible;
+            }
+            GameManager.getInstance().redraw();
+        }
+        else {
+            removeListener();
+            removeRenderer();
+        }
+    }
+
+    @Override
+    public void draw(Graphics2D g) {
+        g.setColor(color);
+        
+        if(isVisible)
+            g.fillRect(rect.x, rect.y, rect.width, rect.height);
+    }
+
+    @Override
+    public void removeRenderer() {
+        GameManager.getInstance().removerRender(this, 1);
+    }
+
 }
