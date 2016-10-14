@@ -289,6 +289,7 @@ public class BoardHolder implements Renderizavel, Selecionavel {
             if (index == destaque && cartas[index] == null) {
                 player.perderVida(dano);
                 BlinkingAnimation b = new BlinkingAnimation(getCardRect(index));
+                b.setDelay(0.375f);
                 b.setDuration(1f);
             }
         }
@@ -359,6 +360,7 @@ class BlinkingAnimation implements java.awt.event.ActionListener, Renderizavel {
     private int steps = 0;
     private int blinkInterval = 8;
     private int blinkCounter = 0;
+    private int delayStep = 0;
     private float dt = 0.01f;
     private Color color = new Color(255,0,0,200);
     private boolean isVisible = false;
@@ -366,6 +368,10 @@ class BlinkingAnimation implements java.awt.event.ActionListener, Renderizavel {
     public BlinkingAnimation(Rectangle rect) {
         this.rect = new Rectangle(rect);
         GameManager.getInstance().adicionarRender(this, 1);
+    }
+    
+    public void setDelay(float delay) {
+        delayStep = (int) (delay/dt);
     }
     
     public void setDuration(float duration) {
@@ -387,19 +393,23 @@ class BlinkingAnimation implements java.awt.event.ActionListener, Renderizavel {
     
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if(steps > 0) {
-            steps--;
-            blinkCounter--;
-            if(blinkCounter < 1) {
-                blinkCounter = blinkInterval;
-                isVisible = !isVisible;
+        if (delayStep < 1) {
+            if(steps > 0) {
+                steps--;
+                blinkCounter--;
+                if(blinkCounter < 1) {
+                    blinkCounter = blinkInterval;
+                    isVisible = !isVisible;
+                }
+            }
+            else {
+                removeListener();
+                removeRenderer();
             }
             GameManager.getInstance().redraw();
         }
-        else {
-            removeListener();
-            removeRenderer();
-        }
+        else
+            delayStep--;
     }
 
     @Override
