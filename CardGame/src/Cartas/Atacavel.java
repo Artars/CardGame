@@ -5,6 +5,7 @@
  */
 package Cartas;
 
+import cardgame.GameManager;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -101,6 +102,18 @@ public abstract class Atacavel extends Carta {
     //Retorna se a carta pode ser atacada
     public boolean isAtacavel(){
         return onBoard;
+    }
+    
+    public void mover (Model.BoardHolder b, int n) {
+        boardParent.retiraCarta(index);
+        b.insereCarta(this, n);
+        GameManager.getInstance().log(
+            "Mover" + "," + this.toString() + "," + (b.getIndex()+1) 
+            + "," + this.boardParent + "," + this.index
+            + "," + b + "," + b.getIndex());
+        boardParent = b;
+        realizouAcao = true;
+        onBoard = true;
     }
     
 }

@@ -64,9 +64,10 @@ public class Logger {
         else if (parts[0].equals("Turno"))
             formatado = "\n" + "--- " + "Turno do jogador " + parts[1] + " ---";
         else
-            formatado = "Batata";
+            formatado = null;
     
-        logArea.append(formatado + "\n");
+        if(formatado != null)
+            logArea.append(formatado + "\n");
         
     }
     

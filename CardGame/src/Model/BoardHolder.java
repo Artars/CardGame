@@ -316,6 +316,15 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         t.start();
     }
     
+    public int cardCount() {
+        int total = 0;
+        for(Carta c:cartas) {
+            if(c != null)
+                total++;
+        }
+        return total;
+    }
+    
     //Getters e Setters --------------------------------------------------------    
     public Carta getCarta(int n) {
         return cartas[n];

@@ -102,15 +102,7 @@ public class Atacante extends Atacavel {
                     BoardHolder b = (BoardHolder) args[0];
                     
                     if ((b.getJogador() == jogador) && !onBoard && b.getIndex() != -1) {
-                        boardParent.retiraCarta(index);
-                        b.insereCarta(this);
-                        GameManager.getInstance().log(
-                            "Mover" + "," + this.toString() + "," + (b.getIndex()+1)  
-                            + "," + this.boardParent + "," + this.index
-                            + "," + b + "," + b.getIndex());
-                        boardParent = b;
-                        realizouAcao = true;
-                        onBoard = true;
+                        mover(b, b.getIndex());
                     }
                     //Descarte
                     else if (b.getJogador() == 0 && !onBoard) {
@@ -118,13 +110,7 @@ public class Atacante extends Atacavel {
                     }
                     //Atacar diretamente o jogador
                     else if (onBoard && b.getJogador() == inimigo) {
-                        realizouAcao = true;
-                            GameManager.getInstance().log(
-                            "Ataque," + this.toString() + "," + "jogador" + "," +
-                            this.boardParent + "," + this.index + "," +
-                            b + "," + b.getIndex());
-                        attackMovement();
-                        b.levaDano(index, forca * multiplicador);
+                        ataque(b,false);
                     }
                     break;
 
@@ -133,13 +119,7 @@ public class Atacante extends Atacavel {
 
                     if (a.getJogador() == inimigo && a.isAtacavel()) {
                         if (a.getIndex() == this.index) {            
-                            realizouAcao = true;
-                            GameManager.getInstance().log(
-                            "Ataque," + this.toString() + "," + a.toString() + "," +
-                            this.boardParent + "," + this.index + "," +
-                            a.getBoardParent() + "," + a.getIndex());
-                            attackMovement();
-                            a.levarDano(forca * multiplicador);
+                            ataque(a,false);
                         }
                     }
                     break;
@@ -177,14 +157,48 @@ public class Atacante extends Atacavel {
 
         return colors;
     }
+
+    public void ataque(Atacavel a, boolean invertido) {
+        realizouAcao = true;
+        GameManager.getInstance().log(
+        "Ataque," + this.toString() + "," + a.toString() + "," +
+        this.boardParent + "," + this.index + "," +
+        a.getBoardParent() + "," + a.getIndex());
+        attackMovement(invertido);
+        a.levarDano(forca * multiplicador);
+    }
     
-    private void attackMovement() {
+    public void ataque(BoardHolder b, boolean invertido) {
+        realizouAcao = true;
+        GameManager.getInstance().log(
+        "Ataque," + this.toString() + "," + "jogador" + "," +
+        this.boardParent + "," + this.index + "," +
+        b + "," + b.getIndex());
+        attackMovement(invertido);
+        b.levaDano(index, forca * multiplicador);
+    }
+    
+    public void mover(BoardHolder b, int n) {
+        boardParent.retiraCarta(index);
+        b.insereCarta(this,n);
+        GameManager.getInstance().log(
+            "Mover" + "," + this.toString() + "," + (b.getIndex()+1)  
+            + "," + this.boardParent + "," + this.index
+            + "," + b + "," + b.getIndex());
+        boardParent = b;
+        realizouAcao = true;
+        onBoard = true;
+    }
+    
+    //Funções privadas ---------------------------------------------------------
+    private void attackMovement(boolean invertido) {
+        int sinal = (invertido) ? -1:1;
         java.awt.Rectangle[] points = new java.awt.Rectangle[3];
         points[0] = new java.awt.Rectangle(rect);
         points[1] = new java.awt.Rectangle(rect);
         points[2] = new java.awt.Rectangle(rect);
-        points[0].y += 20;
-        points[1].y -= 20;
+        points[0].y += 20 * sinal;
+        points[1].y -= 20 * sinal;
         float[] durations = new float[3];
         durations[0] = .25f;
         durations[1] = .125f;

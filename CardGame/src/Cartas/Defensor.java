@@ -48,15 +48,7 @@ public class Defensor extends Atacavel {
                     //Se colocou ou moveu dentro do tabuleiro
                     BoardHolder b1 = (BoardHolder) args[0];
                     if (b1.getJogador() == jogador && b1.getIndex() != -1) {
-                        boardParent.retiraCarta(index);
-                        b1.insereCarta(this);
-                        GameManager.getInstance().log(
-                            "Mover" + "," + this.toString() + "," + (b1.getIndex()+1) 
-                            + "," + this.boardParent + "," + this.index
-                            + "," + b1 + "," + b1.getIndex());
-                        boardParent = b1;
-                        realizouAcao = true;
-                        onBoard = true;
+                        mover(b1, b1.getIndex());
                     }
                     //Foi pra pilha de descarte
                     else if (b1.getJogador() == 0 && !onBoard) {      
@@ -71,18 +63,7 @@ public class Defensor extends Atacavel {
                     //Troca de posicao com outra carta
                     if (!realizouAcao && onBoard) {
                         if (b.getJogador() == jogador && a.isAtacavel()) {
-                            int otherIndex = a.getIndex();
-                            if (otherIndex != this.index) {
-                                GameManager.getInstance().log(
-                            "Trocou" + "," + this.toString() + "," + a
-                            + "," + this.boardParent + "," + this.index
-                            + "," + a + "," + a.getIndex());
-                                b.retiraCarta(otherIndex);
-                                b.retiraCarta(index);
-                                b.insereCarta(a, index);
-                                b.insereCarta(this, otherIndex);
-                                realizouAcao = true;
-                            }
+                            trocar(b, a);
                         }
                     }
                     
@@ -118,5 +99,20 @@ public class Defensor extends Atacavel {
             colors.add(Color.BLACK);
 
         return colors;
+    }
+    
+    public void trocar(BoardHolder b, Atacavel a) {
+        int otherIndex = a.getIndex();
+        if (otherIndex != this.index) {
+            GameManager.getInstance().log(
+        "Trocou" + "," + this.toString() + "," + a
+        + "," + this.boardParent + "," + this.index
+        + "," + a + "," + a.getIndex());
+            b.retiraCarta(otherIndex);
+            b.retiraCarta(index);
+            b.insereCarta(a, index);
+            b.insereCarta(this, otherIndex);
+            realizouAcao = true;
+        }
     }
 }

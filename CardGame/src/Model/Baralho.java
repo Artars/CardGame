@@ -67,7 +67,13 @@ public class Baralho implements Renderizavel{
     //Embaralha as cartas
     private void shuffle() {
         Collections.shuffle(cartas);
+        String sequence = "Sincronizar";
+        for(int i: cartas) {
+            sequence.concat("," + String.valueOf(i));
+        }
+        GameManager.getInstance().log(sequence);
     }
+    
     
     //Dado um indice i, ele cria uma carta do tipo correto
     private Carta criarCarta(Integer i) {
@@ -115,6 +121,16 @@ public class Baralho implements Renderizavel{
             a.add(criarCarta(get));
         }
         return a;
+    }
+    
+    public void sincronize(String s) {
+        ArrayList<Integer> novaLista = new ArrayList<>();
+        String[] parts;
+        parts = s.split(",");
+        for (int i = 1; i < parts.length; i++) {
+            novaLista.add(Integer.parseInt(parts[i]));
+        }
+        cartas = novaLista;
     }
     
     //Getters e setter ---------------------------------------------------------
