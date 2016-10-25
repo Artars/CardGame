@@ -28,20 +28,20 @@ public class Atacante extends Atacavel {
         super(x,y,n);
         switch(this.numero) {
             case 1:
-                maxVida = 11;
+                maxVida = 1;
                 forca = 11;
                 break;
             case 11:
-                maxVida = 10;
-                forca = 10;
+                maxVida = 8;
+                forca = 8;
                 break;
             case 12:
-                maxVida = 15;
-                forca = 10;
+                maxVida = 12;
+                forca = 8;
                 break;
             case 13:
-                maxVida = 10;
-                forca = 15;
+                maxVida = 8;
+                forca = 12;
                 break;    
             default:
                 maxVida = 12 - this.numero;
@@ -56,20 +56,20 @@ public class Atacante extends Atacavel {
         super(n);
         switch(this.numero) {
             case 1:
-                maxVida = 11;
+                maxVida = 1;
                 forca = 11;
                 break;
             case 11:
-                maxVida = 10;
-                forca = 10;
+                maxVida = 8;
+                forca = 8;
                 break;
             case 12:
-                maxVida = 15;
-                forca = 10;
+                maxVida = 12;
+                forca = 8;
                 break;
             case 13:
-                maxVida = 10;
-                forca = 15;
+                maxVida = 8;
+                forca = 12;
                 break;    
             default:
                 maxVida = 12 - this.numero;

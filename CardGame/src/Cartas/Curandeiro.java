@@ -20,7 +20,23 @@ public class Curandeiro extends Carta {
 
     public Curandeiro(int n) {
         super(n);
-        this.cura = this.numero;
+        switch(numero) {
+            case 1:
+                cura = 11;
+                break;
+            case 11:
+                cura = 8;
+                break;
+            case 12:
+                cura = 8;
+                break;
+            case 13:
+                cura = 8;
+                break;    
+            default:
+                cura = this.numero;
+        }
+        cura *= 2;
     }
 
     @Override
@@ -47,18 +63,9 @@ public class Curandeiro extends Carta {
                     BoardHolder b1 = (BoardHolder) args[0];
                     Atacavel a = (Atacavel) args[1];
                     if (b1.getJogador() == jogador && a.isAtacavel()) {
-                        if (a.getNumero() == this.numero)
-                            multiplicador ++;
-                        a.recuperarVida(cura * multiplicador);
-                            GameManager.getInstance().log(
-                            "Cura," + this.toString() + "," + a.toString() + "," +
-                            this.boardParent + "," + this.index + "," +
-                            a.getBoardParent() + "," + a.getIndex());
-                        realizouAcao = true;
-                        //Se descarta
-                        descartar();
-
+                        curar(b1,a);
                     }
+                    break;
             }
         }
         catch(ClassCastException e) {
@@ -87,6 +94,24 @@ public class Curandeiro extends Carta {
         colors.add(Color.DARK_GRAY);
 
         return colors;
+    }
+    
+    public void curar(BoardHolder b, Atacavel a) {
+        for(int i = 0; i < 5; i++) {
+            Carta c = b.getCarta(i);
+            if(c != null && c.getNumero() == this.numero) {
+                multiplicador = c.getMultiplicador() + 1;
+                break;
+            }
+        }
+        a.recuperarVida(cura * multiplicador);
+            GameManager.getInstance().log(
+            "Cura," + this.toString() + "," + a.toString() + "," +
+            this.boardParent + "," + this.index + "," +
+            a.getBoardParent() + "," + a.getIndex());
+        realizouAcao = true;
+        //Se descarta
+        descartar();
     }
     
 }

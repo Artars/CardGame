@@ -48,6 +48,8 @@ public class CardModel {
         
         if(!esconderTudo) {
             ComprarDeck(turno);
+            boards[3].resetarAcoes();
+            boards[1].resetarAcoes();
             
             boolean hidePlayer1 = (turno == 2);
             boards[4].cardVisibility(hidePlayer1);
@@ -62,47 +64,31 @@ public class CardModel {
         }
     }
     
-    //Compra cartas pra mao do jogador "turno"
     public void ComprarDeck(int turno){
-        int i = 0;
-        int vazio = 0;
-        ArrayList <Carta> Comprado = new ArrayList <> ();
+        int maoJogador = (turno == 1)? 4:0;
         
-        if (turno == 1){
-            while (i < 5 && vazio < 2){
-                if (boards[4].getCarta(i) == null) vazio++;
-                i++;
-            }
-            if (vazio > 0) Comprado = baralho.retirarCartas(vazio);
-
-            i = 0;
-            while (i < 5 && !Comprado.isEmpty()){
-                if (boards[4].getCarta(i) == null){
-                    boards[4].insereCarta(Comprado.get(0), i);
-                    boards[4].getCarta(i).setJogador(1);
-                    Comprado.remove(0);
+        int numCartasMao = boards[maoJogador].cardCount();
+        int numCartasMesa = boards[(turno == 1)? 3:1].cardCount();
+        
+        int desiredCard;
+        if(numCartasMesa > 4)
+            desiredCard = 0;
+        else if (numCartasMesa > 2)
+            desiredCard = 1;
+        else
+            desiredCard = 2;
+        numCartasMao = 5 - numCartasMao;
+        
+        int saque = Math.min(numCartasMao, desiredCard);
+        if(saque > 0) {
+            ArrayList<Carta> comprado = baralho.retirarCartas(saque);
+            for(int i = 0; i < 5 && comprado.size() > 0; i++) {
+                if (boards[maoJogador].getCarta(i) == null) {
+                    boards[maoJogador].insereCarta(comprado.get(0), i);
+                    boards[maoJogador].getCarta(i).setJogador(turno);
+                    comprado.remove(0);
                 }
-                i++;
             }
-            boards[1].resetarAcoes();
-        }
-        else{
-            while (i < 5 && vazio < 2){
-                if (boards[0].getCarta(i) == null) vazio++;
-                i++;
-            }
-            if (vazio > 0) Comprado = baralho.retirarCartas(vazio);
-
-            i = 0;
-            while (i < 5 && !Comprado.isEmpty()){
-                if (boards[0].getCarta(i) == null){
-                    boards[0].insereCarta(Comprado.get(0), i);
-                    boards[0].getCarta(i).setJogador(2);
-                    Comprado.remove(0);
-                }
-                i++;
-            }    
-            boards[3].resetarAcoes();
         }
     }
     

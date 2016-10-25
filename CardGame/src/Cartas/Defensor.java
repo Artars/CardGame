@@ -24,7 +24,23 @@ public class Defensor extends Atacavel {
 
     public Defensor(int n) {
         super(n);
-        maxVida = 2 * this.numero;
+        switch(numero) {
+            case 1:
+                maxVida = 11;
+                break;
+            case 11:
+                maxVida = 8;
+                break;
+            case 12:
+                maxVida = 8;
+                break;
+            case 13:
+                maxVida = 8;
+                break;    
+            default:
+                maxVida = this.numero;
+        }
+        maxVida *= 2;
         vidaAtual = maxVida;
         vida = 1;
     }
