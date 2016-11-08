@@ -68,6 +68,10 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
         this.jButtonLoad.addActionListener(controller);
     }
 
+    /**
+     * Retorna o panel principal
+     * @return 
+     */
     public JPanel getBoardPanel() {
         return boardPanel;
     }

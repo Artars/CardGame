@@ -22,7 +22,9 @@ public class IndicadorClicado implements Renderizavel {
     private boolean enabled;
     private int width;
     
-    //Construtor
+    /**
+     * Contrutor basico
+     */
     public IndicadorClicado() {
         enabled = false;
         width = 6;
@@ -48,18 +50,29 @@ public class IndicadorClicado implements Renderizavel {
             }
         }
     }
-
+    
+    @Override
+    public void adicionarRenderer() {
+        GameManager.getInstance().adicionarRender(this, 0);
+    }
+    
     @Override
     public void removeRenderer() {
         GameManager.getInstance().removerRender(this, 1);
     }
 
-    //Define a sua localização e tamanho do objeto
+    /**
+     * Define a sua localização e tamanho do objeto
+     * @param rect 
+     */
     public void setRect(Rectangle rect) {
         this.rect = rect;
     }
 
-    //Torna o objeto visivel ou nao
+    /**
+     * Torna o objeto visivel ou nao
+     * @param enabled 
+     */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
         if (enabled)

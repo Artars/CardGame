@@ -43,7 +43,12 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
         
         GameManager.getInstance().adicionarRender((Renderizavel)this,0);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
-        this.player = GameManager.getInstance().getPlayer(player);
+        if (jogador == 1 || jogador == 2) {
+            this.player = new Player(jogador, 100);
+            GameManager.getInstance().setBar(this.player, jogador);
+        }
+        else
+            this.player = null;
     }
     
     public BoardHolder(int player) {
@@ -79,6 +84,11 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
             frame = getCardRect(i);
             g.fillRect(frame.x, frame.y, frame.width, frame.height);
         }
+    }
+    
+    @Override
+    public void adicionarRenderer() {
+        GameManager.getInstance().adicionarRender(this, 0);
     }
     
     @Override
@@ -151,7 +161,6 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
         for (Carta c : cartas) {
             if (c != null) {
                 c.setRect(getCardRect(c.getIndex()));
-                c.setDimension(pocketWidth, pocketHeight);
             }
         }
     }
@@ -325,13 +334,6 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
         ajustCard();
     }
     
-    public void grow(float scale, float duration) {
-        Cartas.ScaleTween g = new Cartas.ScaleTween ((Selecionavel) this);
-        g.setScale(scale, duration);
-        Thread t = new Thread(g);
-        t.start();
-    }
-    
     public int cardCount() {
         int total = 0;
         for(Carta c:cartas) {
@@ -448,6 +450,11 @@ class BlinkingAnimation implements java.awt.event.ActionListener, Renderizavel {
             g.fillRect(rect.x, rect.y, rect.width, rect.height);
     }
 
+    @Override
+    public void adicionarRenderer() {
+        GameManager.getInstance().adicionarRender(this, 1);
+    }
+    
     @Override
     public void removeRenderer() {
         GameManager.getInstance().removerRender(this, 1);

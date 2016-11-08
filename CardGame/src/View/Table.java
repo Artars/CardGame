@@ -4,24 +4,23 @@
  * and open the template in the editor.
  */
 package View;
-/**
- *
- * @author Arthur
- */
 
 import Cartas.Renderizavel;
 import cardgame.GameManager;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 import javax.swing.JPanel;
 
+/**
+ * Classe responsável por desenhar todos os objetos renderizaveis
+ * @author Arthur
+ */
 public class Table extends JPanel {
 
+    /**
+     * Construtor bobo
+     */
     public Table() {
     }
     

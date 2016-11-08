@@ -10,9 +10,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Não é mais utilizada, foi substituida por uma versão mais estável, que
+ * é a animação.
  * @author Arthur
  */
+/*
 public class ScaleTween implements Runnable{
     Selecionavel parent;
     float dt = 0.01f;
@@ -144,4 +146,7 @@ public class ScaleTween implements Runnable{
     private void redraw() {
         cardgame.GameManager.getInstance().redraw();
     }
+
+  
 }
+*/

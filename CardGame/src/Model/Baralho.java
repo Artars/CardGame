@@ -29,7 +29,12 @@ public class Baralho implements Renderizavel, Serializable{
     private ImageIcon sprite;
     private Rectangle rect;
 
-    //Construtor -------------------------------------------------------------
+    //Construtor ---------------------------------------------------------------
+    /**
+     * Contrutor que toma como parâmetro o numero de cartas que deverá ter no
+     * baralho
+     * @param n 
+     */
     public Baralho(int n) {
         cartas = new ArrayList<>();
         for(int i = 0; i < n; i++)
@@ -50,12 +55,19 @@ public class Baralho implements Renderizavel, Serializable{
     }
     
     @Override
+    public void adicionarRenderer() {
+        GameManager.getInstance().adicionarRender(this, 0);
+    }
+    
+    @Override
     public void removeRenderer() {
         GameManager.getInstance().removerRender(this, 0);
     }
     
     //Funcoes Privadas ---------------------------------------------------------
-    //Embaralha as cartas
+    /**
+     * Embaralha as cartas
+     */
     private void shuffle() {
         Collections.shuffle(cartas);
         String sequence = "Sincronizar";
@@ -66,7 +78,11 @@ public class Baralho implements Renderizavel, Serializable{
     }
     
     
-    //Dado um indice i, ele cria uma carta do tipo correto
+    /**
+     * Dado um indice i, ele cria uma carta do tipo correto
+     * @param i
+     * @return carta
+     */
     private Carta criarCarta(Integer i) {
         int n = i;
         Carta c;
@@ -90,7 +106,9 @@ public class Baralho implements Renderizavel, Serializable{
         return c;
     }
     
-    //Pega cartas do descarte caso falte do baralho
+    /**
+     * Pega cartas do descarte caso falte do baralho
+     */
     private void fillCards() {
         ArrayList<Integer> descarte;
         descarte = GameManager.getInstance().getDescarte().getDescarteList();
@@ -99,7 +117,11 @@ public class Baralho implements Renderizavel, Serializable{
     }
     
     //Funcoes Publicas ---------------------------------------------------------
-    //Retira uma lista com n cartas
+    /**
+     * Retira uma lista com n cartas
+     * @param n
+     * @return lista
+     */
     public ArrayList<Carta> retirarCartas(int n) {
         ArrayList<Carta> a = new ArrayList<>();
         
@@ -114,6 +136,10 @@ public class Baralho implements Renderizavel, Serializable{
         return a;
     }
     
+    /**
+     *  Sincroniza esse baralho com outro, dada uma string com todos os numeros
+     * @param s 
+     */
     public void sincronize(String s) {
         ArrayList<Integer> novaLista = new ArrayList<>();
         String[] parts;
@@ -125,17 +151,23 @@ public class Baralho implements Renderizavel, Serializable{
     }
     
     //Getters e setter ---------------------------------------------------------
+    /**
+     * Define a posição do baralho dado um retângulo
+     * @param rect 
+     */
     public void setRect(Rectangle rect) {
         this.rect = rect;
     }
     
+    /**
+     * Define a posição do baralho dado um retângulo definido por inteiros
+     * @param x
+     * @param y
+     * @param width
+     * @param height 
+     */
     public void setRect(int x, int y, int width, int height) {
         rect = new Rectangle(x,y,width,height);
-    }
-    
-    public void setRect(int x, int y) {
-        rect.x = x;
-        rect.y = y;
     }
     
 }

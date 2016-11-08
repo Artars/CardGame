@@ -11,17 +11,16 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 /**
- *
+ * Tipo de carta que pode trocar de posição no tabuleiro. Pode trocar de 
+ * posicao com outra carta.
  * @author Arthur
  */
-
-/*
-    Tipo de carta que pode trocar de posição no tabuleiro. Pode trocar de 
-posicao com outra carta.
-*/
-
 public class Defensor extends Atacavel {
 
+    /**
+     * Construtor para um defensor, usando um numero n
+     * @param n 
+     */
     public Defensor(int n) {
         super(n);
         switch(numero) {
@@ -119,6 +118,11 @@ public class Defensor extends Atacavel {
         return colors;
     }
     
+    /**
+     * Realiza a troca de posição com uma carta a colocado no tabuleiro b.
+     * @param b
+     * @param a 
+     */
     public void trocar(BoardHolder b, Atacavel a) {
         int otherIndex = a.getIndex();
         if (otherIndex != this.index) {

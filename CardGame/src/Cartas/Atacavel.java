@@ -10,15 +10,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 /**
- *
+ *  Tipo de carta que pode ser colocada no tabuleiro. Possui vida e todas as
+ *  funcoes relacionadas à ela.
  * @author Arthur
  */
-
-/*
-    Tipo de carta que pode ser colocada no tabuleiro. Possui vida e todas as
-funcoes relacionadas à ela.
-*/
-
 public abstract class Atacavel extends Carta {
     //Variaveis ----------------------------------------------------------------
     protected int vidaAtual;
@@ -27,10 +22,20 @@ public abstract class Atacavel extends Carta {
     protected boolean onBoard;
 
     //Construtores -------------------------------------------------------------
+    /**
+     * Contrutor padrao com variaveis para as coordenadas x, y e numero da carta n
+     * @param x
+     * @param y
+     * @param n 
+     */
     public Atacavel(int x, int y, int n) {
         super(x, y, n);
     }
     
+    /**
+     * Construtor para um numero da carta n
+     * @param n 
+     */
     public Atacavel(int n) {
         super(n);
     }
@@ -55,7 +60,10 @@ public abstract class Atacavel extends Carta {
     }
     
     //Funcoes publicas ---------------------------------------------------------
-    //Realiza dano na carta
+    /**
+     * Realiza dano na carta.
+     * @param dano 
+     */
     public void levarDano(int dano) {
         vidaAtual = vidaAtual - dano;
         vida = (float)vidaAtual / (float)(maxVida * multiplicador);
@@ -71,7 +79,10 @@ public abstract class Atacavel extends Carta {
         }
     }
     
-    //Recupera vida da carta
+    /**
+     * Recupera vida da carta
+     * @param cura 
+     */
     public void recuperarVida(int cura) {
         if (estaVivo()) {
             vidaAtual += cura;
@@ -82,24 +93,37 @@ public abstract class Atacavel extends Carta {
         }
     }
     
-    //Retorna se a carta esta viva
+    /**
+     * Retorna se a carta esta viva
+     * @return viva
+     */
     public boolean estaVivo() {
         if (vida <= 0)
             die();
         return (vida > 0); //To change body of generated methods, choose Tools | Templates.
     }
     
-    //Faz a carta morrer
+    /**
+     * Faz a carta morrer
+     */
     public void die() {
         vida = 1;
         descartar();
     }
     
-    //Retorna se a carta pode ser atacada
+    /**
+     * Retorna se a carta pode ser atacada
+     * @return atacavel
+     */
     public boolean isAtacavel(){
         return onBoard;
     }
     
+    /**
+     * Move a carta para o tabuleiro b na posição n
+     * @param b
+     * @param n 
+     */
     public void mover (Model.BoardHolder b, int n) {
         boardParent.retiraCarta(index);
         b.insereCarta(this, n);

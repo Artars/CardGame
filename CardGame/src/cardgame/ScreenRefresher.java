@@ -9,13 +9,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
+ * Classe responsável por redesenhar a tela
  * @author Arthur
  */
 public class ScreenRefresher implements ActionListener {
 
     javax.swing.JFrame view;
     
+    /**
+     * Contrutor que toma como parâmetro a tela que ele irá redesenhar
+     * @param frame 
+     */
     public ScreenRefresher (javax.swing.JFrame frame) {
         view = frame;
     }

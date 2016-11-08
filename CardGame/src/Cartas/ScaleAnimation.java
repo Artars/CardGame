@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ *  Classe responsavel por fazer a animação de crescimento de um objeto
  * @author Arthur
  */
 public class ScaleAnimation implements ActionListener{
@@ -40,13 +40,23 @@ public class ScaleAnimation implements ActionListener{
     private float currentWidth;
     private float currentHeight;
 
-    
+    /**
+     * Construtor da animação, recebendo como parâmetro o objeto que será
+     * animado
+     * @param parent 
+     */
     public ScaleAnimation(Selecionavel parent) {
         this.parent = parent;
         this.delay = 0;
         enabled = false;
     }
     
+    /**
+     * Define a escala de crescimento e duração da animação. Após definir, a 
+     * animação já iniciará
+     * @param scale
+     * @param duration 
+     */
     public void setScale(float scale, float duration) {
         duration *= 0.5f;
         this.scale = scale;
@@ -74,18 +84,31 @@ public class ScaleAnimation implements ActionListener{
         addToListener();
     }
     
+    /**
+     * Define quanto delay deverá ter a animação antes de começar
+     * @param delay 
+     */
     public void setDelay(float delay) {
         this.delayStep = (int) (delay/dt);
     }
     
+    /**
+     * Adiciona à animação ao timer que realizará em períodos regulares
+     */
     private void addToListener(){
         GameManager.getInstance().addAnimation(this);
     }
     
+    /**
+     * Retira à animação do processamento
+     */
     private void removeListener(){
         GameManager.getInstance().removeAnimation(this);
     }
     
+    /**
+     * Corpo do loop a ser utilizado na função principal
+     */
     private void loopBody() {
         Rectangle deltaRect = new Rectangle();
             currentX += speedX * dt;
@@ -95,22 +118,18 @@ public class ScaleAnimation implements ActionListener{
             if(Math.abs(currentX) >= 1) {
                 deltaRect.x = (int) currentX;
                 currentX -= (int) currentX;
-                redraw();
             }
             if(Math.abs(currentY) >= 1) {
                 deltaRect.y = (int) currentY;
                 currentY -= (int) currentY;
-                redraw();
             }
             if(Math.abs(currentWidth) >= 1) {
                 deltaRect.width = (int) currentWidth;
                 currentWidth -= (int) currentWidth;
-                redraw();
             }
             if(Math.abs(currentHeight) >= 1) {
                 deltaRect.height = (int) currentHeight;
                 currentHeight -= (int) currentHeight;
-                redraw();
             }
             parent.getRect().x += deltaRect.x;
             parent.getRect().y += deltaRect.y;
@@ -118,9 +137,6 @@ public class ScaleAnimation implements ActionListener{
             parent.getRect().height += deltaRect.height;
     }
     
-    private void redraw() {
-        cardgame.GameManager.getInstance().redraw();
-    }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
@@ -146,7 +162,6 @@ public class ScaleAnimation implements ActionListener{
                     else {
                         parent.getRect().height = originalRect.height;
                         parent.getRect().width = originalRect.width;
-                        redraw();
                         removeListener();
                     }
                 }

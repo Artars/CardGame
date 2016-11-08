@@ -14,11 +14,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Não é mais utilizada, foi substituida por uma versão mais estável, que
+ * é a animação.
  * @author Arthur
  */
-public class TransladationTween implements Runnable, ActionListener {
-
+/*
+public class TransladationTween implements Runnable, ActionListener {  
     private Selecionavel parent;
     private ArrayList<Rectangle> targets;
     private ArrayList<Float> durations; 
@@ -169,4 +170,6 @@ public class TransladationTween implements Runnable, ActionListener {
             removeListener();
         }
     }
+    
 }
+*/

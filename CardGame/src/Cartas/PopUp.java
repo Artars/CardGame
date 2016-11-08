@@ -17,15 +17,17 @@ import java.util.ArrayList;
  * @author Arthur
  * Classe que mostra status da carta sobre ela
  */
-
-
-
 public class PopUp implements Renderizavel, Serializable{
     //Define ponto inferior equerdo do Retangulo
     private Rectangle invertedRect;
     //Referencia a carta mae
     private Carta cartaMae;
 
+    /**
+     * Construtor padrao da carta, recebendo como parâmetro a carta sobre a qual
+     * ela vai passar informações
+     * @param cartaMae 
+     */
     public PopUp(Carta cartaMae) {
         this.cartaMae = cartaMae;
         invertedRect = new Rectangle();
@@ -82,6 +84,11 @@ public class PopUp implements Renderizavel, Serializable{
         }
     }
 
+    @Override
+    public void adicionarRenderer() {
+        GameManager.getInstance().adicionarRender(this, 1);
+    }
+    
     @Override
     public void removeRenderer() {
         GameManager.getInstance().removerRender(this, 1);

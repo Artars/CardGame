@@ -12,7 +12,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- *
+ * Classe responsável pelo armazenamento e gerenciamento de todas as cartas,
+ * tabuleiros, descarte e baralho
  * @author Arthur
  */
 public class CardModel implements Serializable {
@@ -21,6 +22,9 @@ public class CardModel implements Serializable {
     private BoardHolder[] boards;
     private int turno;
     
+    /**
+     * Construtor básico
+     */
     public CardModel (){
         baralho = new Baralho(52);
         boards = new BoardHolder[5];
@@ -34,7 +38,10 @@ public class CardModel implements Serializable {
         turno = 1;
     }
     
-    //Realiza a troca de turno para o jogador "turno"
+    /**
+     * Realiza a troca de turno para o jogador "turno"
+     * @param turno 
+     */
     public void trocarTurno(int turno) {      
         
         this.turno = turno;
@@ -60,10 +67,18 @@ public class CardModel implements Serializable {
         }
     }
     
+    /**
+     * Retorna o turno atual
+     * @return turno
+     */
     public int getTurno() {
         return turno;
     }
     
+    /**
+     * Realiza a compra de cartas para o jogador "turno"
+     * @param turno 
+     */
     public void ComprarDeck(int turno){
         int maoJogador = (turno == 1)? 4:0;
         
@@ -92,7 +107,12 @@ public class CardModel implements Serializable {
         }
     }
     
-    //Ajusta e posiciona os boards
+    /**
+     * Ajusta e posiciona os boards dado as localizações adequadas e tamanhos
+     * @param locations
+     * @param socketWidth
+     * @param socketHeight 
+     */
     public void UpdateBoardLocations(Point[] locations, int socketWidth, int socketHeight) {
         int i = 0;
         for (Point p :locations){
@@ -108,6 +128,10 @@ public class CardModel implements Serializable {
                 (int) locations[5].getY() + 3, socketWidth - 6, socketHeight - 6);
     }
     
+    /**
+     * Reposiciona as variaveis carregadas no GameManager, possibilitando seu
+     * uso
+     */
     public void updateGameManager(){
         GameManager g = GameManager.getInstance();
         for (BoardHolder b : boards) {

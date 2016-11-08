@@ -8,11 +8,6 @@ package cardgame;
 import java.util.ArrayList;
 import javax.swing.JTextArea;
 
-/**
- *
- * @author Arthur
- */
-
 /*
 MODELO
 Função, Nome1, Nome2, Tabuleiro1, Posicao1, Tabuleiro2, Posicao2
@@ -33,20 +28,36 @@ Trocar de Turno
 Turno, Nome1
 */
 
+/**
+ * Classe responsável por fazer log de todas as ações realizadas
+ * @author Arthur
+ */
 public class Logger {
     JTextArea logArea;
     ArrayList<String> commands;
     
+    /**
+     * Construtor que tem como parâmetro a àrea em que será escrito os logs
+     * @param logArea 
+     */
     public Logger (JTextArea logArea) {
         this.logArea = logArea;
         commands = new ArrayList<>();
     }
     
+    /**
+     * Adiciona um novo log
+     * @param command 
+     */
     public void addLog(String command) {
         commands.add(command);
         formatCommand(command);
     }
     
+    /**
+     * Formata um comando para algo legível
+     * @param command 
+     */
     private void formatCommand(String command) {
         String[] parts = command.split(",");
         
@@ -71,9 +82,5 @@ public class Logger {
         if(formatado != null)
             logArea.append(formatado + "\n");
         
-    }
-    
-    private String melhoraVerbo(String s) {
-        return null;
     }
 }

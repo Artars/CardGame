@@ -10,7 +10,7 @@ import java.io.Serializable;
 import javax.swing.JProgressBar;
 
 /**
- *
+ * Classe que é responsável por gerenciar o jogador, sua vida e atualização
  * @author Arthur
  */
 public class Player implements Serializable{
@@ -23,6 +23,12 @@ public class Player implements Serializable{
     JProgressBar barra;
     
     //Construtores -------------------------------------------------------------
+    /**
+     * Construtor para jogador, que cria um jogador de numero "jogador" com a
+     * quantidade de vida dada
+     * @param jogador
+     * @param vida 
+     */
     public Player(int jogador, int vida) {
         this.jogador = jogador;
         this.vidaAtual = this.vidaMax = vida;
@@ -32,14 +38,19 @@ public class Player implements Serializable{
     }
     
     //Funcao Privada -----------------------------------------------------------
-    //Atualiza a barra para o tanto de vida do jogador
+    /**
+     * Atualiza a barra para o tanto de vida do jogador
+     */
     private void updateBarra(){
         barra.setString(String.valueOf(vidaAtual) + "/" + String.valueOf(vidaMax));
         barra.setValue(vidaAtual);
     }
     
     //Funcoes Publicas ---------------------------------------------------------
-    //Define a barra de vida do jogador
+    /**
+     * Define a barra de vida do jogador
+     * @param barra 
+     */
     public void setBarra(JProgressBar barra) {
         barra.setMinimum(0);
         barra.setMaximum(vidaMax);
@@ -48,7 +59,10 @@ public class Player implements Serializable{
         updateBarra();
     }
     
-    //Retira vida do jogador
+    /**
+     * Retira vida do jogador
+     * @param dano 
+     */
     public void perderVida(int dano) {
         vidaAtual -= dano;
         updateBarra();
@@ -59,6 +73,10 @@ public class Player implements Serializable{
         }
     }
     
+    /**
+     * Recupera vida do jogador
+     * @param cura 
+     */
     public void recuperarVida(int cura) {
         vidaAtual += cura;
         if(vidaAtual > vidaMax)

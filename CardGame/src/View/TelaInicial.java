@@ -5,37 +5,33 @@
  */
 package View;
 
-import Cartas.Carta;
 import cardgame.GameManager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Point;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 /**
- *
+ * Tela inicial do jogo, com um menu de seleção para os diferentes modos de jogos
  * @author Arthur
  */
 public class TelaInicial extends javax.swing.JFrame {
-
-    /**
-     * Creates new form TelaInicial
-////     */
+    
     Background board;
     
+    /**
+     * Cria uma nova tela inicial, tendo como parametro o background
+     * @param back 
+     */
     public TelaInicial(Background back) {
         initComponents();
         //jPanel2.add(back);
         init(back);
     }
     
-    
+    /**
+     * Inicia a janela
+     * @param board 
+     */
     private void init(Background board){
       
         Dimension area = new Dimension(boardPanel.getWidth(), boardPanel.getHeight());
@@ -47,9 +43,8 @@ public class TelaInicial extends javax.swing.JFrame {
         this.board.setBackground(new Color(124,179,66));//set cor de fundo       
         this.boardPanel.setLayout(new GridLayout(1, 1));
         
-        // o board que nos interessa nao é o do Swing padrao, mas a classe Tabuleiro jPanel que criamos !!!
         this.boardPanel.add(board);
-        board.add(jBInit, new Integer(1), 0);
+        board.add(jBInit, 1, 0);
         jBInit.setLocation((boardPanel.getWidth()-jBInit.getWidth())/2, 
                 (boardPanel.getHeight()-jBInit.getHeight())/2);
         jBInit.setVisible(true);

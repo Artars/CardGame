@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Classe responsavel por fazer a animação de crescimento de um objeto
  * @author Arthur
  */
 public class TransladationAnimation implements ActionListener {
@@ -37,6 +37,10 @@ public class TransladationAnimation implements ActionListener {
     private boolean onListener;
     private boolean targeting;
     
+    /**
+     * Contrutor que toma como parâmetro o objeto que será animado
+     * @param parent 
+     */
     public TransladationAnimation (Selecionavel parent) {
         this.parent = parent;
         this.targets = new ArrayList<>();
@@ -45,6 +49,12 @@ public class TransladationAnimation implements ActionListener {
         onListener = false;
     }
     
+    /**
+     * Adiciona um ponto a ser percorrido na animação. Ao usar essa função, a
+     * animação será iniciada
+     * @param targetRect
+     * @param time 
+     */
     public void addTarget(Rectangle targetRect, float time) {
         targets.add(targetRect);
         durations.add(time);
@@ -53,7 +63,7 @@ public class TransladationAnimation implements ActionListener {
         
     }
     
-    public void setTarget(Rectangle target, float time) {
+    private void setTarget(Rectangle target, float time) {
         Rectangle parRect = parent.getRect();
         speedX = ((target.x - parRect.x) / time);
         speedY = ((target.y - parRect.y) / time);
@@ -68,12 +78,12 @@ public class TransladationAnimation implements ActionListener {
         targeting = true;
     }
     
+    /**
+     * Define um delay inicial para a animação começar
+     * @param delay 
+     */
     public void setDelay(float delay) {
         this.delay = delay;
-    }
-    
-    private void redraw() {
-        cardgame.GameManager.getInstance().redraw();
     }
 
     private void addToListener(){
@@ -99,7 +109,6 @@ public class TransladationAnimation implements ActionListener {
         if(steps < 1) {
             if (targets.size() < 2) {
                 parent.getRect().setRect(targets.get(0));
-                redraw();
             }
             targets.remove(0);
             durations.remove(0);
@@ -120,22 +129,18 @@ public class TransladationAnimation implements ActionListener {
             if(Math.abs(currentX) >= 1) {
                 deltaRect.x = (int) currentX;
                 currentX -= (int) currentX;
-                redraw();
             }
             if(Math.abs(currentY) >= 1) {
                 deltaRect.y = (int) currentY;
                 currentY -= (int) currentY;
-                redraw();
             }
             if(Math.abs(currentWidth) >= 1) {
                 deltaRect.width = (int) currentWidth;
                 currentWidth -= (int) currentWidth;
-                redraw();
             }
             if(Math.abs(currentHeight) >= 1) {
                 deltaRect.height = (int) currentHeight;
                 currentHeight -= (int) currentHeight;
-                redraw();
             }
             parent.getRect().x += deltaRect.x;
             parent.getRect().y += deltaRect.y;

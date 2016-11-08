@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**
- *
+ * Painel responsável por desenhar uma imagem de fundo (Background)
  * @author Arthur
  */
 public class Background extends JPanel {
@@ -27,6 +27,9 @@ public class Background extends JPanel {
     
     Image background;
     
+    /**
+     * Construtor Básico
+     */
     public Background() {
         initComponents();
         try {

@@ -14,7 +14,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 /**
- *
+ * Classe responsável por manejar os descartes
  * @author Arthur
  */
 public class Descarte extends BoardHolder {
@@ -27,6 +27,11 @@ public class Descarte extends BoardHolder {
     Carta lastCard;
     
     //Construtor ---------------------------------------------------------------
+    /**
+     * Construtor para o descarte, posicionando o mesmo no retangulo desejado
+     * @param rect
+     * @param player 
+     */
     public Descarte(Rectangle rect, int player) {
         super(rect, player);
         over = false;
@@ -36,6 +41,10 @@ public class Descarte extends BoardHolder {
         GameManager.getInstance().setDescarte((Descarte)this);
     }
 
+    /**
+     * Construtor para o descarte dado um player
+     * @param player 
+     */
     public Descarte(int player) {
         super(player);
         over = false;
@@ -46,13 +55,19 @@ public class Descarte extends BoardHolder {
     }
     
     //Funcoes Privadas ---------------------------------------------------------
-    //Notifica os boards de alterações
+    /**
+     * Notifica os boards de alterações realizadas no descarte
+     */
     private void updateBoards() {
         for (BoardHolder b: boardJogadores)
             b.atualizarMultiplicadores();
     }
     
-    //Adiciona a carta na posicao indicada
+    /**
+     * Adiciona a carta na posicao indicada
+     * @param c
+     * @param n 
+     */
     private void adicionarCarta(Carta c, int n) {
         cartas[n] = c;
         c.setIndex(n);
@@ -62,7 +77,12 @@ public class Descarte extends BoardHolder {
     }
     
     //Funcoes Publicas ---------------------------------------------------------
-    //Define os boars que o descarte notificará
+    /**
+     * Define os boards que o descarte notificará, dado o board e o jogador a
+     * quem pertence
+     * @param b
+     * @param jogador 
+     */
     public void setBoardJogadores(BoardHolder b, int jogador) {
         if(jogador == 1 || jogador == 2) {
             boardJogadores[jogador - 1] = b;
@@ -165,18 +185,28 @@ public class Descarte extends BoardHolder {
         return true;
     }
     
-    //Transforma a carta em um int que vai ser armazenado pelo descarte
+    /**
+     * Transforma a carta em um int que vai ser armazenado pelo descarte
+     * @param c
+     * @return integer
+     */
     private Integer cartaToInteger(Carta c) {
         int result = c.getNaipe() * 13 + c.getNumero() - 1;
         return result;
     }
     
-    //Retorna o vetor com as cartas
+    /**
+     * Retorna o vetor com as cartas
+     * @return cartas
+     */
     public Carta[] getCartas() {
         return cartas;
     }
     
-    //Retorna todas as cartas armazenadas no descarte fixo e o limpa
+    /**
+     * Retorna todas as cartas armazenadas no descarte fixo e o limpa
+     * @return descarte
+     */
     public ArrayList<Integer> getDescarteList() {
         ArrayList<Integer> antigas = descarteFixo;
         descarteFixo = new ArrayList<>();

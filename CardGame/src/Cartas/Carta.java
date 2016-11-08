@@ -105,6 +105,11 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
     
     //Funcoes de implementacao obrigatoria -------------------------------------
+    /**
+     * Compara a carta com outra carta
+     * @param t
+     * @return 
+     */
     @Override
     public int compareTo(Object t) {
         try {
@@ -130,6 +135,10 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
             return (this.numero > c.numero) ? 1:-1;
     }
     
+    /**
+     * Retorna o nome da carta
+     * @return nome
+     */
     @Override
     public String toString() {
         return NumeroToString() + " de " + NaipeToString();
@@ -200,6 +209,11 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
     
     @Override
+    public void adicionarRenderer() {
+        GameManager.getInstance().adicionarRender(this, layer);
+    }
+    
+    @Override
     public void removeRenderer() {
         GameManager.getInstance().removerRender(this, layer);
     }
@@ -245,7 +259,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
 
     
     /**
-     * Transforma o naipe em uma String
+     * Transforma o naipe em uma String para abrir o arquivo de imagem
      * @return naipe
      */
     private String SourceNaipe(){
@@ -264,7 +278,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
  
     /**
-     * Transforma o numero da carta em String
+     * Transforma o numero da carta em String para se buscar o arquivo
      * @return numero
      */
     private String SourceNumero(){
@@ -307,20 +321,21 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
         return !realizouAcao && jogador == this.jogador;
     }
     
-    /*
-    public void move(java.awt.Rectangle dest) {
-        TransladationTween t = new TransladationTween(this);
-        t.addTarget(dest, .5f);
-        Thread thread = new Thread(t);
-        thread.start();
-    }
-    */
-    
+    /**
+     * Começa uma animação para mover a carta até um ponto destino
+     * @param dest 
+     */
     public void move(java.awt.Rectangle dest) {
         TransladationAnimation a = new TransladationAnimation(this);
         a.addTarget(dest, .5f);
     }
     
+    /**
+     * Começa uma animação para mover a carta através de vários pontos, definindo os
+     * pontos onde vai passar e os intervalos de tempo desse caminho
+     * @param points
+     * @param intervals 
+     */
     public void movePath(java.awt.Rectangle[] points, float[] intervals) {
         TransladationAnimation a = new TransladationAnimation(this);
         for (int i = 0; i < points.length; i++) {
@@ -328,98 +343,47 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
         }
     }
     
-    /*
-    public void movePath(java.awt.Rectangle[] points, float[] intervals) {
-        TransladationTween t = new TransladationTween(this);
-        for (int i = 0; i < points.length; i++) {
-            t.addTarget(points[i], intervals[i]);
-        }
-        Thread thread = new Thread(t);
-        thread.start();
-    }
-    */
-    
+    /**
+     * Método utilizado para realizar uma animação de alteração de escala
+     * @param scale
+     * @param duration 
+     */
     public void grow(float scale, float duration) {
         ScaleAnimation a = new ScaleAnimation(this);
         a.setScale(scale, duration);
     }
     
-    /*
-    public void grow(float scale) {
-        ScaleTween t = new ScaleTween(this);
-        t.setScale(scale, .5f);
-        Thread thread = new Thread(t);
-        thread.start();
-    }
-    
-    public void grow(float scale, float duration) {
-        ScaleTween t = new ScaleTween(this);
-        t.setScale(scale, duration);
-        Thread thread = new Thread(t);
-        thread.start();
-    }
-    
-    public void grow(float scale, float duration, float delay) {
-        ScaleTween t = new ScaleTween(this);
-        t.setScale(scale, duration);
-        t.setDelay(delay);
-        Thread thread = new Thread(t);
-        thread.start();
-    }
-    */
+    /**
+     * Função utilizada para mover a carta entre diferentes camadas de
+     * renderização, dada a camada destino.
+     * @param newLayer 
+     */
     public void changeLayer(int newLayer) {
         GameManager.getInstance().removerRender(this, layer);
         layer = newLayer;
         GameManager.getInstance().adicionarRender(this, layer);
     }
     
-    
-    //Getters e setters --------------------------------------------------------
     /**
-     * Seta Rect
-     * @param x
-     * @param y 
+     * Cria um novo PopUp
      */
-    public void setRect(int x, int y) {
-        rect.x = x;
-        rect.y = y;
-    }
-    
     public void newPop() {
         popUp = new PopUp(this);
     }
     
-    /**
-     * 
-     * @param x
-     * @param y
-     * @param width
-     * @param height 
-     */
-    public void setRect(int x, int y, int width, int height) {
-        rect = new Rectangle(x,y,width,height);
-    }
+    
+    //Getters e setters --------------------------------------------------------
 
     /**
-     * 
+     * Define um novo retângulo para carta
      * @param rect 
      */
     public void setRect(Rectangle rect) {
-        this.rect = rect;
-    }
-    
-    /**
-     * 
-     * @param width
-     * @param height 
-     */
-    public void setDimension(int width, int height) {
-        rect.width = width;
-        rect.height = height;
+        this.rect = new Rectangle(rect);
     }
 
     /**
-     * 
+     * Define um novo index(de tabuleiro) para a carta.
      * @param index 
      */
     public void setIndex(int index) {
@@ -427,7 +391,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
     
     /**
-     * 
+     * Retorna o index(de tabuleiro) da carta
      * @return index
      */
     public int getIndex() {
@@ -435,7 +399,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
 
     /**
-     * 
+     * Retorna o tabuleiro que está guardando esta carta
      * @return boardParent
      */
     public BoardHolder getBoardParent() {
@@ -443,7 +407,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
 
     /**
-     * 
+     * Define o tabuleiro que guarda a carta
      * @param boardParent 
      */
     public void setBoardParent(BoardHolder boardParent) {
@@ -451,7 +415,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }  
     
     /**
-     * 
+     * Retorna o numero da carta
      * @return 
      */
     public int getNumero() {
@@ -459,7 +423,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
 
     /**
-     * 
+     * Retorna o naipe da carta
      * @return 
      */
     public int getNaipe() {
@@ -467,7 +431,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
 
     /**
-     * 
+     * Retorna qual o jogador da carta
      * @return 
      */
     public int getJogador() {
@@ -475,7 +439,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
 
     /**
-     * 
+     * Retorna o multiplicador da carta
      * @return 
      */
     public int getMultiplicador() {
@@ -483,7 +447,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
     
     /**
-     * 
+     * Define o jogador da carta
      * @param jogador 
      */
     public void setJogador(int jogador) {
@@ -491,7 +455,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
 
     /**
-     * 
+     * Define se a carta pode ou não ser utilizada
      * @param realizouAcao 
      */
     public void setRealizouAcao(boolean realizouAcao) {
@@ -499,7 +463,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
 
     /**
-     * 
+     * Define o multiplicador da carta
      * @param multiplicador 
      */
     public void setMultiplicador(int multiplicador) {
@@ -507,7 +471,7 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
     
     /**
-     * 
+     * Retorna se a carta pode está selecionada
      * @return 
      */
     public boolean getSelecionado() {
@@ -515,13 +479,10 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
     }
 
     /**
-     * 
+     * Faz a carta permanecer com seu conteudo escondido
      * @param escondido 
      */
     public void setEscondido(boolean escondido) {
         this.escondido = escondido;
     }
-    
-    
-    
 }

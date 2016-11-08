@@ -29,7 +29,7 @@ import java.util.Observer;
 import javax.swing.JButton;
 
 /**
- *
+ * Classe responsável por fazer o controle do jogo
  * @author Arthur
  */
 public class CardController implements MouseListener, MouseMotionListener, ActionListener {
@@ -44,6 +44,9 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     private int turno = 0;
     private int jogadorAtual;
 
+    /**
+     * Construtor básico
+     */
     public CardController() {
         selecionados = new ArrayList<>();
         clicado = null;
@@ -51,21 +54,29 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         turnScreen = new TurnScreen();
     }
     
-    //Adiciona o view ao controle
+    /**
+     * Adiciona view ao controle
+     * @param view 
+     */
     public void addView(Observer view){
         this.view = (BoardFrame)view;
         turnScreen.setRect(this.view.getBoardPanel().getBounds());
     }
     
-    //Adiciona um model ao controle
+    /**
+     * Adiciona um model ao controle
+     * @param model 
+     */
     public void addModel(CardModel model) {
         this.model = (CardModel) model;
         UpdateWorkspaces();
         model.ComprarDeck(1);
     }
     
-    //Passa as localizacoes e tamanhos dos retangulos para o model
-    public void UpdateWorkspaces (){
+    /**
+     * Passa as localizacoes e tamanhos dos retangulos para o model
+     */
+    private void UpdateWorkspaces (){
         int i = 0;
         int j = 0;
         int height = view.getBoardPanel().getBounds().height / 5;

@@ -11,13 +11,17 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 /**
- *
+ *  Tipo de carta capaz de curar outras cartas ou o jogador
  * @author Arthur
  */
 public class Curandeiro extends Carta {
 
     private int cura;
 
+    /**
+     * Construtor do Curandeiro para um numero N
+     * @param n 
+     */
     public Curandeiro(int n) {
         super(n);
         switch(numero) {
@@ -58,7 +62,7 @@ public class Curandeiro extends Carta {
                         descartar();
                     }
                     else if(b.getJogador() == this.getJogador()){
-                        curar(b);
+                        curar(b, b.getIndex());
                     }
                     break;
                 
@@ -99,6 +103,11 @@ public class Curandeiro extends Carta {
         return colors;
     }
     
+    /**
+     * Realiza uma cura sobre uma carta a, presente no board b
+     * @param b
+     * @param a 
+     */
     public void curar(BoardHolder b, Atacavel a) {
         for(int i = 0; i < 5; i++) {
             Carta c = b.getCarta(i);
@@ -117,8 +126,13 @@ public class Curandeiro extends Carta {
         descartar();
     }
     
-    public void curar(BoardHolder b) {
-        if (b.getIndex() != -1 && b.getCarta(b.getIndex()) == null) {
+    /**
+     * Realiza uma cura sobre um tabuleiro na posição index
+     * @param b
+     * @param index 
+     */
+    public void curar(BoardHolder b, int index) {
+        if (index != -1 && b.getCarta(index) == null) {
             for(int i = 0; i < 5; i++) {
                 Carta c = b.getCarta(i);
                 if(c != null && c.getNumero() == this.numero) {
@@ -127,11 +141,11 @@ public class Curandeiro extends Carta {
                 }
             }
             
-            b.curaJogador(b.getIndex() ,cura * multiplicador);
+            b.curaJogador(index, cura * multiplicador);
             GameManager.getInstance().log(
             "Cura," + this.toString() + ",Jogador " + b.getJogador() + "," +
             this.boardParent + "," + this.index + "," +
-            b + "," + b.getIndex());
+            b + "," + index);
             
             realizouAcao = true;
             descartar();

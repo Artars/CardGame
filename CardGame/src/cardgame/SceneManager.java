@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 /**
- *
+ * Classe responsável por gerenciar as janelas
  * @author Arthur
  */
 public class SceneManager {
@@ -24,12 +24,18 @@ public class SceneManager {
     JFrame actualWindow;
     Timer animationTimer;
     
+    /**
+     * Construtor basico
+     */
     public SceneManager () {
         actualWindow = null;
         animationTimer = new Timer(10,null);
         animationTimer.start();
     }
     
+    /**
+     * Abre a tela inicial
+     */
     public void startMenu(){
         if(actualWindow != null)
             actualWindow.setVisible(false);
@@ -40,6 +46,9 @@ public class SceneManager {
         menu.repaint();
     }
     
+    /**
+     * Inicia o jogo
+     */
     public void startGame() {
         if(actualWindow != null)
             actualWindow.setVisible(false);
@@ -54,26 +63,29 @@ public class SceneManager {
         actualWindow = view;
     }
     
-    public void redraw(){
-        actualWindow.repaint();
-    }
-    
-    public Timer getAnimator() {
-        return animationTimer;
-    }
-    
+    /**
+     * Adiciona uma nova animação ao timer
+     * @param a 
+     */
     public void addAnimation(ActionListener a) {
         animationTimer.addActionListener(a);
         if(animationTimer.getActionListeners().length == 1)
             animationTimer.addActionListener(new ScreenRefresher(actualWindow));
     }
     
+    /**
+     * Remove animações do timer
+     * @param a 
+     */
     public void removeAnimation(ActionListener a) {
         animationTimer.removeActionListener(a);
         if(animationTimer.getActionListeners().length == 1)
             animationTimer.removeActionListener((animationTimer.getActionListeners())[0]);
     }
     
+    /**
+     * Reinicia o timer
+     */
     public void resetAnimator() {
         animationTimer = new Timer(10, null);
     }

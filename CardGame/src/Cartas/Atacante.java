@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ *  Classe capaz de atacar outras cartas ou o jogador
  * @author Arthur
  */
 public class Atacante extends Atacavel {
@@ -22,6 +22,12 @@ public class Atacante extends Atacavel {
     private int forca;
     
     //Construtor ---------------------------------------------------------------
+    /**
+     * Contrutor do atacante usando as posições x e y e o número n da carta
+     * @param x
+     * @param y
+     * @param n 
+     */
     public Atacante(int x, int y, int n) {
         super(x,y,n);
         switch(this.numero) {
@@ -50,6 +56,10 @@ public class Atacante extends Atacavel {
         vida = (float) vidaAtual / (maxVida * multiplicador);
     }
     
+    /**
+     * Contrutor do atacantes usando o numero n da carta
+     * @param n 
+     */
     public Atacante(int n) {
         super(n);
         switch(this.numero) {
@@ -79,8 +89,12 @@ public class Atacante extends Atacavel {
     }
 
     //Funcoes publicas ---------------------------------------------------------
+    /**
+     * Função de clique com argumentos opcionais
+     * @param args
+     */
     @Override
-    public void onClick(Object[] args) throws IllegalArgumentException {
+    public void onClick(Object[] args) {
         int size = 0;
         if(args != null)
             size = args.length;
@@ -156,6 +170,12 @@ public class Atacante extends Atacavel {
         return colors;
     }
 
+    /**
+     * Realiza o ataque sobre uma carta a. Possui uma variável invertido para
+     * inverter o sentido de movimento de ataque.
+     * @param a
+     * @param invertido 
+     */
     public void ataque(Atacavel a, boolean invertido) {
         realizouAcao = true;
         GameManager.getInstance().log(
@@ -166,6 +186,12 @@ public class Atacante extends Atacavel {
         a.levarDano(forca * multiplicador);
     }
     
+    /**
+     * Realiza o ataque sobre um tabuleiro. Possui uma variável invertido para
+     * inverter o sentido de movimento de ataque.
+     * @param b
+     * @param invertido 
+     */
     public void ataque(BoardHolder b, boolean invertido) {
         realizouAcao = true;
         GameManager.getInstance().log(
@@ -178,6 +204,10 @@ public class Atacante extends Atacavel {
 
     
     //Funções privadas ---------------------------------------------------------
+    /**
+     * Realiza a animação de ataque, pode ser invertido.
+     * @param invertido 
+     */
     private void attackMovement(boolean invertido) {
         int sinal = (invertido) ? -1:1;
         java.awt.Rectangle[] points = new java.awt.Rectangle[3];
@@ -196,14 +226,4 @@ public class Atacante extends Atacavel {
         s.setScale(1.25f, .125f);
     }
    
-    private void delay(double delay) {
-        Delay d = new Delay(delay);
-        Thread t = new Thread(d);
-        t.start();
-        try {
-            t.join();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Atacante.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }

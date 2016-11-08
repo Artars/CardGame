@@ -8,9 +8,11 @@ package View;
 import javax.swing.JFrame;
 
 /**
- *
+ * Não é mais utilizada, foi substituida por uma versão mais estável, que
+ * é a animação.
  * @author Arthur
  */
+/*
 public class RepaintThread implements Runnable{
 
     JFrame frame;
@@ -26,3 +28,4 @@ public class RepaintThread implements Runnable{
     }
     
 }
+*/

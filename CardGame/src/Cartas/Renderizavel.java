@@ -8,12 +8,22 @@ package Cartas;
 import java.awt.Graphics2D;
 
 /**
- * Interface de todas as cartas que podem ser desenhadas na tela
+ * Interface de todos os objetos que podem ser desenhados na tela
  * @author Arthur
  */
 public interface Renderizavel {
-    //Funcao responsavel por desenhar o objeto
+    /**
+     * Função responsável por desenhar o objeto dado um graphics
+     * @param g 
+     */
     public abstract void draw(Graphics2D g);
-    //Remove o objeto da lista de renderizaveis
+    
+    /**
+     * Adiciona o objeto à lista de renderizaveis
+     */
+    public abstract void adicionarRenderer();
+    /**
+     * Remove o objeto da lista de renderizaveis
+     */
     public abstract void removeRenderer();
 }
