@@ -108,7 +108,6 @@ public abstract class Atacavel extends Carta {
             + "," + this.boardParent + "," + this.index
             + "," + b + "," + b.getIndex());
         boardParent = b;
-        realizouAcao = true;
         onBoard = true;
     }
     

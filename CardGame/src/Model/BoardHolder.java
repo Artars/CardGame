@@ -301,6 +301,16 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
         }
     }
     
+    public void curaJogador(int index, int cura) {
+        if(jogador == 1 || jogador == 2) {
+            player.recuperarVida(cura);
+            BlinkingAnimation b = new BlinkingAnimation(getCardRect(index));
+            b.setColor(new Color(0,0,255,120));
+            b.setDelay(0.375f);
+            b.setDuration(1f);
+        }
+    }
+    
     //Determina a visibilidade das cartas
     public void cardVisibility(boolean visibility) {
         for(Carta c:cartas) {

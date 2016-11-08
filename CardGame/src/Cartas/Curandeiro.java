@@ -57,6 +57,9 @@ public class Curandeiro extends Carta {
                     if (b.getJogador() == 0) {
                         descartar();
                     }
+                    else if(b.getJogador() == this.getJogador()){
+                        curar(b);
+                    }
                     break;
                 
                 case 2:
@@ -112,6 +115,27 @@ public class Curandeiro extends Carta {
         realizouAcao = true;
         //Se descarta
         descartar();
+    }
+    
+    public void curar(BoardHolder b) {
+        if (b.getCarta(b.getIndex()) == null) {
+            for(int i = 0; i < 5; i++) {
+                Carta c = b.getCarta(i);
+                if(c != null && c.getNumero() == this.numero) {
+                    multiplicador = c.getMultiplicador() + 1;
+                    break;
+                }
+            }
+            
+            b.curaJogador(b.getIndex() ,cura * multiplicador);
+            GameManager.getInstance().log(
+            "Cura," + this.toString() + ",Jogador " + b.getJogador() + "," +
+            this.boardParent + "," + this.index + "," +
+            b + "," + b.getIndex());
+            
+            realizouAcao = true;
+            descartar();
+        }
     }
     
 }

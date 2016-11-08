@@ -175,18 +175,7 @@ public class Atacante extends Atacavel {
         attackMovement(invertido);
         b.levaDano(index, forca * multiplicador);
     }
-    
-    public void mover(BoardHolder b, int n) {
-        boardParent.retiraCarta(index);
-        b.insereCarta(this,n);
-        GameManager.getInstance().log(
-            "Mover" + "," + this.toString() + "," + (b.getIndex()+1)  
-            + "," + this.boardParent + "," + this.index
-            + "," + b + "," + b.getIndex());
-        boardParent = b;
-        realizouAcao = true;
-        onBoard = true;
-    }
+
     
     //Funções privadas ---------------------------------------------------------
     private void attackMovement(boolean invertido) {

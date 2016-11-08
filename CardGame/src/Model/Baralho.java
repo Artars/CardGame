@@ -72,10 +72,10 @@ public class Baralho implements Renderizavel, Serializable{
         Carta c;
         switch (n /13) {
             case 0:
-                c = new Defensor(n);
+                c = new Atacante(n);
                 break;
             case 1:
-                c = new Atacante(n);
+                c = new Defensor(n);
                 break;
             case 2:
                 c = new Curandeiro(n);

@@ -59,6 +59,11 @@ public class Player implements Serializable{
         }
     }
     
-    
+    public void recuperarVida(int cura) {
+        vidaAtual += cura;
+        if(vidaAtual > vidaMax)
+            vidaAtual = vidaMax;
+        updateBarra();
+    }
     
 }

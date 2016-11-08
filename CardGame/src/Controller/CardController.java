@@ -193,18 +193,23 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         }
         
         else if (ae.getActionCommand().equals("Save")) {
-            try
-            {
-              FileOutputStream f_out = new
-                     FileOutputStream ("data/card.data");
-              ObjectOutputStream obj_out = new
-                     ObjectOutputStream (f_out);
-              obj_out.writeObject (model);
-            }
-            catch (Exception e)
-            {
-              System.out.println (e.toString ());
-              System.out.println ("Can't save file");
+            if(GameManager.getInstance().getTurno() != 0) {
+                try
+                {
+                  FileOutputStream f_out = new
+                         FileOutputStream ("data/card.data");
+                  ObjectOutputStream obj_out = new
+                         ObjectOutputStream (f_out);
+                  obj_out.writeObject (model);
+                  GameManager.getInstance().log("Console,Jogo salvo");
+                }
+                catch (Exception e)
+                {
+                  System.out.println (e.toString ());
+                  System.out.println ("Can't save file");
+                }
+            } else {
+                GameManager.getInstance().log("Console,Não pode salvar em transição de turnos!");
             }
         }
         

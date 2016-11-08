@@ -64,6 +64,8 @@ public class Defensor extends Atacavel {
                     //Se colocou ou moveu dentro do tabuleiro
                     BoardHolder b1 = (BoardHolder) args[0];
                     if (b1.getJogador() == jogador && b1.getIndex() != -1) {
+                        if(onBoard)
+                            realizouAcao = true;
                         mover(b1, b1.getIndex());
                     }
                     //Foi pra pilha de descarte

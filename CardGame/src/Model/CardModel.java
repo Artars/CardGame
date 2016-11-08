@@ -123,12 +123,11 @@ public class CardModel implements Serializable {
                 }
             }
         }
+        g.adicionarRender(baralho,0);
         g.trocarTurno(turno);
         g.setDescarte((Descarte) boards[2]);
         g.setBar(boards[1].getPlayer(), 1);
         g.setBar(boards[3].getPlayer(), 2);
-        
-        
     }
     
 }
