@@ -118,7 +118,7 @@ public class Curandeiro extends Carta {
     }
     
     public void curar(BoardHolder b) {
-        if (b.getCarta(b.getIndex()) == null) {
+        if (b.getIndex() != -1 && b.getCarta(b.getIndex()) == null) {
             for(int i = 0; i < 5; i++) {
                 Carta c = b.getCarta(i);
                 if(c != null && c.getNumero() == this.numero) {
