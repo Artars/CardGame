@@ -29,8 +29,8 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
     public BoardFrame(Table board) {
         initComponents();
         init(board);
-        GameManager.getInstance().setBar(1, barraJogador1);
-        GameManager.getInstance().setBar(2, barraJogador2);
+        GameManager.getInstance().addBar(barraJogador1);
+        GameManager.getInstance().addBar(barraJogador2);
     }
     
     /**
@@ -62,6 +62,10 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
         this.board.addMouseMotionListener(controller);
         this.turnButton.setActionCommand("Turno");
         this.turnButton.addActionListener(controller);
+        this.jButtonSave.setActionCommand("Save");
+        this.jButtonSave.addActionListener(controller);
+        this.jButtonLoad.setActionCommand("Load");
+        this.jButtonLoad.addActionListener(controller);
     }
 
     public JPanel getBoardPanel() {
@@ -92,6 +96,8 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
         barraJogador2 = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         logArea = new javax.swing.JTextArea();
+        jButtonSave = new javax.swing.JButton();
+        jButtonLoad = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -143,6 +149,10 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
         logArea.setRows(5);
         jScrollPane1.setViewportView(logArea);
 
+        jButtonSave.setText("Save");
+
+        jButtonLoad.setText("Load");
+
         javax.swing.GroupLayout informationPanelLayout = new javax.swing.GroupLayout(informationPanel);
         informationPanel.setLayout(informationPanelLayout);
         informationPanelLayout.setHorizontalGroup(
@@ -155,14 +165,18 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(turnButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(informationPanelLayout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(barraJogador1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(barraJogador2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, informationPanelLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(informationPanelLayout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(informationPanelLayout.createSequentialGroup()
+                .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonLoad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         informationPanelLayout.setVerticalGroup(
             informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,7 +195,11 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(barraJogador2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonLoad, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(jButtonSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -219,6 +237,8 @@ public class BoardFrame extends javax.swing.JFrame implements Observer {
     private javax.swing.JPanel boardPanel;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JPanel informationPanel;
+    private javax.swing.JButton jButtonLoad;
+    private javax.swing.JButton jButtonSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

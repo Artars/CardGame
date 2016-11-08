@@ -63,6 +63,8 @@ public class Logger {
             formatado = "'" + parts[1] + "' foi descartado";
         else if (parts[0].equals("Turno"))
             formatado = "\n" + "--- " + "Turno do jogador " + parts[1] + " ---";
+        else if (parts[0].equals("Console"))
+            formatado = "\n" + "*** " + parts[1] + " ***";
         else
             formatado = null;
     

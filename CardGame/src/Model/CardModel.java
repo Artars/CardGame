@@ -5,26 +5,21 @@
  */
 package Model;
 
-import Cartas.Atacante;
 import Cartas.Carta;
-import Cartas.Defensor;
 import cardgame.GameManager;
-import java.awt.Graphics2D;
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  *
  * @author Arthur
  */
-public class CardModel {
+public class CardModel implements Serializable {
 
     private Baralho baralho;
     private BoardHolder[] boards;
-
+    private int turno;
     
     public CardModel (){
         baralho = new Baralho(52);
@@ -36,12 +31,13 @@ public class CardModel {
         boards[4] = new BoardHolder(3);
         ((Descarte) boards[2]).setBoardJogadores(boards[3], 1);
         ((Descarte) boards[2]).setBoardJogadores(boards[1], 2);
-
+        turno = 1;
     }
     
     //Realiza a troca de turno para o jogador "turno"
     public void trocarTurno(int turno) {      
         
+        this.turno = turno;
         boolean esconderTudo = (turno == 0);
         for(BoardHolder b:boards)
             b.cardVisibility(esconderTudo);
@@ -62,6 +58,10 @@ public class CardModel {
             boards[1].setRect(boards[3].getRect());
             boards[3].setRect(aux);
         }
+    }
+    
+    public int getTurno() {
+        return turno;
     }
     
     public void ComprarDeck(int turno){
@@ -106,6 +106,29 @@ public class CardModel {
         
         baralho.setRect((int) locations[5].getX() + (6 * socketWidth) + 3, 
                 (int) locations[5].getY() + 3, socketWidth - 6, socketHeight - 6);
+    }
+    
+    public void updateGameManager(){
+        GameManager g = GameManager.getInstance();
+        for (BoardHolder b : boards) {
+            g.adicionarRender(b, 0);
+            g.adicionarSelecionavel(b);
+        }
+        for (BoardHolder b : boards) {
+            for (int i = 0 ; i < 5; i++) {
+                if(b.getCarta(i) != null) {
+                    g.adicionarRender(b.getCarta(i), 0);
+                    g.adicionarSelecionavel(b.getCarta(i));
+                    b.getCarta(i).newPop();
+                }
+            }
+        }
+        g.trocarTurno(turno);
+        g.setDescarte((Descarte) boards[2]);
+        g.setBar(boards[1].getPlayer(), 1);
+        g.setBar(boards[3].getPlayer(), 2);
+        
+        
     }
     
 }

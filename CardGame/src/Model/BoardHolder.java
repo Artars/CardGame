@@ -14,6 +14,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -21,7 +22,7 @@ import java.util.Collections;
  *
  * @author Arthur
  */
-public class BoardHolder implements Renderizavel, Selecionavel {
+public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
     
     //Variaveis ----------------------------------------------------------------
     protected Rectangle rect;
@@ -53,7 +54,12 @@ public class BoardHolder implements Renderizavel, Selecionavel {
         
         GameManager.getInstance().adicionarRender((Renderizavel)this,0);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
-        this.player = GameManager.getInstance().getPlayer(player);
+        if (jogador == 1 || jogador == 2) {
+            this.player = new Player(jogador, 100);
+            GameManager.getInstance().setBar(this.player, jogador);
+        }
+        else
+            this.player = null;
     }
     
     //Funcoes de Implementacao Obrigatoria -------------------------------------
@@ -361,6 +367,10 @@ public class BoardHolder implements Renderizavel, Selecionavel {
     public int getJogador() {
         return jogador;
     }
+    
+    public Player getPlayer() {
+        return player;
+    }
 }
 
 class BlinkingAnimation implements java.awt.event.ActionListener, Renderizavel {
@@ -393,11 +403,11 @@ class BlinkingAnimation implements java.awt.event.ActionListener, Renderizavel {
     }
     
     private void addToListener(){
-        GameManager.getInstance().getAnimator().addActionListener(this);
+        GameManager.getInstance().addAnimation(this);
     }
     
     private void removeListener(){
-        GameManager.getInstance().getAnimator().removeActionListener(this);
+        GameManager.getInstance().removeAnimation(this);
     }
     
     @Override
@@ -415,7 +425,6 @@ class BlinkingAnimation implements java.awt.event.ActionListener, Renderizavel {
                 removeListener();
                 removeRenderer();
             }
-            GameManager.getInstance().redraw();
         }
         else
             delayStep--;

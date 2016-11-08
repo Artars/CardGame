@@ -20,6 +20,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Observer;
 import javax.swing.JButton;
@@ -185,6 +189,53 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
                 model.trocarTurno(0);
                 turnScreen.setEnable(true);
                 view.repaint();
+            }
+        }
+        
+        else if (ae.getActionCommand().equals("Save")) {
+            try
+            {
+              FileOutputStream f_out = new
+                     FileOutputStream ("data/card.data");
+              ObjectOutputStream obj_out = new
+                     ObjectOutputStream (f_out);
+              obj_out.writeObject (model);
+            }
+            catch (Exception e)
+            {
+              System.out.println (e.toString ());
+              System.out.println ("Can't save file");
+            }
+        }
+        
+        else if (ae.getActionCommand().equals("Load")) {
+            try
+            {
+              FileInputStream f_in = new
+                      FileInputStream ("data/card.data");
+              ObjectInputStream obj_in = new
+                      ObjectInputStream (f_in);
+              try {
+                model = (CardModel) obj_in.readObject ();
+                GameManager.getInstance().clearSystems();
+                model.updateGameManager();
+                indicador = new IndicadorClicado();
+                clicado = null;
+                turnScreen = new TurnScreen(this.view.getBoardPanel().getBounds());
+                turno = GameManager.getInstance().getTurno();
+                view.updateTurnText(turno);
+                view.repaint();
+                GameManager.getInstance().log("Console,Jogo carregado");
+              }
+              catch (ClassCastException e) {
+                  System.out.println("Wrong file");
+              }
+              
+            }
+            catch (Exception e)
+            {
+              System.out.println (e.toString ());
+              System.out.println("Can't read file");
             }
         }
     }

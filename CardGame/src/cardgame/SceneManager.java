@@ -11,6 +11,7 @@ import View.Background;
 import View.BoardFrame;
 import View.Table;
 import View.TelaInicial;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
@@ -59,6 +60,18 @@ public class SceneManager {
     
     public Timer getAnimator() {
         return animationTimer;
+    }
+    
+    public void addAnimation(ActionListener a) {
+        animationTimer.addActionListener(a);
+        if(animationTimer.getActionListeners().length == 1)
+            animationTimer.addActionListener(new ScreenRefresher(actualWindow));
+    }
+    
+    public void removeAnimation(ActionListener a) {
+        animationTimer.removeActionListener(a);
+        if(animationTimer.getActionListeners().length == 1)
+            animationTimer.removeActionListener((animationTimer.getActionListeners())[0]);
     }
     
     public void resetAnimator() {

@@ -15,14 +15,14 @@ import View.BoardFrame;
 import View.Table;
 import View.TelaInicial;
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Observer;
 
 /**
  *
  * @author Arthur
  */
-public class GameManager {
+public class GameManager implements Serializable{
 
    //Variaveis------------------------------------------------------------------
    private ArrayList<ArrayList<Renderizavel>> camadasRenderizaveis;
@@ -33,6 +33,7 @@ public class GameManager {
    private int rodada;
    private SceneManager sceneManager;
    private Logger logger;
+   private ArrayList<javax.swing.JProgressBar> barras = null;
    
    //create an object of SingleObject
    private static GameManager instance = new GameManager();
@@ -49,7 +50,7 @@ public class GameManager {
     //Funcos Publicas ----------------------------------------------------------
    //Get the only object available
     public static GameManager getInstance(){
-      return instance;
+        return instance;
     }
    
     /*
@@ -128,12 +129,18 @@ public class GameManager {
         this.descarte = descarte;
     }
     
+    public void addBar(javax.swing.JProgressBar barra) {
+        if (barras == null)
+            barras = new ArrayList<>();
+        barras.add(barra);
+    }
+    
     //Adiciona a barra de vida ao jogador (1 ou 2)
-    public void setBar(int jogador, javax.swing.JProgressBar barra) {
+    public void setBar(Player player, int jogador) {
         if (jogador == 1 || jogador == 2) {
-            if(players[jogador-1] == null) 
-                players[jogador - 1] = new Player(jogador, 100);
-            players[jogador - 1].setBarra(barra);
+            jogador -= 1;
+            if(barras.get(jogador) != null)
+                player.setBarra(barras.get(jogador));
         }
     }
     
@@ -163,6 +170,15 @@ public class GameManager {
         sceneManager.startMenu();
     }
     
+    public void clearSystems() {
+        camadasRenderizaveis = new ArrayList<>();
+        selecionaveis = new ArrayList<>();
+        turno = 1;
+        rodada = 0;
+        players = new Player[2];
+        logger = new Logger(logger.logArea);
+    }
+    
     public void startGame(){
         camadasRenderizaveis = new ArrayList<>();
         selecionaveis = new ArrayList<>();
@@ -181,7 +197,11 @@ public class GameManager {
         sceneManager.redraw();
     }
     
-    public javax.swing.Timer getAnimator() {
-        return sceneManager.getAnimator();
+    public void addAnimation(java.awt.event.ActionListener a) {
+        sceneManager.addAnimation(a);
+    }
+    
+    public void removeAnimation(java.awt.event.ActionListener a) {
+        sceneManager.removeAnimation(a);
     }
 }

@@ -77,12 +77,12 @@ public class TransladationAnimation implements ActionListener {
     }
 
     private void addToListener(){
-        GameManager.getInstance().getAnimator().addActionListener(this);
+        GameManager.getInstance().addAnimation(this);
         onListener = true;
     }
     
     private void removeListener(){
-        GameManager.getInstance().getAnimator().removeActionListener(this);
+        GameManager.getInstance().removeAnimation(this);
         onListener = false;
     }
     

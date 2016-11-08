@@ -6,13 +6,14 @@
 package Model;
 
 import cardgame.GameManager;
+import java.io.Serializable;
 import javax.swing.JProgressBar;
 
 /**
  *
  * @author Arthur
  */
-public class Player {
+public class Player implements Serializable{
     //Variaveis ----------------------------------------------------------------
     private int jogador;
     private int vidaMax;

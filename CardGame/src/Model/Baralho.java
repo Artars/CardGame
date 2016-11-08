@@ -12,25 +12,21 @@ import Cartas.Defensor;
 import Cartas.Renderizavel;
 import cardgame.GameManager;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Rectangle;
-import java.io.File;
-import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *  Classe reponsavel por gerenciar as cartas ainda não colocadas
  * @author Arthur
  */
-public class Baralho implements Renderizavel{
+public class Baralho implements Renderizavel, Serializable{
     
     //Variaveis ----------------------------------------------------------------
     private ArrayList<Integer> cartas;
-    private Image sprite;
+    private ImageIcon sprite;
     private Rectangle rect;
 
     //Construtor -------------------------------------------------------------
@@ -40,13 +36,8 @@ public class Baralho implements Renderizavel{
             cartas.add(i);
         shuffle();
         
-        if(this.sprite == null){
-            try {
-                sprite = ImageIO.read(new File("img/back.png"));
-            } catch (IOException ex) {
-                Logger.getLogger(Carta.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        if(this.sprite == null)
+            sprite = new ImageIcon("img/back.png");
         
         rect = new Rectangle(0,0,74,94);
         GameManager.getInstance().adicionarRender(this, 0);
@@ -55,7 +46,7 @@ public class Baralho implements Renderizavel{
     //Funcoes de implementacao obrigatoria -------------------------------------
     @Override
     public void draw(Graphics2D g) {
-        g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);   
+        g.drawImage(sprite.getImage(), rect.x, rect.y, rect.width, rect.height, null);   
     }
     
     @Override

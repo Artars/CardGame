@@ -9,8 +9,6 @@ package Cartas;
 import Model.BoardHolder;
 import cardgame.GameManager;
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;

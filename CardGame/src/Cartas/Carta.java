@@ -8,23 +8,19 @@ package Cartas;
 import Model.BoardHolder;
 import cardgame.GameManager;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.io.File;
-import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  * Clase abstrata de carta, base para todas as cartas presentes no jogo
  * 
  * @author Arthur
  */
-public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
+public abstract class Carta implements Comparable, Selecionavel, Renderizavel, Serializable {
     
     //Variaveis estáticas da carta ---------------------------------------------
     protected int numero;
@@ -33,8 +29,8 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     protected int jogador;
     
     //Variaveis de sistema (Dinamicas) -----------------------------------------
-    protected Image sprite;
-    protected Image hiddenSprite;
+    protected ImageIcon sprite;
+    protected ImageIcon hiddenSprite;
     private int layer = 0;
     protected Rectangle rect;
     protected boolean selecionado;
@@ -72,14 +68,11 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
 
         //O caminho é da forma "img/2_of_clubs"
         String imgPath = "img/" + this.SourceNumero() + "_of_" + this.SourceNaipe() + ".png";
-        if(this.sprite == null){
-            try {
-                sprite = ImageIO.read(new File(imgPath));
-                hiddenSprite = ImageIO.read(new File("img/back.png"));
-            } catch (IOException ex) {
-                Logger.getLogger(Carta.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        if(this.sprite == null)
+                sprite = new ImageIcon(imgPath);
+        if(this.hiddenSprite == null)
+            hiddenSprite = new ImageIcon("img/back.png");
+        
         
         this.rect = new Rectangle(x,y, 74, 94);
         GameManager.getInstance().adicionarRender((Renderizavel) this,layer);
@@ -100,14 +93,10 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
         
         //O caminho é da forma "img/2_of_clubs"
         String imgPath = "img/" + this.SourceNumero() + "_of_" + this.SourceNaipe() + ".png";
-        if(this.sprite == null){
-            try {
-                sprite = ImageIO.read(new File(imgPath));
-                hiddenSprite = ImageIO.read(new File("img/back.png"));
-            } catch (IOException ex) {
-                Logger.getLogger(Carta.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        if(this.sprite == null)
+                sprite = new ImageIcon(imgPath);
+        if(this.hiddenSprite == null)
+            hiddenSprite = new ImageIcon("img/back.png");
         
         this.rect = new Rectangle(0,0,74,94);
         GameManager.getInstance().adicionarRender((Renderizavel) this, layer);
@@ -149,12 +138,12 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     @Override
     public void draw(Graphics2D g) {
         if(escondido){
-            g.drawImage(hiddenSprite, rect.x, rect.y, rect.width, rect.height, null);
+            g.drawImage(hiddenSprite.getImage(), rect.x, rect.y, rect.width, rect.height, null);
             return;
         }
         
         //Desenha a imagem da carta
-        g.drawImage(sprite, rect.x, rect.y, rect.width, rect.height, null);
+        g.drawImage(sprite.getImage(), rect.x, rect.y, rect.width, rect.height, null);
         popUp.draw(g);
         
         //Desenha um retangulo transparente com o estado da carta
@@ -394,6 +383,10 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel {
     public void setRect(int x, int y) {
         rect.x = x;
         rect.y = y;
+    }
+    
+    public void newPop() {
+        popUp = new PopUp(this);
     }
     
     /**

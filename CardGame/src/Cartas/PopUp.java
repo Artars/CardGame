@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 
 
-public class PopUp implements Renderizavel{
+public class PopUp implements Renderizavel, Serializable{
     //Define ponto inferior equerdo do Retangulo
     private Rectangle invertedRect;
     //Referencia a carta mae

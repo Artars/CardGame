@@ -7,11 +7,7 @@ package Cartas;
 
 import cardgame.GameManager;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
