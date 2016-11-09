@@ -45,7 +45,7 @@ public class CardModel implements Serializable {
     public void trocarTurno(int turno) {      
         
         this.turno = turno;
-        boolean esconderTudo = (turno == 0);
+        boolean esconderTudo = (turno > 2);
         for(BoardHolder b:boards)
             b.cardVisibility(esconderTudo);
         

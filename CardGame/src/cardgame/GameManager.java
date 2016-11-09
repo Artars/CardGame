@@ -133,7 +133,7 @@ public class GameManager implements Serializable{
      */  
     public void trocarTurno(int turno) {
         this.turno = turno;
-        if (turno != 0) rodada++;
+        if (turno < 3) rodada++;
     }
     
     /**

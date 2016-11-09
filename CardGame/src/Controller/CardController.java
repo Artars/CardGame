@@ -181,11 +181,12 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
             clicado = null;
             indicador.setEnabled(false);
             
-            if (Turno.getText().contains("Trocar turno")){
-                
-                if (Turno.getText().contains("1"))GameManager.getInstance().trocarTurno(2);
-                else GameManager.getInstance().trocarTurno(1);
-                
+            if (turno > 2){
+                if (turno == 3)
+                    turno = 2;
+                else 
+                    turno = 1;
+                GameManager.getInstance().trocarTurno(turno);
                 Turno.setText("Terminar turno");
                 turno = GameManager.getInstance().getTurno();
                 GameManager.getInstance().log("Turno," + turno);
@@ -194,33 +195,33 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
                 turnScreen.setEnable(false);
                 view.repaint();
             }
-            else if (Turno.getText().equals("Terminar turno")){
-                Turno.setText("Trocar turno " + turno);
-                GameManager.getInstance().trocarTurno(0);
-                model.trocarTurno(0);
+            else if (turno < 3){
+                turno += 2;
+                GameManager.getInstance().trocarTurno(turno);
+                if (turno == 3) 
+                    Turno.setText("Trocar para turno " + 2);
+                else
+                    Turno.setText("Trocar para turno " + 1);
+                model.trocarTurno(turno);
                 turnScreen.setEnable(true);
                 view.repaint();
             }
         }
         
-        else if (ae.getActionCommand().equals("Save")) {
-            if(GameManager.getInstance().getTurno() != 0) {
-                try
-                {
-                  FileOutputStream f_out = new
-                         FileOutputStream ("data/card.data");
-                  ObjectOutputStream obj_out = new
-                         ObjectOutputStream (f_out);
-                  obj_out.writeObject (model);
-                  GameManager.getInstance().log("Console,Jogo salvo");
-                }
-                catch (Exception e)
-                {
-                  System.out.println (e.toString ());
-                  System.out.println ("Can't save file");
-                }
-            } else {
-                GameManager.getInstance().log("Console,Não pode salvar em transição de turnos!");
+    else if (ae.getActionCommand().equals("Save")) {
+            try
+            {
+              FileOutputStream f_out = new
+                     FileOutputStream ("data/card.data");
+              ObjectOutputStream obj_out = new
+                     ObjectOutputStream (f_out);
+              obj_out.writeObject (model);
+              GameManager.getInstance().log("Console,Jogo salvo");
+            }
+            catch (Exception e)
+            {
+              System.out.println (e.toString ());
+              System.out.println ("Can't save file");
             }
         }
         
