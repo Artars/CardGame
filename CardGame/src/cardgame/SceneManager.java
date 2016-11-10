@@ -6,9 +6,12 @@
 package cardgame;
 
 import Controller.CardController;
+import Controller.MultController;
 import Model.CardModel;
 import View.Background;
 import View.BoardFrame;
+import View.BoardMult;
+import View.MultiplayerChat;
 import View.Table;
 import View.TelaInicial;
 import java.awt.event.ActionListener;
@@ -22,6 +25,7 @@ import javax.swing.Timer;
 public class SceneManager {
     
     JFrame actualWindow;
+    JFrame secondaryWindow;
     Timer animationTimer;
     
     /**
@@ -61,6 +65,30 @@ public class SceneManager {
         view.addController(controller);
         controller.startMainWindow();
         actualWindow = view;
+    }
+    
+    public void startMultChat() {
+        if(actualWindow != null)
+            actualWindow.setVisible(false);
+        MultiplayerChat chat = new MultiplayerChat();
+        MultController controller = new MultController();
+        controller.addChat(chat);
+        actualWindow = chat;
+        chat.setVisible(true);
+    }
+    
+    public void startMultGame(){
+        Table board = new Table();
+        BoardMult view = new BoardMult(board);
+        CardModel model = new CardModel();
+        MultController controller = ((MultiplayerChat) actualWindow).getController();
+        controller.addView(view);
+        controller.addModel(model);
+        view.addController(controller);
+        controller.startMainWindow();
+        secondaryWindow = actualWindow;
+        actualWindow = view;
+        
     }
     
     /**

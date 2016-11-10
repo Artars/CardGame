@@ -32,8 +32,8 @@ public class Descarte extends BoardHolder {
      * @param rect
      * @param player 
      */
-    public Descarte(Rectangle rect, int player) {
-        super(rect, player);
+    public Descarte(Rectangle rect, int player, int index) {
+        super(rect, player, index);
         over = false;
         lastIndex = -1;
         descarteFixo = new ArrayList<>();
@@ -45,8 +45,8 @@ public class Descarte extends BoardHolder {
      * Construtor para o descarte dado um player
      * @param player 
      */
-    public Descarte(int player) {
-        super(player);
+    public Descarte(int player, int index) {
+        super(player, index);
         over = false;
         lastIndex = -1;
         descarteFixo = new ArrayList<>();

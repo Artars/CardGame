@@ -6,6 +6,7 @@
 package cardgame;
 
 import java.util.ArrayList;
+import java.util.Observer;
 import javax.swing.JTextArea;
 
 /*
@@ -35,6 +36,7 @@ Turno, Nome1
 public class Logger {
     JTextArea logArea;
     ArrayList<String> commands;
+    ArrayList<Observer> observers;
     
     /**
      * Construtor que tem como parâmetro a àrea em que será escrito os logs
@@ -43,6 +45,11 @@ public class Logger {
     public Logger (JTextArea logArea) {
         this.logArea = logArea;
         commands = new ArrayList<>();
+        observers = new ArrayList<>();
+    }
+    
+    public void addObserver(Observer ob) {
+        observers.add(ob);
     }
     
     /**
@@ -52,6 +59,8 @@ public class Logger {
     public void addLog(String command) {
         commands.add(command);
         formatCommand(command);
+        for(Observer o:observers)
+            o.update(null, command);
     }
     
     /**

@@ -5,16 +5,18 @@
  */
 package Controller;
 
+import Cartas.Atacante;
+import Cartas.Atacavel;
 import Cartas.Carta;
+import Cartas.Curandeiro;
 import Cartas.Selecionavel;
-import Model.BoardHolder;
 import Model.CardModel;
 import View.BoardFrame;
-import View.Table;
+import View.BoardMult;
+import View.MultiplayerChat;
 import cardgame.GameManager;
 import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -25,33 +27,32 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JButton;
 
 /**
- * Classe responsável por fazer o controle do jogo
+ *
  * @author Arthur
  */
-public class CardController implements MouseListener, MouseMotionListener, ActionListener {
-
-    private BoardFrame view;
+public class MultController implements MouseListener, MouseMotionListener, ActionListener, Observer {
+    private boolean host;
+    private int jogador;
+    private BoardMult view;
+    private MultiplayerChat chat;
+    private Servidor servidor;
     private CardModel model;
     private Selecionavel clicado;
     private ArrayList <Selecionavel> selecionados;
+    private int turno;
     private IndicadorClicado indicador;
-    private TurnScreen turnScreen;
-    
-    private int turno = 0;
-    private int jogadorAtual;
 
-    /**
-     * Construtor básico
-     */
-    public CardController() {
+    public MultController() {
         selecionados = new ArrayList<>();
         clicado = null;
         indicador = new IndicadorClicado();
-        turnScreen = new TurnScreen();
+        host = false;
+        turno = 1;
     }
     
     /**
@@ -59,8 +60,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
      * @param view 
      */
     public void addView(Observer view){
-        this.view = (BoardFrame)view;
-        turnScreen.setRect(this.view.getBoardPanel().getBounds());
+        this.view = (BoardMult)view;
     }
     
     /**
@@ -70,12 +70,8 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     public void addModel(CardModel model) {
         this.model = (CardModel) model;
         UpdateWorkspaces();
-        model.ComprarDeck(1);
     }
     
-    /**
-     * Passa as localizacoes e tamanhos dos retangulos para o model
-     */
     private void UpdateWorkspaces (){
         int i = 0;
         int j = 0;
@@ -94,6 +90,146 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         model.UpdateBoardLocations(locations, width, height);
     }
     
+    public void addChat(MultiplayerChat chat) {
+        this.chat = chat;
+        chat.addController(this);
+    }
+
+    public void host() {
+        this.jogador = 1;
+        host = true;
+        servidor = new Servidor(this);
+        (new Thread(servidor)).start();
+    }
+    
+    public void conectar(String ip) {
+        servidor = new Servidor(this, ip);
+        (new Thread(servidor)).start();
+        this.jogador = 2;
+    }
+    
+    public void enviarComando(String s) {
+        String[] parts = s.split(",");
+        
+        if(parts[0].equals("Fala")) {
+            servidor.write(s);
+        }
+        else {
+            if(turno == jogador) {
+                servidor.write(s);
+            }
+        }
+    }
+    
+    public void receberComando(String s) {
+        String[] parts = s.split(",");
+        if(parts != null) {
+            Atacante a;
+            Atacavel alvo;
+            Cartas.Defensor d;
+            Model.BoardHolder b1, b2;
+            if(parts[0].equals("Ataque")) {
+                b1 = model.getBoard(
+                        Integer.parseInt(parts[3]));
+                a = (Atacante) (b1.getCarta(
+                        Integer.parseInt(parts[4])));
+                b2 = model.getBoard(Integer.parseInt(parts[5]));
+                if(parts[2].charAt(0) == 'J') {
+                    a.ataque(b2, Integer.parseInt(parts[6]), true);
+                }
+                else {
+                    alvo = (Atacavel) (b2.getCarta(
+                        Integer.parseInt(parts[6])));
+                    a.ataque(alvo, true);
+                }
+            }
+            else if (parts[0].equals("Cura")) {
+                b1 = model.getBoard(
+                        Integer.parseInt(parts[3]));
+                Curandeiro c = (Curandeiro) (b1.getCarta(
+                        Integer.parseInt(parts[4])));
+                b2 = model.getBoard(Integer.parseInt(parts[5]));
+                if(parts[2].charAt(0) == 'J') {
+                    c.curar(b2, Integer.parseInt(parts[6]));
+                }
+                else {
+                    alvo = (Atacavel) (b2.getCarta(
+                        Integer.parseInt(parts[6])));
+                    c.curar(b2, alvo);
+                }
+            }
+            else if (parts[0].equals("Mover")){
+                b1 = model.getBoard(
+                        Integer.parseInt(parts[3]));
+                alvo = (Atacavel) (b1.getCarta(
+                        Integer.parseInt(parts[4])));
+                alvo.setEscondido(false);
+                b2 = model.getBoard(Integer.parseInt(parts[5]));
+                alvo.mover(b2, Integer.parseInt(parts[6]));
+            }
+            else if (parts[0].equals("Trocou")) {
+                b1 = model.getBoard(
+                        Integer.parseInt(parts[3]));
+                d = (Cartas.Defensor) (b1.getCarta(
+                        Integer.parseInt(parts[4])));
+                b2 = model.getBoard(Integer.parseInt(parts[5]));
+                alvo = (Atacavel) (b2.getCarta(
+                        Integer.parseInt(parts[6])));
+                d.trocar(b2, alvo);
+            }
+            else if(parts[0].equals("Descarte")) {
+                b1 = model.getBoard(Integer.parseInt(parts[2]));
+                Carta car = b1.getCarta(
+                        Integer.parseInt(parts[3]));
+                car.setEscondido(false);
+                car.descartar();
+            }
+            else if(parts[0].equals("Turno")) {
+                trocarTurno(Integer.parseInt(parts[1]));
+            }
+            else if (parts[0].equals("Console")) {
+            
+            }
+            else if (parts[0].equals("Sincronizar")) {
+                model.sincronizarBaralho(s);
+                model.trocarTurno(turno, jogador);
+                model.inverterTabuleiro(jogador);
+            }
+            else if (parts[0].equals("Fala")) {
+                String textoJunto = "";
+                boolean primeiro = true;
+                for(int i = 2; i < parts.length; i++) {
+                    if(primeiro) {
+                        textoJunto = textoJunto + parts[i];
+                        primeiro = false;
+                    }
+                    else
+                        textoJunto = textoJunto + "," + parts[i];
+                }
+                chat.getTextArea().append(parts[1] + ": " + textoJunto + "\n");
+            }
+        }
+    }
+    
+    public void conseguiuConectar() {
+        chat.conectado();
+        GameManager.getInstance().observeLog(this);
+        if(jogador == 1) {
+            String baralho = model.getBaralho();
+            System.out.println(baralho);
+            enviarComando(baralho);
+            model.trocarTurno(turno, jogador);
+            model.inverterTabuleiro(jogador);
+        }
+    }
+    
+    public void trocarTurno(int trocTurno) {
+        GameManager.getInstance().log("Turno," + trocTurno);
+        turno = trocTurno;
+        GameManager.getInstance().trocarTurno(turno);
+        view.setTurnText(turno);
+        model.trocarTurno(turno, jogador);
+    }
     
     @Override
     public void mouseClicked(MouseEvent me) {
@@ -102,6 +238,8 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         ArrayList <Selecionavel> clicados = GameManager.getInstance().findSelecionavel(x, y); 
         turno = GameManager.getInstance().getTurno();
         
+        if(turno != jogador)
+            return;
         //Seleciona uma carta caso nada esteja selecionado
         if (clicados.size() > 1 && clicado == null){
             Carta c = (Carta) clicados.get(1);
@@ -178,6 +316,11 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         
         //Clicou no botao de troca de turno
         if (ae.getActionCommand().equals("Turno")) {
+            if(turno == jogador) {
+                int jogadorOposto = (jogador == 1)? 2:1;
+                trocarTurno(jogadorOposto);
+            }
+            /*
             JButton Turno = (JButton) ae.getSource();
             clicado = null;
             indicador.setEnabled(false);
@@ -207,6 +350,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
                 turnScreen.setEnable(true);
                 view.repaint();
             }
+            */
         }
         
     else if (ae.getActionCommand().equals("Save")) {
@@ -239,7 +383,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
                 model.updateGameManager();
                 indicador = new IndicadorClicado();
                 clicado = null;
-                turnScreen = new TurnScreen(this.view.getBoardPanel().getBounds());
+                //turnScreen = new TurnScreen(this.view.getBoardPanel().getBounds());
                 turno = GameManager.getInstance().getTurno();
                 view.updateTurnText(turno);
                 view.repaint();
@@ -258,11 +402,14 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         }
     }
     
-    /**
-     * Inicia a janela principal
-     */
+    
     public void startMainWindow(){
         view.setMinimumSize(new Dimension(600, 400));
         view.setVisible(true);
+    }
+
+    @Override
+    public void update(Observable o, Object o1) {
+        enviarComando((String) o1);
     }
 }

@@ -153,6 +153,8 @@ public abstract class Carta implements Comparable, Selecionavel, Renderizavel, S
         
         //Desenha a imagem da carta
         g.drawImage(sprite.getImage(), rect.x, rect.y, rect.width, rect.height, null);
+        if(popUp == null)
+            newPop();
         popUp.draw(g);
         
         //Desenha um retangulo transparente com o estado da carta

@@ -33,13 +33,15 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
     protected int pocketHeight;
     private Player player;
     private boolean invertido;
+    private int ownIndex;
 
     //Contrutores --------------------------------------------------------------
-    public BoardHolder(Rectangle rect, int player) {
+    public BoardHolder(Rectangle rect, int player, int index) {
         this.rect = rect;
         this.jogador = player;
         this.cartas = new Carta[5];
         this.destaque = -1;
+        this.ownIndex = index;
         
         GameManager.getInstance().adicionarRender((Renderizavel)this,0);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
@@ -51,11 +53,12 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
             this.player = null;
     }
     
-    public BoardHolder(int player) {
+    public BoardHolder(int player, int index) {
         this.rect = new Rectangle(0,0,0,0);
         this.jogador = player;
         this.cartas = new Carta[5];
         this.destaque = -1;
+        this.ownIndex = index;
         
         GameManager.getInstance().adicionarRender((Renderizavel)this,0);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
@@ -152,7 +155,7 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
     
     @Override
     public String toString(){
-        return String.valueOf(jogador);
+        return String.valueOf(ownIndex);
     }
     
     //Funcoes Privadas ---------------------------------------------------------
@@ -301,7 +304,7 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
     //Realiza dano no jogador
     public void levaDano(int index, int dano) {
         if(jogador == 1 || jogador == 2) {
-            if (index == destaque && cartas[index] == null) {
+            if (cartas[index] == null) {
                 player.perderVida(dano);
                 BlinkingAnimation b = new BlinkingAnimation(getCardRect(index));
                 b.setDelay(0.375f);
@@ -383,6 +386,7 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
     public Player getPlayer() {
         return player;
     }
+    
 }
 
 class BlinkingAnimation implements java.awt.event.ActionListener, Renderizavel {

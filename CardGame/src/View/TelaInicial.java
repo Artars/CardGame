@@ -36,7 +36,7 @@ public class TelaInicial extends javax.swing.JFrame {
       
         Dimension area = new Dimension(boardPanel.getWidth(), boardPanel.getHeight());
         
-        jBInit.setVisible(false);
+        jBSingle.setVisible(false);
         
         this.board = board;
         this.board.setPreferredSize(area);//set dimensao do painel de desenho
@@ -44,10 +44,13 @@ public class TelaInicial extends javax.swing.JFrame {
         this.boardPanel.setLayout(new GridLayout(1, 1));
         
         this.boardPanel.add(board);
-        board.add(jBInit, 1, 0);
-        jBInit.setLocation((boardPanel.getWidth()-jBInit.getWidth())/2, 
-                (boardPanel.getHeight()-jBInit.getHeight())/2);
-        jBInit.setVisible(true);
+        board.add(jBSingle, 1, 0);
+        board.add(jBMulti, 1, 0);
+        jBSingle.setLocation((boardPanel.getWidth()-jBSingle.getWidth())/2, 
+                (boardPanel.getHeight()-jBSingle.getHeight())/2);
+        jBMulti.setLocation(jBSingle.getLocation().x, jBSingle.getLocation().y + 20);
+        jBSingle.setVisible(true);
+        jBMulti.setVisible(true);
     }
 
     /**
@@ -60,16 +63,24 @@ public class TelaInicial extends javax.swing.JFrame {
     private void initComponents() {
 
         boardPanel = new javax.swing.JPanel();
-        jBInit = new javax.swing.JButton();
+        jBSingle = new javax.swing.JButton();
+        jBMulti = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(905, 612));
         setResizable(false);
 
-        jBInit.setText("Começar o jogo");
-        jBInit.addActionListener(new java.awt.event.ActionListener() {
+        jBSingle.setText("Um jogador");
+        jBSingle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBInitActionPerformed(evt);
+                jBSingleActionPerformed(evt);
+            }
+        });
+
+        jBMulti.setText("Dois jogadores");
+        jBMulti.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBMultiActionPerformed(evt);
             }
         });
 
@@ -77,17 +88,21 @@ public class TelaInicial extends javax.swing.JFrame {
         boardPanel.setLayout(boardPanelLayout);
         boardPanelLayout.setHorizontalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, boardPanelLayout.createSequentialGroup()
-                .addContainerGap(204, Short.MAX_VALUE)
-                .addComponent(jBInit)
-                .addGap(185, 185, 185))
+            .addGroup(boardPanelLayout.createSequentialGroup()
+                .addGap(198, 198, 198)
+                .addGroup(boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jBSingle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBMulti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(195, Short.MAX_VALUE))
         );
         boardPanelLayout.setVerticalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, boardPanelLayout.createSequentialGroup()
-                .addContainerGap(140, Short.MAX_VALUE)
-                .addComponent(jBInit)
-                .addGap(137, 137, 137))
+                .addContainerGap(141, Short.MAX_VALUE)
+                .addComponent(jBSingle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jBMulti)
+                .addGap(102, 102, 102))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -104,12 +119,18 @@ public class TelaInicial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jBInitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBInitActionPerformed
+    private void jBSingleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSingleActionPerformed
         // TODO add your handling code here:
-        GameManager.getInstance().startGame();
+        GameManager.getInstance().startSingleGame();
         this.setVisible(false);
         //this.finalize();
-    }//GEN-LAST:event_jBInitActionPerformed
+    }//GEN-LAST:event_jBSingleActionPerformed
+
+    private void jBMultiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMultiActionPerformed
+        // TODO add your handling code here:
+        GameManager.getInstance().startMultConnection();
+        this.setVisible(false);
+    }//GEN-LAST:event_jBMultiActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,6 +138,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boardPanel;
-    private javax.swing.JButton jBInit;
+    private javax.swing.JButton jBMulti;
+    private javax.swing.JButton jBSingle;
     // End of variables declaration//GEN-END:variables
 }

@@ -28,11 +28,11 @@ public class CardModel implements Serializable {
     public CardModel (){
         baralho = new Baralho(52);
         boards = new BoardHolder[5];
-        boards[0] = new BoardHolder(3);
-        boards[1] = new BoardHolder(2);
-        boards[2] = new Descarte(0);
-        boards[3] = new BoardHolder(1);
-        boards[4] = new BoardHolder(3);
+        boards[0] = new BoardHolder(3,0);
+        boards[1] = new BoardHolder(2,1);
+        boards[2] = new Descarte(0,2);
+        boards[3] = new BoardHolder(1,3);
+        boards[4] = new BoardHolder(3,4);
         ((Descarte) boards[2]).setBoardJogadores(boards[3], 1);
         ((Descarte) boards[2]).setBoardJogadores(boards[1], 2);
         turno = 1;
@@ -60,6 +60,37 @@ public class CardModel implements Serializable {
             boards[1].inverter();
             boards[3].inverter();
 
+            java.awt.Rectangle aux;
+            aux = boards[1].getRect();
+            boards[1].setRect(boards[3].getRect());
+            boards[3].setRect(aux);
+        }
+    }
+    
+    public void trocarTurno(int turno, int jogador) {      
+        
+        this.turno = turno;
+        boolean esconderTudo = (turno > 2);
+        for(BoardHolder b:boards)
+            b.cardVisibility(esconderTudo);
+        
+        if(!esconderTudo) {
+            ComprarDeck(turno);
+            boards[3].resetarAcoes();
+            boards[1].resetarAcoes();
+            
+            boolean hidePlayer1 = (jogador == 2);
+            boards[4].cardVisibility(hidePlayer1);
+            boards[0].cardVisibility(!hidePlayer1);
+        }
+    }
+    
+    public void inverterTabuleiro(int jogador) {
+        if(jogador == 1) {
+            boards[1].inverter();
+        }
+        else {
+            boards[3].inverter();
             java.awt.Rectangle aux;
             aux = boards[1].getRect();
             boards[1].setRect(boards[3].getRect());
@@ -97,6 +128,8 @@ public class CardModel implements Serializable {
         int saque = Math.min(numCartasMao, desiredCard);
         if(saque > 0) {
             ArrayList<Carta> comprado = baralho.retirarCartas(saque);
+            for(Carta c:comprado)
+                c.setEscondido(true);
             for(int i = 0; i < 5 && comprado.size() > 0; i++) {
                 if (boards[maoJogador].getCarta(i) == null) {
                     boards[maoJogador].insereCarta(comprado.get(0), i);
@@ -126,6 +159,18 @@ public class CardModel implements Serializable {
         
         baralho.setRect((int) locations[5].getX() + (6 * socketWidth) + 3, 
                 (int) locations[5].getY() + 3, socketWidth - 6, socketHeight - 6);
+    }
+    
+    public void sincronizarBaralho(String s) {
+        baralho.sincronize(s);
+    }
+    
+    public String getBaralho() {
+        return baralho.getBaralho();
+    }
+    
+    public BoardHolder getBoard(int n) {
+        return boards[n];
     }
     
     /**

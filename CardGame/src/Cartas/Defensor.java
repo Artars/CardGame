@@ -129,7 +129,7 @@ public class Defensor extends Atacavel {
             GameManager.getInstance().log(
         "Trocou" + "," + this.toString() + "," + a
         + "," + this.boardParent + "," + this.index
-        + "," + a + "," + a.getIndex());
+        + "," + b + "," + a.getIndex());
             b.retiraCarta(otherIndex);
             b.retiraCarta(index);
             b.insereCarta(a, index);

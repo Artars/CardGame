@@ -63,6 +63,7 @@ public class Curandeiro extends Carta {
                     }
                     else if(b.getJogador() == this.getJogador()){
                         curar(b, b.getIndex());
+                        descartar();
                     }
                     break;
                 
@@ -71,6 +72,7 @@ public class Curandeiro extends Carta {
                     Atacavel a = (Atacavel) args[1];
                     if (b1.getJogador() == jogador && a.isAtacavel()) {
                         curar(b1,a);
+                        descartar();
                     }
                     break;
             }
@@ -123,7 +125,6 @@ public class Curandeiro extends Carta {
             a.getBoardParent() + "," + a.getIndex());
         realizouAcao = true;
         //Se descarta
-        descartar();
     }
     
     /**
@@ -148,7 +149,6 @@ public class Curandeiro extends Carta {
             b + "," + index);
             
             realizouAcao = true;
-            descartar();
         }
     }
     

@@ -199,6 +199,10 @@ public class GameManager implements Serializable{
         logger = new Logger(textArea);
     }
     
+    public void observeLog(java.util.Observer ob) {
+        logger.addObserver(ob);
+    }
+    
     /**
      * Funcao que inicia o fim dos tempos
      * @param jogador 
@@ -231,7 +235,7 @@ public class GameManager implements Serializable{
     /**
      * Inicia o jogo
      */
-    public void startGame(){
+    public void startSingleGame(){
         camadasRenderizaveis = new ArrayList<>();
         selecionaveis = new ArrayList<>();
         turno = 1;
@@ -239,6 +243,20 @@ public class GameManager implements Serializable{
         players = new Player[2];
         logger = null;
         sceneManager.startGame();
+    }
+    
+    public void startMultConnection() {
+        sceneManager.startMultChat();
+    }
+    
+    public void startMultGame() {
+        camadasRenderizaveis = new ArrayList<>();
+        selecionaveis = new ArrayList<>();
+        turno = 1;
+        rodada = 0;
+        players = new Player[2];
+        logger = null;
+        sceneManager.startMultGame();
     }
     
     /**

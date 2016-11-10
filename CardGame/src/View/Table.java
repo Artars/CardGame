@@ -32,13 +32,15 @@ public class Table extends JPanel {
         Graphics2D g2 = (Graphics2D)g;
         
         //Desenha todas as camadas de renderizavel
-        for(ArrayList<Renderizavel> a: GameManager.getInstance().getRenderizaveis()){ 
-            for(Renderizavel r: a)
-                r.draw((Graphics2D) g2);
+        ArrayList<ArrayList<Renderizavel>> a = GameManager.getInstance().getRenderizaveis();
+        for(int i = 0; i < a.size(); i++) {
+            for (int j = 0; j < a.get(i).size(); j++) {
+                a.get(i).get(j).draw(g2);
+            }
         }
     }
-
-    
-
     
 }
+
+    
+

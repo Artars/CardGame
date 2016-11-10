@@ -150,6 +150,15 @@ public class Baralho implements Renderizavel, Serializable{
         cartas = novaLista;
     }
     
+    public String getBaralho() {
+        String baralho = "Sincronizar";
+        for (int c:cartas) {
+           baralho = baralho + "," + String.valueOf(c);
+        }
+        
+        return baralho;
+    }
+    
     //Getters e setter ---------------------------------------------------------
     /**
      * Define a posição do baralho dado um retângulo

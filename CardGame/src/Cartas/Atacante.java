@@ -122,7 +122,7 @@ public class Atacante extends Atacavel {
                     }
                     //Atacar diretamente o jogador
                     else if (onBoard && b.getJogador() == inimigo) {
-                        ataque(b,false);
+                        ataque(b,b.getIndex(),false);
                     }
                     break;
 
@@ -192,12 +192,12 @@ public class Atacante extends Atacavel {
      * @param b
      * @param invertido 
      */
-    public void ataque(BoardHolder b, boolean invertido) {
+    public void ataque(BoardHolder b, int index, boolean invertido) {
         realizouAcao = true;
         GameManager.getInstance().log(
-        "Ataque," + this.toString() + "," + "jogador" + "," +
+        "Ataque," + this.toString() + "," + "Jogador" + b.getJogador() + "," +
         this.boardParent + "," + this.index + "," +
-        b + "," + b.getIndex());
+        b + "," + index);
         attackMovement(invertido);
         b.levaDano(index, forca * multiplicador);
     }
