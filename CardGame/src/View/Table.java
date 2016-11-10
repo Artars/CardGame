@@ -35,7 +35,8 @@ public class Table extends JPanel {
         ArrayList<ArrayList<Renderizavel>> a = GameManager.getInstance().getRenderizaveis();
         for(int i = 0; i < a.size(); i++) {
             for (int j = 0; j < a.get(i).size(); j++) {
-                a.get(i).get(j).draw(g2);
+                if (a.get(i).get(j) != null)
+                    a.get(i).get(j).draw(g2);
             }
         }
     }

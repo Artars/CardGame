@@ -10,8 +10,6 @@ import Model.BoardHolder;
 import cardgame.GameManager;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *  Classe capaz de atacar outras cartas ou o jogador

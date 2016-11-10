@@ -181,8 +181,10 @@ public class MultController implements MouseListener, MouseMotionListener, Actio
                 b1 = model.getBoard(Integer.parseInt(parts[2]));
                 Carta car = b1.getCarta(
                         Integer.parseInt(parts[3]));
-                car.setEscondido(false);
-                car.descartar();
+                if (car != null) {
+                    car.setEscondido(false);
+                    car.descartar();
+                }
             }
             else if(parts[0].equals("Turno")) {
                 trocarTurno(Integer.parseInt(parts[1]));
