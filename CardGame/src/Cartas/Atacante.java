@@ -128,7 +128,7 @@ public class Atacante extends Atacavel {
                     Atacavel a = (Atacavel) args[1];
 
                     if (a.getJogador() == inimigo && a.isAtacavel()) {
-                        if (a.getIndex() == this.index) {            
+                        if (a.getIndex() == (4 - this.index)) {            
                             ataque(a,false);
                         }
                     }

@@ -70,7 +70,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
     public void addModel(CardModel model) {
         this.model = (CardModel) model;
         UpdateWorkspaces();
-        model.ComprarDeck(1);
+        model.ComprarDeck(1, false);
     }
     
     /**
@@ -218,6 +218,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
                      ObjectOutputStream (f_out);
               obj_out.writeObject (model);
               GameManager.getInstance().log("Console,Jogo salvo");
+              f_out.close();
             }
             catch (Exception e)
             {

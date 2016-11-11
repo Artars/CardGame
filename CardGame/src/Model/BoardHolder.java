@@ -42,6 +42,7 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
         this.cartas = new Carta[5];
         this.destaque = -1;
         this.ownIndex = index;
+        this.invertido = false;
         
         GameManager.getInstance().adicionarRender((Renderizavel)this,0);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
@@ -59,6 +60,7 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
         this.cartas = new Carta[5];
         this.destaque = -1;
         this.ownIndex = index;
+        this.invertido = false;
         
         GameManager.getInstance().adicionarRender((Renderizavel)this,0);
         GameManager.getInstance().adicionarSelecionavel((Selecionavel)this);
@@ -116,8 +118,6 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
             Rectangle cardZone = getCardRect(i);
             if(cardZone.contains(x,y)){
                 destaque = i;
-                if(invertido)
-                    //destaque = 4 - destaque;
                 break;
             }
         }
@@ -131,8 +131,6 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
             Rectangle cardZone = getCardRect(i);
             if(cardZone.contains(x,y)){
                 destaque = i;
-                if(invertido)
-                    destaque = 4 - destaque;
                 break;
             }
         }

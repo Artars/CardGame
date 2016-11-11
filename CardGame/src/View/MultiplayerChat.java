@@ -7,6 +7,12 @@ package View;
 
 import Controller.MultController;
 import cardgame.GameManager;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import javax.swing.JTextArea;
 
 /**
@@ -24,6 +30,7 @@ public class MultiplayerChat extends javax.swing.JFrame {
      */
     public MultiplayerChat() {
         initComponents();
+        loadPrevius();
     }
 
     public void addController(MultController controller) {
@@ -45,6 +52,7 @@ public class MultiplayerChat extends javax.swing.JFrame {
         }
         else
             nome = possivelNome;
+        saveActual();
     }
     
     public JTextArea getTextArea() {
@@ -53,6 +61,36 @@ public class MultiplayerChat extends javax.swing.JFrame {
     
     public MultController getController() {
         return controller;
+    }
+    
+    public void loadPrevius() {
+        try {
+            FileInputStream f_in = new
+                          FileInputStream ("data/credencial.data");
+            BufferedReader s = new BufferedReader(new java.io.InputStreamReader(f_in));
+            jTFIP.setText(s.readLine());
+            jTName.setText(s.readLine());
+            s.close();
+        }
+        catch (java.io.IOException e) {
+        
+        }
+    }
+    
+    public void saveActual() {
+        try {
+            FileOutputStream arquivo = new 
+                FileOutputStream("data/credencial.data");
+            PrintStream saida = new PrintStream(arquivo);
+            PrintWriter output = new PrintWriter(saida);
+            output.println(jTFIP.getText());
+            output.println(jTName.getText());
+            output.flush();
+            output.close();
+        }
+        catch (java.io.IOException e) {
+        
+        }
     }
     
     /**

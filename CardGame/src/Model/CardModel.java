@@ -35,6 +35,7 @@ public class CardModel implements Serializable {
         boards[4] = new BoardHolder(3,4);
         ((Descarte) boards[2]).setBoardJogadores(boards[3], 1);
         ((Descarte) boards[2]).setBoardJogadores(boards[1], 2);
+        boards[1].inverter();
         turno = 1;
     }
     
@@ -50,7 +51,7 @@ public class CardModel implements Serializable {
             b.cardVisibility(esconderTudo);
         
         if(!esconderTudo) {
-            ComprarDeck(turno);
+            ComprarDeck(turno, false);
             boards[3].resetarAcoes();
             boards[1].resetarAcoes();
             
@@ -75,7 +76,7 @@ public class CardModel implements Serializable {
             b.cardVisibility(esconderTudo);
         
         if(!esconderTudo) {
-            ComprarDeck(turno);
+            ComprarDeck(turno, true);
             boards[3].resetarAcoes();
             boards[1].resetarAcoes();
             
@@ -85,17 +86,13 @@ public class CardModel implements Serializable {
         }
     }
     
-    public void inverterTabuleiro(int jogador) {
-        if(jogador == 1) {
-            boards[1].inverter();
-        }
-        else {
-            boards[3].inverter();
-            java.awt.Rectangle aux;
-            aux = boards[1].getRect();
-            boards[1].setRect(boards[3].getRect());
-            boards[3].setRect(aux);
-        }
+    public void inverterTabuleiro() {
+        boards[1].inverter();
+        boards[3].inverter();
+        java.awt.Rectangle aux;
+        aux = boards[1].getRect();
+        boards[1].setRect(boards[3].getRect());
+        boards[3].setRect(aux);
     }
     
     /**
@@ -110,7 +107,7 @@ public class CardModel implements Serializable {
      * Realiza a compra de cartas para o jogador "turno"
      * @param turno 
      */
-    public void ComprarDeck(int turno){
+    public void ComprarDeck(int turno, boolean hide){
         int maoJogador = (turno == 1)? 4:0;
         
         int numCartasMao = boards[maoJogador].cardCount();
@@ -128,8 +125,10 @@ public class CardModel implements Serializable {
         int saque = Math.min(numCartasMao, desiredCard);
         if(saque > 0) {
             ArrayList<Carta> comprado = baralho.retirarCartas(saque);
-            for(Carta c:comprado)
-                c.setEscondido(true);
+            if (hide) {
+                for(Carta c:comprado)
+                    c.setEscondido(true);
+            }
             for(int i = 0; i < 5 && comprado.size() > 0; i++) {
                 if (boards[maoJogador].getCarta(i) == null) {
                     boards[maoJogador].insereCarta(comprado.get(0), i);

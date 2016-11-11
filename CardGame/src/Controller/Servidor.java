@@ -23,22 +23,26 @@ public class Servidor implements Runnable {
     private PrintWriter output;
     private boolean host;
     private String ip;
+    private boolean stop;
     
     public Servidor(MultController controller, boolean isHost) {
         this.controller = controller;
         host = isHost;
         ip = "127.0.0.1";
+        stop = false;
     }
     
     public Servidor(MultController controller) {
         this.controller = controller;
         host = true;
         ip = "127.0.0.1";
+        stop = false;
     }
     
     public Servidor(MultController controller, String ip) {
         this.controller = controller;
         this.ip = ip;
+        stop = false;
     }
     
     public void setHost(boolean host) {
@@ -51,6 +55,10 @@ public class Servidor implements Runnable {
     
     public void setIP(String ip) {
         this.ip = ip;
+    }
+    
+    public void stop() {
+        stop = true;
     }
     
     @Override
@@ -77,12 +85,11 @@ public class Servidor implements Runnable {
             
             output.println("Teste");
             String in;
-            while ((in = s.readLine()) != null) {
+            while ( ((in = s.readLine()) != null) && !stop) {
                 System.out.println(in);
                 controller.receberComando(in);
             }
             write("Sair");
-            controller.receberComando("Sair");
             s.close();
             output.close();
             cliente.close();

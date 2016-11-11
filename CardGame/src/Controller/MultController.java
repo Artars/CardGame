@@ -192,10 +192,12 @@ public class MultController implements MouseListener, MouseMotionListener, Actio
             else if (parts[0].equals("Console")) {
             
             }
+            else if (parts[0].equals("Comecar")) {
+                model.trocarTurno(turno, jogador);
+                model.inverterTabuleiro();
+            }
             else if (parts[0].equals("Sincronizar")) {
                 model.sincronizarBaralho(s);
-                model.trocarTurno(turno, jogador);
-                model.inverterTabuleiro(jogador);
             }
             else if (parts[0].equals("Fala")) {
                 String textoJunto = "";
@@ -210,6 +212,9 @@ public class MultController implements MouseListener, MouseMotionListener, Actio
                 }
                 chat.getTextArea().append(parts[1] + ": " + textoJunto + "\n");
             }
+            else if (parts[0].equals("Sair")) {
+                chat.getTextArea().append("*** O outro jogador saiu ***");
+            }
         }
     }
     
@@ -218,10 +223,9 @@ public class MultController implements MouseListener, MouseMotionListener, Actio
         GameManager.getInstance().observeLog(this);
         if(jogador == 1) {
             String baralho = model.getBaralho();
-            System.out.println(baralho);
             enviarComando(baralho);
             model.trocarTurno(turno, jogador);
-            model.inverterTabuleiro(jogador);
+            enviarComando("Comecar");
         }
     }
     
@@ -353,6 +357,9 @@ public class MultController implements MouseListener, MouseMotionListener, Actio
                 view.repaint();
             }
             */
+            else {
+                GameManager.getInstance().log("Sair");
+            }
         }
         
     else if (ae.getActionCommand().equals("Save")) {
