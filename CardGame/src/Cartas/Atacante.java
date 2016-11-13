@@ -10,8 +10,6 @@ import Model.BoardHolder;
 import cardgame.GameManager;
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *  Classe capaz de atacar outras cartas ou o jogador
@@ -113,8 +111,14 @@ public class Atacante extends Atacavel {
                     //Se colocar em campo
                     BoardHolder b = (BoardHolder) args[0];
                     
-                    if ((b.getJogador() == jogador) && !onBoard && b.getIndex() != -1) {
-                        mover(b, b.getIndex());
+                    if ((b.getJogador() == jogador) && !onBoard) {
+                        try {
+                            mover(b, b.getIndex());
+                        }
+                        catch(java.lang.IndexOutOfBoundsException e) {
+                            System.out.println (e.toString ());
+                            System.out.println("Posicao invalida");
+                        }
                     }
                     //Descarte
                     else if (b.getJogador() == 0 && !onBoard) {
@@ -138,7 +142,8 @@ public class Atacante extends Atacavel {
             }
         }
         catch (ClassCastException e){
-            
+            System.out.println (e.toString ());
+            System.out.println("Argumento do tipo errado");
         }
     }
 

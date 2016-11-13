@@ -22,6 +22,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
@@ -218,7 +219,7 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
               obj_out.writeObject (model);
               GameManager.getInstance().log("Console,Jogo salvo");
             }
-            catch (Exception e)
+            catch (IOException e)
             {
               System.out.println (e.toString ());
               System.out.println ("Can't save file");
@@ -228,11 +229,10 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
         else if (ae.getActionCommand().equals("Load")) {
             try
             {
-              FileInputStream f_in = new
-                      FileInputStream ("data/card.data");
-              ObjectInputStream obj_in = new
-                      ObjectInputStream (f_in);
-              try {
+                FileInputStream f_in = new
+                    FileInputStream ("data/card.data");
+                ObjectInputStream obj_in = new
+                    ObjectInputStream (f_in);
                 model = (CardModel) obj_in.readObject ();
                 GameManager.getInstance().clearSystems();
                 model.updateGameManager();
@@ -242,17 +242,16 @@ public class CardController implements MouseListener, MouseMotionListener, Actio
                 turno = GameManager.getInstance().getTurno();
                 view.updateTurnText(turno);
                 view.repaint();
-                GameManager.getInstance().log("Console,Jogo carregado");
-              }
-              catch (ClassCastException e) {
-                  System.out.println("Wrong file");
-              }
-              
+                GameManager.getInstance().log("Console,Jogo carregado");              
             }
-            catch (Exception e)
+            catch (IOException e)
             {
               System.out.println (e.toString ());
               System.out.println("Can't read file");
+            }
+            catch (ClassNotFoundException e) {
+                System.out.println (e.toString ());
+                System.out.println("Wrong type file");
             }
         }
     }

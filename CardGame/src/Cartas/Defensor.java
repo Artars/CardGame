@@ -62,10 +62,16 @@ public class Defensor extends Atacavel {
                 case 1:
                     //Se colocou ou moveu dentro do tabuleiro
                     BoardHolder b1 = (BoardHolder) args[0];
-                    if (b1.getJogador() == jogador && b1.getIndex() != -1) {
+                    if (b1.getJogador() == jogador) {
                         if(onBoard)
                             realizouAcao = true;
-                        mover(b1, b1.getIndex());
+                        try {
+                            mover(b1, b1.getIndex());
+                        }
+                        catch(java.lang.IndexOutOfBoundsException e) {
+                            System.out.println (e.toString ());
+                            System.out.println("Posicao invalida");
+                        }
                     }
                     //Foi pra pilha de descarte
                     else if (b1.getJogador() == 0 && !onBoard) {      
@@ -88,7 +94,8 @@ public class Defensor extends Atacavel {
         
         }
         catch(ClassCastException e) {
-        
+            System.out.println (e.toString ());
+            System.out.println("Argumento do tipo errado");
         }
     }
     

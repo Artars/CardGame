@@ -284,18 +284,21 @@ public class BoardHolder implements Renderizavel, Selecionavel, Serializable {
     }
     
     //Retorna o indice da carta localizada nas coordenadas x e y. -1 se não há carta
-    public int getIndex(int x, int y) {
+    public int getIndex(int x, int y) throws java.lang.IndexOutOfBoundsException {
         for(int i = 0; i < 5; i++) {
             Rectangle frame = getCardRect(i);
             if (frame.contains(x,y)) {
                     return i;
             }
         }
-        return -1;
+        throw new java.lang.IndexOutOfBoundsException();
     }
     
-    public int getIndex() {
-        return destaque;
+    public int getIndex() throws java.lang.IndexOutOfBoundsException {
+        if(destaque > -1 && destaque < 5)
+            return destaque;
+        else
+            throw new java.lang.IndexOutOfBoundsException();
     }
     
     //Realiza dano no jogador
