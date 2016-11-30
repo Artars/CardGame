@@ -113,7 +113,8 @@ public class Atacante extends Atacavel {
                     
                     if ((b.getJogador() == jogador) && !onBoard) {
                         try {
-                            mover(b, b.getIndex());
+                            int index = b.getIndex();
+                            mover(b, index);
                         }
                         catch(java.lang.IndexOutOfBoundsException e) {
                             System.out.println (e.toString ());

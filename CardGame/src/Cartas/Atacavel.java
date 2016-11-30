@@ -125,11 +125,17 @@ public abstract class Atacavel extends Carta {
      * @param n 
      */
     public void mover (Model.BoardHolder b, int n) {
-        GameManager.getInstance().log(
-            "Mover" + "," + this.toString() + "," + b.getIndex() 
-            + "," + this.boardParent + "," + this.index
-            + "," + b + "," + b.getIndex());
-        boardParent.retiraCarta(index);
+        try {
+            GameManager.getInstance().log(
+                "Mover" + "," + this.toString() + "," + n 
+                + "," + this.boardParent + "," + this.index
+                + "," + b + "," + n);
+            boardParent.retiraCarta(index);
+        }
+        catch(java.lang.IndexOutOfBoundsException e) {
+            System.out.println (e.toString ());
+            System.out.println("Posicao invalida");
+        }
         b.insereCarta(this, n);
         boardParent = b;
         if(onBoard)

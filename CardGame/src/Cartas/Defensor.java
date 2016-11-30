@@ -66,7 +66,8 @@ public class Defensor extends Atacavel {
                         if(onBoard)
                             realizouAcao = true;
                         try {
-                            mover(b1, b1.getIndex());
+                            int index = b1.getIndex();
+                            mover(b1, index);
                         }
                         catch(java.lang.IndexOutOfBoundsException e) {
                             System.out.println (e.toString ());

@@ -63,7 +63,9 @@ public class Curandeiro extends Carta {
                     }
                     else if(b.getJogador() == this.getJogador()){
                         try {
-                            curar(b, b.getIndex());
+                            int index = b.getIndex();
+                            curar(b, index);
+                            descartar();
                         }
                         catch(java.lang.IndexOutOfBoundsException e) {
                             System.out.println (e.toString ());
