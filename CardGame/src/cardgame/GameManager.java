@@ -208,7 +208,7 @@ public class GameManager implements Serializable{
      * @param jogador 
      */
     public void gameOver(int jogador) {
-        System.out.println("Jogador " + String.valueOf(jogador) + " perdeu!");
+        log("Console," + "Jogador " + String.valueOf(jogador) + " perdeu!");
         players = new Player[2];
         startMenu();
     }

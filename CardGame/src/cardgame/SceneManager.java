@@ -43,6 +43,8 @@ public class SceneManager {
     public void startMenu(){
         if(actualWindow != null)
             actualWindow.setVisible(false);
+        if(secondaryWindow != null)
+            secondaryWindow.setVisible(false);
         Background b = new Background();
         TelaInicial menu = new TelaInicial(b);
         actualWindow = menu;

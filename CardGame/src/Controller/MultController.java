@@ -123,6 +123,7 @@ public class MultController implements MouseListener, MouseMotionListener, Actio
     
     public void receberComando(String s) {
         String[] parts = s.split(",");
+        System.out.println(parts);
         if(parts != null) {
             Atacante a;
             Atacavel alvo;
@@ -214,6 +215,7 @@ public class MultController implements MouseListener, MouseMotionListener, Actio
             }
             else if (parts[0].equals("Sair")) {
                 chat.getTextArea().append("*** O outro jogador saiu ***");
+                GameManager.getInstance().gameOver((jogador == 1? 2:1));
             }
         }
     }

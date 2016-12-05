@@ -85,14 +85,19 @@ public class Servidor implements Runnable {
             
             output.println("Teste");
             String in;
-            while ( ((in = s.readLine()) != null) && !stop) {
-                System.out.println(in);
-                controller.receberComando(in);
+            try {
+                while ((in = s.readLine()) != null) {
+                    System.out.println(in);
+                    controller.receberComando(in);
+                }
             }
-            write("Sair");
-            s.close();
-            output.close();
-            cliente.close();
+            catch(IOException e) {
+                System.out.println("Desconectou");
+                controller.receberComando("Sair");
+                s.close();
+                output.close();
+                cliente.close();
+            }
         }
         catch(IOException e) {
             System.out.println("Não foi possivel iniciar server");
