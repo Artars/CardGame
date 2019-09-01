@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cardgame;
+package Main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

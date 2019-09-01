@@ -5,7 +5,7 @@
  */
 package Cartas;
 
-import cardgame.GameManager;
+import Main.GameManager;
 import java.awt.Color;
 import java.awt.Graphics2D;
 

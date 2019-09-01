@@ -6,7 +6,7 @@
 package Cartas;
 
 import Model.BoardHolder;
-import cardgame.GameManager;
+import Main.GameManager;
 import java.awt.Color;
 import java.util.ArrayList;
 

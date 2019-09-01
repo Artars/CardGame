@@ -5,7 +5,7 @@
  */
 package View;
 
-import cardgame.GameManager;
+import Main.GameManager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;

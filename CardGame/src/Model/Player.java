@@ -5,7 +5,7 @@
  */
 package Model;
 
-import cardgame.GameManager;
+import Main.GameManager;
 import java.io.Serializable;
 import javax.swing.JProgressBar;
 

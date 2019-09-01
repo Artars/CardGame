@@ -14,7 +14,7 @@ import Model.CardModel;
 import View.BoardFrame;
 import View.BoardMult;
 import View.MultiplayerChat;
-import cardgame.GameManager;
+import Main.GameManager;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;

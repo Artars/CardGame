@@ -7,7 +7,7 @@ package Controller;
 
 import Cartas.Renderizavel;
 import View.Background;
-import cardgame.GameManager;
+import Main.GameManager;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;

@@ -6,7 +6,7 @@
 package View;
 
 import Cartas.Renderizavel;
-import cardgame.GameManager;
+import Main.GameManager;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;

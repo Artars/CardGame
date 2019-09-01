@@ -8,7 +8,7 @@ package Model;
 import Cartas.Carta;
 import Cartas.Renderizavel;
 import Cartas.Selecionavel;
-import cardgame.GameManager;
+import Main.GameManager;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;

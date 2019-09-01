@@ -7,7 +7,7 @@ package View;
 
 import Controller.CardController;
 import Controller.MultController;
-import cardgame.GameManager;
+import Main.GameManager;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;

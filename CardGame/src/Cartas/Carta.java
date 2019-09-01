@@ -6,7 +6,7 @@
 package Cartas;
 
 import Model.BoardHolder;
-import cardgame.GameManager;
+import Main.GameManager;
 import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.Point;

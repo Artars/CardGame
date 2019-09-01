@@ -10,7 +10,7 @@ import Cartas.Carta;
 import Cartas.Curandeiro;
 import Cartas.Defensor;
 import Cartas.Renderizavel;
-import cardgame.GameManager;
+import Main.GameManager;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.io.Serializable;

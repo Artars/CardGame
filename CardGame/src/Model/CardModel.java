@@ -6,7 +6,7 @@
 package Model;
 
 import Cartas.Carta;
-import cardgame.GameManager;
+import Main.GameManager;
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;

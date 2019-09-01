@@ -5,7 +5,7 @@
  */
 package Cartas;
 
-import cardgame.GameManager;
+import Main.GameManager;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

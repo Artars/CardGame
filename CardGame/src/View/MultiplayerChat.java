@@ -6,7 +6,7 @@
 package View;
 
 import Controller.MultController;
-import cardgame.GameManager;
+import Main.GameManager;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

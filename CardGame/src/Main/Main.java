@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CardGame;
+package Main;
 
 import Controller.CardController;
 import Model.CardModel;
 import View.BoardFrame;
 import View.Table;
-import cardgame.GameManager;
+import Main.GameManager;
 
 /**
  *
