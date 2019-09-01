@@ -81,4 +81,7 @@ Esses valores podem ser alterados se desejado. Eles estão presentes nas classes
 * Rei - Cura: 16
 * Números (x=2~10) - Cura: 2x
 
+## Multiplayer:
+O jogo possui multiplayer em LAN. Se desejar jogar online, o jogador que será o Host deverá abrir o Port 1234 utilizando *port forwarding*. O outro jogador colocará o IP dado e então conectar. 
+
 
