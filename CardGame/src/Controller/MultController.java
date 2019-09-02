@@ -95,15 +95,16 @@ public class MultController implements MouseListener, MouseMotionListener, Actio
         chat.addController(this);
     }
 
-    public void host() {
+    public void host(String port) {
         this.jogador = 1;
         host = true;
-        servidor = new Servidor(this);
+        servidor = new Servidor(this,true,port);
         (new Thread(servidor)).start();
     }
     
-    public void conectar(String ip) {
-        servidor = new Servidor(this, ip);
+    public void conectar(String ip, String port) {
+        servidor = new Servidor(this, ip, port
+        );
         (new Thread(servidor)).start();
         this.jogador = 2;
     }

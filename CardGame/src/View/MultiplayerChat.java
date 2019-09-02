@@ -109,6 +109,7 @@ public class MultiplayerChat extends javax.swing.JFrame {
         jBConectar = new javax.swing.JButton();
         jTName = new javax.swing.JTextField();
         jBHost = new javax.swing.JButton();
+        jTPort = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,6 +127,7 @@ public class MultiplayerChat extends javax.swing.JFrame {
 
         jTFIP.setText("127.0.0.1");
         jTFIP.setToolTipText("IP");
+        jTFIP.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jTFIP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFIPActionPerformed(evt);
@@ -133,6 +135,7 @@ public class MultiplayerChat extends javax.swing.JFrame {
         });
 
         jBConectar.setText("Conectar");
+        jBConectar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jBConectar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBConectarActionPerformed(evt);
@@ -140,11 +143,22 @@ public class MultiplayerChat extends javax.swing.JFrame {
         });
 
         jTName.setToolTipText("Seu nome");
+        jTName.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jBHost.setText("Host");
+        jBHost.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jBHost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBHostActionPerformed(evt);
+            }
+        });
+
+        jTPort.setText("12345");
+        jTPort.setToolTipText("Port");
+        jTPort.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jTPort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTPortActionPerformed(evt);
             }
         });
 
@@ -155,11 +169,13 @@ public class MultiplayerChat extends javax.swing.JFrame {
             .addComponent(jScrollPane1)
             .addComponent(jWrite)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTFIP, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jTName, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTFIP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTName, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTPort, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBHost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBHost, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBConectar, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -167,12 +183,15 @@ public class MultiplayerChat extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBConectar, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                    .addComponent(jBConectar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jBHost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTFIP)
-                    .addComponent(jTName))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTFIP)
+                        .addComponent(jTPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+                .addComponent(jTName)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jWrite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -186,13 +205,13 @@ public class MultiplayerChat extends javax.swing.JFrame {
 
     private void jBConectarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBConectarActionPerformed
         // TODO add your handling code here:
-        controller.conectar(jTFIP.getText());
+        controller.conectar(jTFIP.getText(), jTPort.getText());
         
     }//GEN-LAST:event_jBConectarActionPerformed
 
     private void jBHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBHostActionPerformed
         // TODO add your handling code here:
-        controller.host();
+        controller.host(jTPort.getText());
         jBHost.setVisible(false);
         jBConectar.setVisible(false);
         host = true;
@@ -207,6 +226,10 @@ public class MultiplayerChat extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jWriteActionPerformed
 
+    private void jTPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTPortActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTPortActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -218,6 +241,7 @@ public class MultiplayerChat extends javax.swing.JFrame {
     private javax.swing.JTextArea jTChat;
     private javax.swing.JTextField jTFIP;
     private javax.swing.JTextField jTName;
+    private javax.swing.JTextField jTPort;
     private javax.swing.JTextField jWrite;
     // End of variables declaration//GEN-END:variables
 }

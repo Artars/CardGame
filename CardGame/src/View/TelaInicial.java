@@ -46,9 +46,9 @@ public class TelaInicial extends javax.swing.JFrame {
         this.boardPanel.add(board);
         board.add(jBSingle, 1, 0);
         board.add(jBMulti, 1, 0);
-        jBSingle.setLocation((boardPanel.getWidth()-jBSingle.getWidth())/2, 
-                (boardPanel.getHeight()-jBSingle.getHeight())/2);
-        jBMulti.setLocation(jBSingle.getLocation().x, jBSingle.getLocation().y + 20);
+//        jBSingle.setLocation((boardPanel.getWidth()-jBSingle.getWidth())/2, 
+//                (boardPanel.getHeight()-jBSingle.getHeight())/2);
+//        jBMulti.setLocation(jBSingle.getLocation().x, jBSingle.getLocation().y + 20);
         jBSingle.setVisible(true);
         jBMulti.setVisible(true);
     }
@@ -67,17 +67,25 @@ public class TelaInicial extends javax.swing.JFrame {
         jBMulti = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(905, 612));
+        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
 
-        jBSingle.setText("Um jogador");
+        jBSingle.setText("Local");
+        jBSingle.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jBSingle.setMaximumSize(new java.awt.Dimension(100, 50));
+        jBSingle.setMinimumSize(new java.awt.Dimension(200, 100));
+        jBSingle.setPreferredSize(new java.awt.Dimension(100, 50));
         jBSingle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBSingleActionPerformed(evt);
             }
         });
 
-        jBMulti.setText("Dois jogadores");
+        jBMulti.setText("Online");
+        jBMulti.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jBMulti.setMaximumSize(new java.awt.Dimension(100, 50));
+        jBMulti.setMinimumSize(new java.awt.Dimension(200, 100));
+        jBMulti.setPreferredSize(new java.awt.Dimension(100, 50));
         jBMulti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBMultiActionPerformed(evt);
@@ -88,21 +96,21 @@ public class TelaInicial extends javax.swing.JFrame {
         boardPanel.setLayout(boardPanelLayout);
         boardPanelLayout.setHorizontalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(boardPanelLayout.createSequentialGroup()
-                .addGap(198, 198, 198)
-                .addGroup(boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jBSingle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jBMulti, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(195, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, boardPanelLayout.createSequentialGroup()
+                .addContainerGap(200, Short.MAX_VALUE)
+                .addGroup(boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jBSingle, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBMulti, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
         boardPanelLayout.setVerticalGroup(
             boardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, boardPanelLayout.createSequentialGroup()
-                .addContainerGap(141, Short.MAX_VALUE)
-                .addComponent(jBSingle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBMulti)
-                .addGap(102, 102, 102))
+                .addContainerGap(99, Short.MAX_VALUE)
+                .addComponent(jBSingle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jBMulti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

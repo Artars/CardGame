@@ -141,7 +141,7 @@ public class BoardMult extends javax.swing.JFrame implements Observer {
         turnLabel.setText("1");
 
         turnButton.setText("Terminar turno");
-        turnButton.setBorder(null);
+        turnButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel3.setText("Vida Jogador 1:");
 
@@ -157,6 +157,7 @@ public class BoardMult extends javax.swing.JFrame implements Observer {
         jScrollPane1.setViewportView(logArea);
 
         jButtonSave.setText("Save");
+        jButtonSave.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         javax.swing.GroupLayout informationPanelLayout = new javax.swing.GroupLayout(informationPanel);
         informationPanel.setLayout(informationPanelLayout);
@@ -176,10 +177,9 @@ public class BoardMult extends javax.swing.JFrame implements Observer {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(informationPanelLayout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(informationPanelLayout.createSequentialGroup()
-                .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(informationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         informationPanelLayout.setVerticalGroup(
