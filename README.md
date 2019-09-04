@@ -22,7 +22,6 @@ Each player has its own board where they can place a maximum of 5 cards. These c
 
 ### Cards
 Each card has a "number" and a suit. The suit is used to decide the use of the card in game. The number of the card affects its attributes.
-Cada carta possui "número" e um naipe. O seu tipo, que depende do Naipe da carta, afeta a função da carta em jogo. O número da carta afetará os seus atributos.
 #### 1. Attacker
 Are the cards of the suits 'Diamonds' and 'Spades'. Using its action, the attacker can attack the slot right in front of it in the board. If it hit another card, you damage that card. If you hit an empty slot, the enemy is hurt. This card has a given amount of "Health". If all health is depleted, this card should be discarded. The damage dealt by each card and it's "Health" are related with the "number" of the card.
 #### 2. Defenders
